@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>test.single</actionName>
+            <goals>
+                <goal>test-compile</goal>
+                <goal>surefire:test</goal>
+                <goal>-Dtest=BoardScrub</goal>
+                <goal>-Dbrowser=CHROME</goal>
+                <goal>-Dnogrid</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+            </properties>
+        </action>
+    </actions>
