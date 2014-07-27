@@ -34,7 +34,7 @@ public class BoardScrub extends AutomationCodeBase
 //    final String imageXpath = "//img";
     
 //    CRAIGSLIST
-    final String url="http://seattle.en.craigslist.org/search/sss?sort=priceasc&query=pokemon";
+    final String url="http://boise.craigslist.org/search/cta?sort=pricedsc&maxAsk=3000&minAsk=0";
     final String linksLoadedIndicatorXpath = "//input[@id='query']";
     final String linkXpath = "//span[@class='pl']/a";
     final String imageXpath = "//img";
