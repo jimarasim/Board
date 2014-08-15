@@ -34,10 +34,17 @@ public class BoardScrub extends AutomationCodeBase
 //    final String imageXpath = "//img";
     
 //    CRAIGSLIST
-    final String url="http://boise.craigslist.org/search/cta?sort=pricedsc&maxAsk=3000&minAsk=0";
+    final String url="https://boise.craigslist.org/search/cta?maxAsk=2000&sort=pricedsc";
     final String linksLoadedIndicatorXpath = "//input[@id='query']";
     final String linkXpath = "//span[@class='pl']/a";
     final String imageXpath = "//img";
+    
+    //EBAY
+//    final String url="http://www.ebay.com/sch/Records-/176985/i.html?_from=R40&_nkw=melvins&_ipg=100&rt=nc";
+//    final String linksLoadedIndicatorXpath = "//span[@class='kwcat' and contains(text(),'results for')]";
+//    final String linkXpath = "//div[@class='ittl']/h3/a";
+//    final String imageXpath = "//img[class='img']";
+    
     @Before
     public void BeforeTest()
     {
