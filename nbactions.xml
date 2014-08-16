@@ -7,6 +7,7 @@
                 <goal>surefire:test</goal>
                 <goal>-Dtest=BoardScrub</goal>
                 <goal>-Dbrowser=CHROME</goal>
+                <goal>-Denvironment=dev</goal>
                 <goal>-Dnogrid</goal>
             </goals>
             <properties>
