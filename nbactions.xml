@@ -13,4 +13,21 @@
                 <test>${packageClassName}</test>
             </properties>
         </action>
+        <action>
+            <actionName>debug.test.single</actionName>
+            <goals>
+                <goal>test-compile</goal>
+                <goal>surefire:test</goal>
+                <goal>-Dtest=BoardScrub</goal>
+                <goal>-Dbrowser=CHROME</goal>
+                <goal>-Denvironment=ebay</goal>
+                <goal>-Dnogrid</goal>
+            </goals>
+            <properties>
+                <test>${packageClassName}</test>
+                <forkMode>once</forkMode>
+                <maven.surefire.debug>-Xdebug -Xrunjdwp:transport=dt_socket,server=n,address=${jpda.address}</maven.surefire.debug>
+                <jpda.listen>true</jpda.listen>
+            </properties>
+        </action>
     </actions>

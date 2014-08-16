@@ -1,8 +1,7 @@
-//http://www.mkyong.com/maven/how-to-install-maven-in-windows/
-
 package com.jaemzware.board;
 
 import com.jaemzware.seleniumcodebase.AutomationCodeBase;
+import java.io.FileInputStream;
 import java.io.PrintWriter;
 
 import org.junit.Assert;
@@ -18,37 +17,30 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Properties;
 
 import org.openqa.selenium.WebElement;
 
 /**
- *mvn -Dtest=BoardScrub -Dbrowser=CHROME -Dnogrid test
+ *@author jaemzware@hotmail.com
  * 
  */
 public class BoardScrub extends AutomationCodeBase
 {
-//    TNABOARD
-//    final String url="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads/page1&pp=100&prefixid=seattle&field_service_type=Escort";
-//    final String linksLoadedIndicatorXpath = "//span[@class='forumtitle' and contains(text(),'WA Provider Ads')]";
-//    final String linkXpath = "//a[contains(@class,'title')]";
-//    final String imageXpath = "//img";
     
-//    CRAIGSLIST
-    final String url="https://boise.craigslist.org/search/cta?maxAsk=2000&sort=pricedsc";
-    final String linksLoadedIndicatorXpath = "//input[@id='query']";
-    final String linkXpath = "//span[@class='pl']/a";
-    final String imageXpath = "//img";
-    
-    //EBAY
-//    final String url="http://www.ebay.com/sch/Records-/176985/i.html?_from=R40&_nkw=melvins&_ipg=100&rt=nc";
-//    final String linksLoadedIndicatorXpath = "//span[@class='kwcat' and contains(text(),'results for')]";
-//    final String linkXpath = "//div[@class='ittl']/h3/a";
-//    final String imageXpath = "//img[class='img']";
+    static Properties properties = new Properties();
     
     @Before
     public void BeforeTest()
     {
         try{//start the webdriver
+            
+            //properties file is in same directory as pom.xml
+            properties.load(new FileInputStream("selenium.properties"));
+            
+            //get input parameters HERE
+            GetParameters();
+            
             StartDriver();
         }
         catch(Exception ex)
@@ -58,9 +50,15 @@ public class BoardScrub extends AutomationCodeBase
     }
     
     @Test
-    public void Scratch()
+    public void BuildPageOfFoundLinks()
     {
         try{
+            
+            final String url = properties.getProperty(environment.toString()+".url");
+            final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
+            final String linkXpath = properties.getProperty(environment.toString()+".linkXpath");
+            final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
+            
             driver.get(url);
             
             //wait for login to complete
@@ -146,7 +144,7 @@ public class BoardScrub extends AutomationCodeBase
         {
             ScreenShot();
             CustomStackTrace("Scratch exception",ex);
-            Assert.fail("SCRATCH TEST FAILED:"+ex.getMessage());
+            Assert.fail(ex.getMessage());
         }
     }
     
@@ -160,8 +158,9 @@ public class BoardScrub extends AutomationCodeBase
         }
         catch(Exception ex)
         {
+            ScreenShot();
             this.CustomStackTrace("After test exception",ex);
-            Assert.fail("AFTER TESTS EXCEPTION:"+ex.getMessage());
+            Assert.fail(ex.getMessage());
         }
     }
     
