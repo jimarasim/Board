@@ -27,7 +27,7 @@ import org.openqa.selenium.WebElement;
  */
 public class BoardScrub extends AutomationCodeBase
 {
-    
+    static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     static Properties properties = new Properties();
     
     @Before
@@ -36,7 +36,7 @@ public class BoardScrub extends AutomationCodeBase
         try{//start the webdriver
             
             //properties file is in same directory as pom.xml
-            properties.load(new FileInputStream("src/test/java/com/jaemzware/board/selenium.properties"));
+            properties.load(new FileInputStream(propertiesFile));
             
             //get input parameters HERE
             GetParameters();
