@@ -63,5 +63,6 @@
       <type>jar</type>
     </dependency>
   </dependencies>
+  <!-- #mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=prod -Dnogrid test -->
 </project>
 
