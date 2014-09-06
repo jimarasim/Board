@@ -68,19 +68,19 @@ public class BoardScrub extends AutomationCodeBase
             }
             
             //get xpaths to search for
-            final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
+//            final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
             final String linkXpath = properties.getProperty(environment.toString()+".linkXpath");
             final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
             
             driver.get(url);
             
-            //wait for login to complete
-            (new WebDriverWait(driver,defaultImplicitWait))
-                    .until(new ExpectedCondition<Boolean>(){
-                    @Override
-                    public Boolean apply(WebDriver d) {
-                        return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
-                    }});
+//            //wait for login to complete
+//            (new WebDriverWait(driver,defaultImplicitWait))
+//                    .until(new ExpectedCondition<Boolean>(){
+//                    @Override
+//                    public Boolean apply(WebDriver d) {
+//                        return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
+//                    }});
             
             //list for links
             List<String> urls = new ArrayList<String>();
@@ -113,16 +113,6 @@ public class BoardScrub extends AutomationCodeBase
                 System.out.println(href);
                 final String oldUrl = driver.getCurrentUrl();
                 driver.get(href);
-                
-//                System.out.println("OLD:"+oldUrl+" NEW:"+href);
-//                
-//                //wait for page to load
-//                (new WebDriverWait(driver,defaultImplicitWait))
-//                        .until(new ExpectedCondition<Boolean>(){
-//                        @Override
-//                        public Boolean apply(WebDriver d) {
-//                            return !driver.getCurrentUrl().contains(oldUrl);
-//                        }});
                 
                 //check for  images
                 if(!IsElementPresent(By.xpath(imageXpath),1000)){
