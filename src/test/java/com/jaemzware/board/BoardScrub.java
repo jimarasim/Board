@@ -114,13 +114,15 @@ public class BoardScrub extends AutomationCodeBase
                 final String oldUrl = driver.getCurrentUrl();
                 driver.get(href);
                 
-                //wait for page to load
-                (new WebDriverWait(driver,defaultImplicitWait))
-                        .until(new ExpectedCondition<Boolean>(){
-                        @Override
-                        public Boolean apply(WebDriver d) {
-                            return !driver.getCurrentUrl().contains(oldUrl);
-                        }});
+//                System.out.println("OLD:"+oldUrl+" NEW:"+href);
+//                
+//                //wait for page to load
+//                (new WebDriverWait(driver,defaultImplicitWait))
+//                        .until(new ExpectedCondition<Boolean>(){
+//                        @Override
+//                        public Boolean apply(WebDriver d) {
+//                            return !driver.getCurrentUrl().contains(oldUrl);
+//                        }});
                 
                 //check for  images
                 if(!IsElementPresent(By.xpath(imageXpath),1000)){
