@@ -158,6 +158,8 @@ public class BoardScrub extends AutomationCodeBase
             
             writer.flush();
             writer.close();
+            
+            System.out.println("INDEX FILE WRITTEN:"+fileName);
         }
         catch(Exception ex)
         {
