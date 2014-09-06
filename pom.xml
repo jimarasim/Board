@@ -56,6 +56,10 @@
       <type>jar</type>
     </dependency>
   </dependencies>
-  <!-- #mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=test -Dinput="http://seattle.craigslist.org/fua/#list" -Dnogrid test -->
+  <!-- #
+  mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=test -Dinput="http://seattle.craigslist.org/fua/#list" -Dnogrid test 
+  mvn -Dtest=BoardScrub -Dbrowser=FIREFOX -Denvironment=other -Dnogrid test 
+  
+  -->
 </project>
 
