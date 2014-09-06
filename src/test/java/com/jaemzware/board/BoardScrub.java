@@ -155,6 +155,9 @@ public class BoardScrub extends AutomationCodeBase
                 writer.println("<img src='"+entry[1]+"' /><br />");
             }
             writer.println("</body></html>");
+            
+            writer.flush();
+            writer.close();
         }
         catch(Exception ex)
         {
