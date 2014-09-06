@@ -54,7 +54,20 @@ public class BoardScrub extends AutomationCodeBase
     {
         try{
             
-            final String url = properties.getProperty(environment.toString()+".url");
+            //get base url
+            String url = new String();
+            if(input!=null){
+                url=input;
+            }
+            else{
+                url= properties.getProperty(environment.toString()+".url");
+            }
+            
+            if(url==null){
+                throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+            }
+            
+            //get xpaths to search for
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
             final String linkXpath = properties.getProperty(environment.toString()+".linkXpath");
             final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
