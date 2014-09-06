@@ -111,7 +111,7 @@ public class BoardScrub extends AutomationCodeBase
             for(String href:urls)
             {
                 System.out.println(href);
-                final String waithref = href;
+                final String oldUrl = driver.getCurrentUrl();
                 driver.get(href);
                 
                 //wait for page to load
@@ -119,7 +119,7 @@ public class BoardScrub extends AutomationCodeBase
                         .until(new ExpectedCondition<Boolean>(){
                         @Override
                         public Boolean apply(WebDriver d) {
-                            return driver.getCurrentUrl().contains(waithref);
+                            return !driver.getCurrentUrl().contains(oldUrl);
                         }});
                 
                 //check for  images
