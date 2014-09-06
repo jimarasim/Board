@@ -137,7 +137,8 @@ public class BoardScrub extends AutomationCodeBase
             }
             
             //build web page
-            PrintWriter writer = new PrintWriter("index.htm", "UTF-8");
+            String fileName = "index"+getDateStamp()+".htm";
+            PrintWriter writer = new PrintWriter(fileName, "UTF-8");
             writer.println("<html><head><title></title></head><body>");
             
             
