@@ -67,8 +67,7 @@ public class BoardScrub extends AutomationCodeBase
                 throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
             }
             
-            System.out.println("BASE SEARCH:"+url);
-            driver.get(url);
+            driverGetWithTime(url);
             
             //get xpaths to search for
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
@@ -129,7 +128,7 @@ public class BoardScrub extends AutomationCodeBase
                 
                 final String hrefToWaitFor = href;
                 
-                driver.get(href);
+                driverGetWithTime(href);
                 
                 //wait for login to complete
                 (new WebDriverWait(driver,defaultImplicitWait))
