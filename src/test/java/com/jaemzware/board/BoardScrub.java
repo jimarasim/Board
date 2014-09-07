@@ -151,6 +151,7 @@ public class BoardScrub extends AutomationCodeBase
                         if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
                         {
                             optionalText = driver.findElement(By.xpath(textXpath)).getText();
+                            if(optionalText==null){optionalText="NULL";}
                             System.out.println("TEXT:"+optionalText);
                         }
                         else{
