@@ -124,8 +124,6 @@ public class BoardScrub extends AutomationCodeBase
             //navigate to links and get images
             for(String href:urls)
             {
-                System.out.println(href);
-                
                 final String hrefToWaitFor = href;
                 
                 driverGetWithTime(href);
