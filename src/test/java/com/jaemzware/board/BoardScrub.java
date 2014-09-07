@@ -67,13 +67,27 @@ public class BoardScrub extends AutomationCodeBase
                 throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
             }
             
+            System.out.println("BASE SEARCH:"+url);
+            driver.get(url);
+            
             //get xpaths to search for
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
             final String linkXpath = properties.getProperty(environment.toString()+".linkXpath");
             final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
-            final String textXpath = properties.getProperty(environment.toString()+".textXpath");
+            final String textXpath = properties.getProperty(environment.toString()+".textXpath"); //NOT REQUIRED
             
-            driver.get(url);
+            //CHECK FOR REQUIRED PARAMETERS
+            if(linksLoadedIndicatorXpath==null){
+                throw new Exception("MISSING:"+environment.toString()+".linksLoadedIndicatorXpath");
+            }
+            
+            if(linkXpath==null){
+                throw new Exception("MISSING:"+environment.toString()+".linkXpath");
+            }
+            
+            if(imageXpath==null){
+                throw new Exception("MISSING:"+environment.toString()+".imageXpath");
+            }
             
             //wait for login to complete
             (new WebDriverWait(driver,defaultImplicitWait))
