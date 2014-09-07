@@ -71,6 +71,7 @@ public class BoardScrub extends AutomationCodeBase
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
             final String linkXpath = properties.getProperty(environment.toString()+".linkXpath");
             final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
+            final String textXpath = properties.getProperty(environment.toString()+".textXpath");
             
             driver.get(url);
             
@@ -129,12 +130,21 @@ public class BoardScrub extends AutomationCodeBase
                     images.add(new String[]{href,"noimage.jpg"}); 
                     continue;
                 }
-                
-                //get images
-                for(WebElement i:driver.findElements(By.xpath(imageXpath)))
-                {
-                    images.add(new String[]{href,i.getAttribute("src")});   
+                else{
+                    
+                    //get images
+                    for(WebElement i:driver.findElements(By.xpath(imageXpath)))
+                    {
+                        images.add(new String[]{href,i.getAttribute("src")});   
+                    }
+                    
+                    //check for the text
+                    if(textXpath!=null && IsElementPresent(By.xpath(textXpath)))
+                    {
+                        System.out.println("TEXT:"+driver.findElement(By.xpath(textXpath)).getText());
+                    }
                 }
+                
                 
             }
             

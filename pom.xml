@@ -57,8 +57,9 @@
     </dependency>
   </dependencies>
   <!-- #
-  mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=test -Dinput="http://seattle.craigslist.org/fua/#list" -Dnogrid test 
-  mvn -Dtest=BoardScrub -Dbrowser=FIREFOX -Denvironment=other -Dnogrid test 
+
+  mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=test -Dinput="http://seattle.craigslist.org/fua/#list" -Dnogrid test
+  mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=stage -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -Dnogrid test
   
   -->
 </project>
