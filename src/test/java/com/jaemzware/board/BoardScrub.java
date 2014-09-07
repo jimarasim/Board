@@ -133,15 +133,20 @@ public class BoardScrub extends AutomationCodeBase
                 else{
                     
                     //get images
+                    String optionalText;
                     for(WebElement i:driver.findElements(By.xpath(imageXpath)))
                     {
-                        images.add(new String[]{href,i.getAttribute("src")});   
-                    }
-                    
-                    //check for the text
-                    if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
-                    {
-                        System.out.println("TEXT:"+driver.findElement(By.xpath(textXpath)).getText());
+                        //check for the text
+                        if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
+                        {
+                            optionalText = driver.findElement(By.xpath(textXpath)).getText();
+                            System.out.println("TEXT:"+optionalText);
+                        }
+                        else{
+                            optionalText="NO TEXT";
+                        }
+                        
+                        images.add(new String[]{href,i.getAttribute("src"),optionalText});   
                     }
                 }
                 
@@ -162,6 +167,7 @@ public class BoardScrub extends AutomationCodeBase
                     oldHref = entry[0];
                     writer.println("<a href='"+oldHref+"' target='_blank'>"+oldHref+"</a><br />");
                 }
+                writer.println("<span>"+entry[2]+"</span><br />");
                 writer.println("<img src='"+entry[1]+"' /><br />");
             }
             writer.println("</body></html>");
