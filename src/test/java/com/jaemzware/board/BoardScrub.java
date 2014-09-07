@@ -139,7 +139,7 @@ public class BoardScrub extends AutomationCodeBase
                     }
                     
                     //check for the text
-                    if(textXpath!=null && IsElementPresent(By.xpath(textXpath)))
+                    if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
                     {
                         System.out.println("TEXT:"+driver.findElement(By.xpath(textXpath)).getText());
                     }
