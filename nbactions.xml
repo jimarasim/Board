@@ -19,10 +19,11 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=ebay</goal>
+                <goal>-Denvironment=test</goal>
                 <goal>-Dnogrid</goal>
+                
             </goals>
             <properties>
                 <test>${packageClassName}</test>

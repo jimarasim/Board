@@ -136,28 +136,28 @@ public class BoardScrub extends AutomationCodeBase
                             return driver.getCurrentUrl().contains(hrefToWaitFor);
                         }});
                 
+                
+                //check for the text
+                String optionalText;
+                if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
+                {
+                    optionalText = driver.findElement(By.xpath(textXpath)).getText();
+                    if(optionalText==null){
+                        optionalText="[WARNING:NO TEXT FOR:"+textXpath+" ON:"+href+" (A)]";
+                    }
+                    System.out.println("TEXT:"+optionalText);
+                }
+                else{
+                    optionalText="[WARNING:NO TEXT FOR:"+textXpath+" ON:"+href+" (B)]";
+                }
+                
                 //check for images
                 if(!IsElementPresent(By.xpath(imageXpath),1000)){
-                    images.add(new String[]{href,"noimage.jpg"}); 
+                    images.add(new String[]{href,"",optionalText}); 
                     continue;
                 }
                 else{
-                    
-                    //get images
-                    String optionalText;
-                    for(WebElement i:driver.findElements(By.xpath(imageXpath)))
-                    {
-                        //check for the text
-                        if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
-                        {
-                            optionalText = driver.findElement(By.xpath(textXpath)).getText();
-                            if(optionalText==null){optionalText="NULL";}
-                            System.out.println("TEXT:"+optionalText);
-                        }
-                        else{
-                            optionalText="NO TEXT";
-                        }
-                        
+                    for(WebElement i:driver.findElements(By.xpath(imageXpath))){
                         images.add(new String[]{href,i.getAttribute("src"),optionalText});   
                     }
                 }
