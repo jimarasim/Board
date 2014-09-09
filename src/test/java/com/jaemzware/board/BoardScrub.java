@@ -171,6 +171,7 @@ public class BoardScrub extends AutomationCodeBase
                         }
                         catch(Exception ex){
                             System.out.println("WARNING: IMAGE WENT STALE");
+                            break;
                         }   
                     }
                 }
