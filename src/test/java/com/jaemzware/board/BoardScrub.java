@@ -69,10 +69,22 @@ public class BoardScrub extends AutomationCodeBase
             }
             
             //get xpaths to search for
+            
+            //indicator that page of links has completely loaded
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
+            
+            //xpath of each link on page of links
             final String linkXpath = properties.getProperty(environment.toString()+".linkXpath");
+            
+            //xpath of images to gather after following each link
             final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
+            
+            //xpath of text to gather after following each link
             final String textXpath = properties.getProperty(environment.toString()+".textXpath"); //NOT REQUIRED
+            
+            //xpath to indicate page of images has completely loaded 
+            final String imagesLoadedXpath = properties.getProperty(environment.toString()+".imagesLoadedXpath"); //NOT REQUIRED
+            
             
             //CHECK FOR REQUIRED PARAMETERS
             if(linksLoadedIndicatorXpath==null){
@@ -96,7 +108,7 @@ public class BoardScrub extends AutomationCodeBase
                     .until(new ExpectedCondition<Boolean>(){
                     @Override
                     public Boolean apply(WebDriver d) {
-                        return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
+                        return IsElementPresent(By.xpath(linksLoadedIndicatorXpath),1000);
                     }});
             
             //list for links
@@ -131,12 +143,19 @@ public class BoardScrub extends AutomationCodeBase
                 
                 driverGetWithTime(href);
                 
-                //wait for login to complete
+                //wait for navigate to href to complete
                 (new WebDriverWait(driver,defaultImplicitWait))
                         .until(new ExpectedCondition<Boolean>(){
                         @Override
                         public Boolean apply(WebDriver d) {
-                            return driver.getCurrentUrl().contains(hrefToWaitFor);
+                            //this waits for an element on the page.  good for pages with a lot of elements to load, that could change the dom
+                            if(imagesLoadedXpath!=null){
+                                return IsElementPresent(By.xpath(imagesLoadedXpath),1000);
+                            }
+                            else{
+                                return driver.getCurrentUrl().contains(hrefToWaitFor);
+                            }
+                            
                         }});
                 
                 
