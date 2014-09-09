@@ -152,17 +152,13 @@ public class BoardScrub extends AutomationCodeBase
                 
                 
                 //check for the text
-                String optionalText;
+                String optionalText="";
                 if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
                 {
                     optionalText = driver.findElement(By.xpath(textXpath)).getText();
                     if(optionalText==null){
-                        optionalText="[WARNING:NO TEXT FOR:"+textXpath+" ON:"+href+" (A)]";
+                        optionalText="";
                     }
-                    System.out.println("TEXT:"+optionalText);
-                }
-                else{
-                    optionalText="[WARNING:NO TEXT FOR:"+textXpath+" ON:"+href+" (B)]";
                 }
                 
                 //check for images
