@@ -82,9 +82,6 @@ public class BoardScrub extends AutomationCodeBase
             //xpath of text to gather after following each link
             final String textXpath = properties.getProperty(environment.toString()+".textXpath"); //NOT REQUIRED
             
-            //xpath to indicate page of images has completely loaded 
-            final String imagesLoadedXpath = properties.getProperty(environment.toString()+".imagesLoadedXpath"); //NOT REQUIRED
-            
             
             //CHECK FOR REQUIRED PARAMETERS
             if(linksLoadedIndicatorXpath==null){
@@ -117,7 +114,7 @@ public class BoardScrub extends AutomationCodeBase
             //make sure there are some links
             System.out.println("CHECKING FOR LINKS");
             
-            if(!IsElementPresent(By.xpath(linkXpath),10000)){
+            if(!IsElementPresent(By.xpath(linkXpath),1000)){
                 throw new Exception("COULDN'T FIND ANY LINKS");
             }
             
@@ -149,12 +146,7 @@ public class BoardScrub extends AutomationCodeBase
                         @Override
                         public Boolean apply(WebDriver d) {
                             //this waits for an element on the page.  good for pages with a lot of elements to load, that could change the dom
-                            if(imagesLoadedXpath!=null){
-                                return IsElementPresent(By.xpath(imagesLoadedXpath),1000);
-                            }
-                            else{
-                                return driver.getCurrentUrl().contains(hrefToWaitFor);
-                            }
+                            return driver.getCurrentUrl().contains(hrefToWaitFor);
                             
                         }});
                 
@@ -178,7 +170,12 @@ public class BoardScrub extends AutomationCodeBase
                     //add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
                     for(WebElement i:imageElements){
-                        images.add(new String[]{href,i.getAttribute("src"),optionalText});   
+                        try{
+                            images.add(new String[]{href,i.getAttribute("src"),optionalText});
+                        }
+                        catch(Exception ex){
+                            System.out.println("WARNING: IMAGE WENT STALE");
+                        }   
                     }
                 }
                 
