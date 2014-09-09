@@ -55,7 +55,7 @@ public class BoardScrub extends AutomationCodeBase
         try{
             
             //get base url
-            String url = new String();
+            String url;
             if(input!=null){
                 url=input;
             }
@@ -63,11 +63,10 @@ public class BoardScrub extends AutomationCodeBase
                 url= properties.getProperty(environment.toString()+".url");
             }
             
+            //MAKE SURE IT'S BEEN SPECIFIED
             if(url==null){
                 throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
             }
-            
-            driverGetWithTime(url);
             
             //get xpaths to search for
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+".linksLoadedIndicatorXpath");
@@ -87,6 +86,10 @@ public class BoardScrub extends AutomationCodeBase
             if(imageXpath==null){
                 throw new Exception("MISSING:"+environment.toString()+".imageXpath");
             }
+            
+            //NAVIGATE TO URL
+            driverGetWithTime(url);
+            
             
             //wait for login to complete
             (new WebDriverWait(driver,defaultImplicitWait))
@@ -152,12 +155,10 @@ public class BoardScrub extends AutomationCodeBase
                 }
                 
                 //check for images
-                if(!IsElementPresent(By.xpath(imageXpath),1000)){
-                    images.add(new String[]{href,"",optionalText}); 
-                    continue;
-                }
-                else{
-                    for(WebElement i:driver.findElements(By.xpath(imageXpath))){
+                if(IsElementPresent(By.xpath(imageXpath),1000)){
+                    //add images to images list
+                    List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    for(WebElement i:imageElements){
                         images.add(new String[]{href,i.getAttribute("src"),optionalText});   
                     }
                 }
@@ -168,7 +169,7 @@ public class BoardScrub extends AutomationCodeBase
             //build web page
             String fileName = "index"+getDateStamp()+".htm";
             PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-            writer.println("<html><head><title></title></head><body>");
+            writer.println("<html><head><title>boardscrub</title></head><body><h1>boardscrub</h1>");
             
             
             String oldHref = new String();
