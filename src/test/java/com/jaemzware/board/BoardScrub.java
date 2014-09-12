@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
 
@@ -53,6 +54,9 @@ public class BoardScrub extends AutomationCodeBase
     public void BuildPageOfFoundLinks()
     {
         try{
+            
+            //set implicit wait for this test
+            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
             
             //get base url
             String url;
