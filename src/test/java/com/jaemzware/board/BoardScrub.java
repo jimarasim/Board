@@ -205,7 +205,7 @@ public class BoardScrub extends AutomationCodeBase
             writer.flush();
             writer.close();
             
-            System.out.println("INDEX FILE WRITTEN:"+fileName);
+            System.out.println("INDEX FILE WRITTEN:"+jenkinsReportPath+fileName);
         }
         catch(Exception ex)
         {
