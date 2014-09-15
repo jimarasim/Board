@@ -84,7 +84,8 @@ public class BoardScrub extends AutomationCodeBase
             final String imageXpath = properties.getProperty(environment.toString()+".imageXpath");
             
             //xpath of text to gather after following each link
-            final String textXpath = properties.getProperty(environment.toString()+".textXpath"); //NOT REQUIRED
+            final String titleTextXpath = properties.getProperty(environment.toString()+".titleTextXpath"); //NOT REQUIRED
+            final String bodyTextXpath = properties.getProperty(environment.toString()+".bodyTextXpath"); //NOT REQUIRED
             
             
             //CHECK FOR REQUIRED PARAMETERS
@@ -155,13 +156,23 @@ public class BoardScrub extends AutomationCodeBase
                         }});
                 
                 
-                //check for the text
-                String optionalText="";
-                if(textXpath!=null && IsElementPresent(By.xpath(textXpath),1000))
+                //check for the title text
+                String titleText="";
+                if(titleTextXpath!=null && IsElementPresent(By.xpath(titleTextXpath),1000))
                 {
-                    optionalText = driver.findElement(By.xpath(textXpath)).getText();
-                    if(optionalText==null){
-                        optionalText="";
+                    titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
+                    if(titleText==null){
+                        titleText="";
+                    }
+                }
+                
+                //check for the body text
+                String bodyText="";
+                if(bodyTextXpath!=null && IsElementPresent(By.xpath(bodyTextXpath),1000))
+                {
+                    bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
+                    if(bodyText==null){
+                        bodyText="";
                     }
                 }
                 
@@ -171,7 +182,7 @@ public class BoardScrub extends AutomationCodeBase
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
                     for(WebElement i:imageElements){
                         try{
-                            images.add(new String[]{href,i.getAttribute("src"),optionalText});
+                            images.add(new String[]{href,i.getAttribute("src"),titleText,bodyText});
                         }
                         catch(Exception ex){
                             System.out.println("WARNING: IMAGE WENT STALE");
@@ -196,8 +207,9 @@ public class BoardScrub extends AutomationCodeBase
                 {
                     oldHref = entry[0];
                     writer.println("<a href='"+oldHref+"' target='_blank'>"+oldHref+"</a><br />");
+                    writer.println("<span>"+entry[2]+"</span><br />");
+                    writer.println("<span>"+entry[3]+"</span><br />");
                 }
-                writer.println("<span>"+entry[2]+"</span><br />");
                 writer.println("<img src='"+entry[1]+"' /><br />");
             }
             writer.println(HtmlReportFooter());
