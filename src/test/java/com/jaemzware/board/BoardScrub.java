@@ -64,7 +64,7 @@ public class BoardScrub extends AutomationCodeBase
                 url=input;
             }
             else{
-                url= properties.getProperty(environment.toString()+".url");
+                throw new Exception("URL NOT SPECIFIED (-Dinput)");
             }
             
             //MAKE SURE IT'S BEEN SPECIFIED
