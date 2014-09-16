@@ -158,7 +158,7 @@ public class BoardScrub extends AutomationCodeBase {
                 // check for the body text
                 String bodyText = "";
 //                System.out.println("BODYTEXTXPATH:" + bodyTextXpath);
-                if (bodyTextXpath != null && IsElementPresent(By.xpath(bodyTextXpath), 5000)) {
+                if (bodyTextXpath != null && IsElementPresent(By.xpath(bodyTextXpath), 1000)) {
                     bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
                     if (bodyText == null) {
                         bodyText = "BODYTEXTNOTSET: null";
