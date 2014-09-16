@@ -146,6 +146,9 @@ public class BoardScrub extends AutomationCodeBase {
                     }
                 });
 
+                // get a copy of the page
+                RestRequest(href);
+
                 // check for the title text
                 String titleText = "";
                 if (titleTextXpath != null && IsElementPresent(By.xpath(titleTextXpath), 1000)) {
@@ -157,17 +160,17 @@ public class BoardScrub extends AutomationCodeBase {
 
                 // check for the body text
                 String bodyText = "";
-//                System.out.println("BODYTEXTXPATH:" + bodyTextXpath);
+                // System.out.println("BODYTEXTXPATH:" + bodyTextXpath);
                 if (bodyTextXpath != null && IsElementPresent(By.xpath(bodyTextXpath), 1000)) {
                     bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
                     if (bodyText == null) {
                         bodyText = "BODYTEXTNOTSET: null";
                     }
 
-//                    System.out.println("BODYTEXTSET:" + bodyText);
+                    // System.out.println("BODYTEXTSET:" + bodyText);
                 }
 
-//                System.out.println("BODYTEXT:" + bodyText);
+                // System.out.println("BODYTEXT:" + bodyText);
 
                 // check for images
                 if (IsElementPresent(By.xpath(imageXpath), 1000)) {
