@@ -5,10 +5,10 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub</goal>
-                <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=dev</goal>
-                <goal>-Dnogrid</goal>
+                
+                
+                
+                
             </goals>
             <properties>
                 <test>${packageClassName}</test>
@@ -19,9 +19,10 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
+                <goal>-Dtest=BoardScrub</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=test</goal>
+                <goal>-Dinput=http://www.ebay.com/sch/i.html?_from=R40&amp;_trksid=p2050601.m570.l1311.R4.TR11.TRC1.A0.H0.Xxbox+&amp;_nkw=xbox+360+games&amp;_sacat=0</goal>
+                <goal>-Denvironment=ebay</goal>
                 <goal>-Dnogrid</goal>
                 
             </goals>
