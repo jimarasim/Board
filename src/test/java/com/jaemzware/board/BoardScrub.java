@@ -108,28 +108,30 @@ public class BoardScrub extends AutomationCodeBase {
             List<String> urls = new ArrayList<String>();
 
             // make sure there are some links
-            System.out.println("CHECKING FOR LINKS");
+            System.out.println("CHECKING FOR RESULTS");
 
             if (!IsElementPresent(By.xpath(linkXpath), 1000)) {
-                throw new Exception("COULDN'T FIND ANY LINKS");
+                throw new Exception("COULDN'T FIND ANY RESULTS");
             }
 
             // GET THE links
-            System.out.println("FINDING LINKS");
+            System.out.println("FINDING RESULTS");
 
             List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
 
             // store off the hrefs
-            System.out.println("SAVING LINKS");
+            System.out.println("SAVING RESULT LINKS");
 
             for (WebElement we : webElements) {
                 urls.add(we.getAttribute("href"));
             }
 
-            System.out.println("VISITING LINKS");
-            List<String[]> images = new ArrayList<String[]>();
+            System.out.println("VISITING RESULT LINKS");
+            List<String[]> results = new ArrayList<String[]>();
 
             // navigate to links and get images
+            int maxVisits = (aNumber!=null)?Integer.parseInt(aNumber):0; //check if the max number was specified
+            int visitCount = 0;
             for (String href : urls) {
                 final String hrefToWaitFor = href;
 
@@ -145,75 +147,121 @@ public class BoardScrub extends AutomationCodeBase {
 
                     }
                 });
-
-                // get a copy of the page
-                RestRequest(href);
-
+                
                 // check for the title text
                 String titleText = "";
-                if (titleTextXpath != null && IsElementPresent(By.xpath(titleTextXpath), 1000)) {
-                    titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
-                    if (titleText == null) {
-                        titleText = "";
+                if(titleTextXpath!=null){
+                    if (IsElementPresent(By.xpath(titleTextXpath), 1000)) {
+                        titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
+                        if (titleText == null) {
+                            titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
+                        }
+                        else if (titleText.isEmpty()){
+                            titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS EMPTY";
+                        }
+                    }
+                    else{
+                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND";
                     }
                 }
+                else{
+                    titleText = "WARNING: TITLETEXT NOT SPECIFIED";
+                }
+                
 
                 // check for the body text
                 String bodyText = "";
-                // System.out.println("BODYTEXTXPATH:" + bodyTextXpath);
-                if (bodyTextXpath != null && IsElementPresent(By.xpath(bodyTextXpath), 1000)) {
-                    bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
-                    if (bodyText == null) {
-                        bodyText = "BODYTEXTNOTSET: null";
+                if(bodyTextXpath!=null){
+                    if (IsElementPresent(By.xpath(bodyTextXpath), 1000)) {
+                        bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
+                        if (bodyText == null) {
+                            bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" GETTEXT IS NULL";
+                        }
+                        else if(bodyText.isEmpty()){
+                            bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" GETTEXT IS EMPTY";
+                        }
                     }
-
-                    // System.out.println("BODYTEXTSET:" + bodyText);
+                    else{
+                        bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND";
+                    }
+                }
+                else{
+                    bodyText = "WARNING: BODYTEXT NOT SPECIFIED";
                 }
 
-                // System.out.println("BODYTEXT:" + bodyText);
-
                 // check for images
+                String imageSrc = "";
                 if (IsElementPresent(By.xpath(imageXpath), 1000)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
                     for (WebElement i : imageElements) {
                         try {
-                            images.add(new String[] { href, i.getAttribute("src"), titleText, bodyText });
-                        } catch (Exception ex) {
+                            imageSrc=i.getAttribute("src");
+                            
+                            //add result entry image
+                            results.add(new String[] { href, imageSrc, titleText, bodyText });
+                        } 
+                        catch (Exception ex) {
                             System.out.println("WARNING: IMAGE WENT STALE");
-                            break;
                         }
                     }
                 }
-
-            }
-
-            // build web page
-            String fileName = "Index-BoardScrub-" + getDateStamp() + ".htm";
-            PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-            writer.println(HtmlReportHeader("BoardScrub"));
-
-            String oldHref = new String();
-            for (String[] entry : images) {
-                if (!oldHref.equals(entry[0])) {
-                    oldHref = entry[0];
-                    writer.println("<a href='" + oldHref + "' target='_blank'>" + oldHref + "</a><br />");
-                    writer.println("<span>" + entry[2] + "</span><br />");
-                    writer.println("<span>" + entry[3] + "</span><br />");
+                else{
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND");
                 }
-                writer.println("<img src='" + entry[1] + "' /><br />");
+
+                //add at least one result entry if no images were found
+                if(imageSrc.isEmpty()){
+                    results.add(new String[] { href, imageSrc, titleText, bodyText });
+                }                
+                
+                // get a copy of the page
+                RestRequest(href);
+                
+                //check the desired image count, and break if it's been reached
+                if((maxVisits>0) && (++visitCount>maxVisits)){
+                    break;
+                }
+
             }
-            writer.println(HtmlReportFooter());
 
-            writer.flush();
-            writer.close();
+            WriteResultsToWebPage(results);
 
-            System.out.println("INDEX FILE WRITTEN:" + jenkinsReportPath + fileName);
         } catch (Exception ex) {
             ScreenShot();
             CustomStackTrace("Scratch exception", ex);
             Assert.fail(ex.getMessage());
         }
+    }
+    
+    /**
+     * Write results from a BoardScrub to a web page
+     * @param results
+     * @throws Exception 
+     */
+    private void WriteResultsToWebPage(List<String[]> results) throws Exception
+    {
+        // build web page
+        String fileName = "Index-BoardScrub-" + getDateStamp() + ".htm";
+        PrintWriter writer = new PrintWriter(fileName, "UTF-8");
+        writer.println(HtmlReportHeader("BoardScrub"));
+
+        String oldHref = new String();
+        for (String[] entry : results) {
+            if (!oldHref.equals(entry[0])) {
+                oldHref = entry[0];
+                writer.println("<a href='" + oldHref + "' target='_blank'>" + oldHref + "</a><br />");
+                writer.println("<span>" + entry[2] + "</span><br />");
+                writer.println("<span>" + entry[3] + "</span><br />");
+            }
+            writer.println("<img src='" + entry[1] + "' /><br />");
+        }
+        writer.println(HtmlReportFooter());
+
+        writer.flush();
+        writer.close();
+
+        System.out.println("INDEX FILE WRITTEN:" + jenkinsReportPath + fileName);
     }
 
     @After
