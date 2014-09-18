@@ -229,7 +229,8 @@ public class BoardScrub extends AutomationCodeBase {
 
         } catch (Exception ex) {
             ScreenShot();
-            CustomStackTrace("Scratch exception", ex);
+            System.out.println("SCRATCH EXCEPTION MESSAGE:"+ex.getMessage());
+            CustomStackTrace("SCRATCH EXCEPTION TRACE", ex);
             Assert.fail(ex.getMessage());
         }
     }
