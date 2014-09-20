@@ -257,7 +257,7 @@ public class BoardScrub extends AutomationCodeBase {
                 writer.println("<span>" + entry[2] + "</span><br />");
                 writer.println("<span>" + entry[3] + "</span><br />");
             }
-            writer.println("<img src='" + entry[1] + "' /><br />");
+            writer.println("<center><img src='" + entry[1] + "' /></center><br />");
         }
         writer.println(HtmlReportFooter());
 
