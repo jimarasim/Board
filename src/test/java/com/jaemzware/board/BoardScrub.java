@@ -25,6 +25,8 @@ import com.jaemzware.seleniumcodebase.AutomationCodeBase;
 public class BoardScrub extends AutomationCodeBase {
     static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     static Properties properties = new Properties();
+    
+    static final int timeout=10000;
 
     @Before
     public void BeforeTest() {
@@ -100,7 +102,7 @@ public class BoardScrub extends AutomationCodeBase {
             (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver d) {
-                    return IsElementPresent(By.xpath(linksLoadedIndicatorXpath), 1000);
+                    return IsElementPresent(By.xpath(linksLoadedIndicatorXpath), timeout);
                 }
             });
 
@@ -110,7 +112,7 @@ public class BoardScrub extends AutomationCodeBase {
             // make sure there are some links
             System.out.println("CHECKING FOR RESULTS");
 
-            if (!IsElementPresent(By.xpath(linkXpath), 1000)) {
+            if (!IsElementPresent(By.xpath(linkXpath), timeout)) {
                 throw new Exception("COULDN'T FIND ANY RESULTS");
             }
 
@@ -151,7 +153,7 @@ public class BoardScrub extends AutomationCodeBase {
                 // check for the title text
                 String titleText = "";
                 if(titleTextXpath!=null){
-                    if (IsElementPresent(By.xpath(titleTextXpath), 1000)) {
+                    if (IsElementPresent(By.xpath(titleTextXpath), timeout)) {
                         titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                         if (titleText == null) {
                             titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
@@ -172,7 +174,7 @@ public class BoardScrub extends AutomationCodeBase {
                 // check for the body text
                 String bodyText = "";
                 if(bodyTextXpath!=null){
-                    if (IsElementPresent(By.xpath(bodyTextXpath), 1000)) {
+                    if (IsElementPresent(By.xpath(bodyTextXpath), timeout)) {
                         bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
                         if (bodyText == null) {
                             bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" GETTEXT IS NULL";
@@ -191,7 +193,7 @@ public class BoardScrub extends AutomationCodeBase {
 
                 // check for images
                 String imageSrc = "";
-                if (IsElementPresent(By.xpath(imageXpath), 1000)) {
+                if (IsElementPresent(By.xpath(imageXpath), timeout)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
                     for (WebElement i : imageElements) {
