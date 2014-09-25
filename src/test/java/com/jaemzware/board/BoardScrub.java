@@ -17,13 +17,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.jaemzware.seleniumcodebase.AutomationCodeBase;
+import com.jaemzware.seleniumcodebase.CodeBase;
 import com.jaemzware.seleniumcodebase.EnvironmentType;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.security.InvalidParameterException;
 
 /**
  * @author jaemzware@hotmail.com
  */
-public class BoardScrub extends AutomationCodeBase {
+public class BoardScrub extends CodeBase {
     static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     static Properties properties = new Properties();
     
@@ -36,12 +39,29 @@ public class BoardScrub extends AutomationCodeBase {
             // properties file is in same directory as pom.xml
             properties.load(new FileInputStream(propertiesFile));
 
+            // initialize verifification errors
+            verificationErrors = new StringBuilder();
+            
             // get input parameters HERE
-            GetParameters();
+            String getParameterResult = GetParameters();
+            if(!getParameterResult.isEmpty()){
+                System.out.println(getParameterResult);
+                throw new InvalidParameterException();
+            }
 
             StartDriver();
-        } catch (Exception ex) {
-            Assert.fail("BEFORE TESTS EXCEPTION:" + ex.getMessage());
+        } 
+        catch (InvalidParameterException ipex) {
+            Assert.fail("INVALID PARAMETERS FOUND");
+        }
+        catch (FileNotFoundException fnfex){
+            Assert.fail(propertiesFile+" NOT FOUND");
+        }
+        catch(IOException ioex){
+            Assert.fail(propertiesFile+" IO EXCEPTION");
+        }
+        catch(Exception ex){
+            Assert.fail(ex.getMessage());
         }
     }
 
