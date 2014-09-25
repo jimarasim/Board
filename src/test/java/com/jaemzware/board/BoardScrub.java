@@ -198,7 +198,7 @@ public class BoardScrub extends CodeBase {
                 
 
                 // check for the body text
-                String bodyText = "";
+                String bodyText;
                 if(bodyTextXpath!=null){
                     if (IsElementPresent(By.xpath(bodyTextXpath), timeout)) {
                         bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
@@ -217,27 +217,6 @@ public class BoardScrub extends CodeBase {
                     bodyText = "WARNING: BODYTEXT NOT SPECIFIED";
                 }
 
-                // check for images
-                String imageSrc = "";
-                if (IsElementPresent(By.xpath(imageXpath), timeout)) {
-                    // add images to images list
-                    List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
-                    for (WebElement i : imageElements) {
-                        try {
-                            imageSrc=i.getAttribute("src");
-                            
-                            //add result entry image
-                            results.add(new String[] { href, imageSrc, titleText, bodyText });
-                        } 
-                        catch (Exception ex) {
-                            System.out.println("WARNING: IMAGE WENT STALE");
-                        }
-                    }
-                }
-                else{
-                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND");
-                }
-                
                 //if this is craigslist, get the contact info
                 if(environment.equals(EnvironmentType.craigslist)){
                     
@@ -265,16 +244,47 @@ public class BoardScrub extends CodeBase {
                         }
                         
                         //get the contact information
+                        StringBuilder contactInfoString = new StringBuilder();
+                        contactInfoString.append("<br />CONTACT:");
+                        
+                        String contactInfoStringPart;
                         List<WebElement> contactInfoUls = driver.findElements(By.xpath(contactInfoXpath));
                         for(WebElement we: contactInfoUls){
-                            System.out.println("CONTACT INFO:"+we.getText()+"'");
+                            contactInfoStringPart = we.getText();
+                            System.out.println(contactInfoStringPart);
+                            contactInfoString.append("<br />").append(contactInfoStringPart);
                         }
-                   
+                        
+                        //append contact info to body
+                        bodyText += contactInfoString;
                     }
                     else{
                         System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath);
                     }
                 }
+                
+                // check for images
+                String imageSrc = "";
+                if (IsElementPresent(By.xpath(imageXpath), timeout)) {
+                    // add images to images list
+                    List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    for (WebElement i : imageElements) {
+                        try {
+                            imageSrc=i.getAttribute("src");
+                            
+                            //add result entry image
+                            results.add(new String[] { href, imageSrc, titleText, bodyText });
+                        } 
+                        catch (Exception ex) {
+                            System.out.println("WARNING: IMAGE WENT STALE");
+                        }
+                    }
+                }
+                else{
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND");
+                }
+                
+                
 
                 //add at least one result entry if no images were found
                 if(imageSrc.isEmpty()){
