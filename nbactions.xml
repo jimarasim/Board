@@ -5,11 +5,11 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-DaNumber=10</goal>
+                <goal>-DaNumber=1</goal>
                 <goal>-Dtest=BoardScrub</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Dinput=http://www.ebay.com/sch/i.html?_from=R40&amp;_trksid=p2047675.m570.l1313.TR0.TRC0.H0.Xvideo+capture+mac&amp;_nkw=video+capture+mac&amp;_sacat=0</goal>
-                <goal>-Denvironment=ebay</goal>
+                <goal>-Dinput=http://seattle.craigslist.org/search/ret</goal>
+                <goal>-Denvironment=craigslist</goal>
                 <goal>-Dnogrid</goal>
                 
                 
@@ -25,11 +25,11 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-DaNumber=10</goal>
+                <goal>-DaNumber=1</goal>
                 <goal>-Dtest=BoardScrub</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Dinput=http://www.ebay.com/sch/i.html?_from=R40&amp;_trksid=p2047675.m570.l1313.TR0.TRC0.H0.Xvideo+capture+mac&amp;_nkw=video+capture+mac&amp;_sacat=0</goal>
-                <goal>-Denvironment=ebay</goal>
+                <goal>-Dinput=http://seattle.craigslist.org/search/ret</goal>
+                <goal>-Denvironment=craigslist</goal>
                 <goal>-Dnogrid</goal>
                 
             </goals>

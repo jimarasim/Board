@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.jaemzware.seleniumcodebase.AutomationCodeBase;
+import com.jaemzware.seleniumcodebase.EnvironmentType;
 
 /**
  * @author jaemzware@hotmail.com
@@ -210,6 +211,46 @@ public class BoardScrub extends AutomationCodeBase {
                 }
                 else{
                     System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND");
+                }
+                
+                //if this is craigslist, get the contact info
+                if(environment.equals(EnvironmentType.craigslist)){
+                    
+                    //find the contact button
+                    String contactButtonXpath = properties.getProperty(environment.toString() + ".contactButtonXpath");
+                    final String contactInfoXpath =  properties.getProperty(environment.toString() + ".contactInfoXpath");
+                    if(IsElementPresent(By.xpath(contactButtonXpath))){
+                        //get the contact button
+                        WebElement contactButton = driver.findElement(By.xpath(contactButtonXpath));
+                        
+                        //click the contact button
+                        contactButton.click();
+                        
+                        //wait for the contact form to appear
+                        try
+                        {
+                            (new WebDriverWait(driver,10))
+                            .until(new ExpectedCondition<Boolean>(){
+                            @Override
+                            public Boolean apply(WebDriver d) {
+                                return IsElementPresent(By.xpath(contactInfoXpath));
+                            }});
+                        }
+                        catch(Exception ex)
+                        {
+                            System.out.println("WARNING: CONTACT INFO DID NOT APPEAR AT :"+contactInfoXpath);
+                        }
+                        
+                        //get the contact information
+                        List<WebElement> contactInfoUls = driver.findElements(By.xpath(contactInfoXpath));
+                        for(WebElement we: contactInfoUls){
+                            System.out.println("CONTACT INFO:"+we.getText()+"'");
+                        }
+                   
+                    }
+                    else{
+                        System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath);
+                    }
                 }
 
                 //add at least one result entry if no images were found
