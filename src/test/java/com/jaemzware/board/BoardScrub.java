@@ -22,6 +22,7 @@ import com.jaemzware.seleniumcodebase.EnvironmentType;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import org.openqa.selenium.JavascriptExecutor;
 
 /**
  * @author jaemzware@hotmail.com
@@ -49,7 +50,11 @@ public class BoardScrub extends CodeBase {
                 throw new InvalidParameterException();
             }
 
+            //start driver
             StartDriver();
+            
+            //set implicit wait
+            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
         } 
         catch (InvalidParameterException ipex) {
             Assert.fail("INVALID PARAMETERS FOUND");
@@ -240,11 +245,9 @@ public class BoardScrub extends CodeBase {
                     String contactButtonXpath = properties.getProperty(environment.toString() + ".contactButtonXpath");
                     final String contactInfoXpath =  properties.getProperty(environment.toString() + ".contactInfoXpath");
                     if(IsElementPresent(By.xpath(contactButtonXpath))){
-                        //get the contact button
-                        WebElement contactButton = driver.findElement(By.xpath(contactButtonXpath));
                         
-                        //click the contact button
-                        contactButton.click();
+                        //CLICK CONTACT BUTTON
+                        ((JavascriptExecutor)driver).executeScript("$('section > button').click();");
                         
                         //wait for the contact form to appear
                         try
@@ -258,7 +261,7 @@ public class BoardScrub extends CodeBase {
                         }
                         catch(Exception ex)
                         {
-                            System.out.println("WARNING: CONTACT INFO DID NOT APPEAR AT :"+contactInfoXpath);
+                            System.out.println("WARNING: TIMED OUT WAITING FOR CONTACT INFO AT :"+contactInfoXpath);
                         }
                         
                         //get the contact information
