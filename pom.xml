@@ -60,8 +60,10 @@
   </dependencies>
   <!-- #
 
+  mvn -Dtest=BoardScrub -Dbrowser=SAFARI -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid test
   mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/fua/#list" -Dnogrid test
   mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -Dnogrid test
+  mvn -Dtest=BoardScrub -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid test
   
   -->
 </project>
