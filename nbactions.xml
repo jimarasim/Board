@@ -5,12 +5,12 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-DaNumber=1</goal>
                 <goal>-Dtest=BoardScrub</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Dinput=http://seattle.craigslist.org/search/ret</goal>
                 <goal>-Denvironment=craigslist</goal>
+                <goal>-Dinput=http://portland.craigslist.org/search/mca?query=shadow+750&amp;hasPic=1</goal>
                 <goal>-Dnogrid</goal>
+                <goal>-DaNumber=5</goal>
                 
                 
                 
@@ -25,12 +25,12 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-DaNumber=1</goal>
                 <goal>-Dtest=BoardScrub</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Dinput=http://seattle.craigslist.org/search/ret</goal>
                 <goal>-Denvironment=craigslist</goal>
+                <goal>-Dinput=http://portland.craigslist.org/search/mca?query=shadow+750&amp;hasPic=1</goal>
                 <goal>-Dnogrid</goal>
+                <goal>-DaNumber=5</goal>
                 
             </goals>
             <properties>

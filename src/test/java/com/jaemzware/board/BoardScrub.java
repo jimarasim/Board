@@ -31,7 +31,6 @@ public class BoardScrub extends CodeBase {
     static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     static Properties properties = new Properties();
     
-    static final int timeout=10000;
 
     @Before
     public void BeforeTest() {
@@ -124,11 +123,11 @@ public class BoardScrub extends CodeBase {
             // NAVIGATE TO URL
             driverGetWithTime(url);
 
-            // wait for login to complete
+            // wait for links to be loaded
             (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
                 @Override
                 public Boolean apply(WebDriver d) {
-                    return IsElementPresent(By.xpath(linksLoadedIndicatorXpath), timeout);
+                    return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
                 }
             });
 
@@ -138,7 +137,7 @@ public class BoardScrub extends CodeBase {
             // make sure there are some links
             System.out.println("CHECKING FOR RESULTS");
 
-            if (!IsElementPresent(By.xpath(linkXpath), timeout)) {
+            if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
                 throw new Exception("COULDN'T FIND ANY RESULTS");
             }
 
@@ -161,25 +160,14 @@ public class BoardScrub extends CodeBase {
             int maxVisits = (aNumber!=null)?Integer.parseInt(aNumber):0; //check if the max number was specified
             int visitCount = 0;
             for (String href : urls) {
-                final String hrefToWaitFor = href;
+                final String targetHref = href;
 
                 driverGetWithTime(href);
 
-                // wait for navigate to href to complete
-                (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
-                    @Override
-                    public Boolean apply(WebDriver d) {
-                        // this waits for an element on the page. good for pages with a lot of elements to load, that
-                        // could change the dom
-                        return driver.getCurrentUrl().contains(hrefToWaitFor);
-
-                    }
-                });
-                
                 // check for the title text
-                String titleText = "";
+                String titleText;
                 if(titleTextXpath!=null){
-                    if (IsElementPresent(By.xpath(titleTextXpath), timeout)) {
+                    if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
                         titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                         if (titleText == null) {
                             titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
@@ -189,7 +177,7 @@ public class BoardScrub extends CodeBase {
                         }
                     }
                     else{
-                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND";
+                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms";
                     }
                 }
                 else{
@@ -200,7 +188,7 @@ public class BoardScrub extends CodeBase {
                 // check for the body text
                 String bodyText;
                 if(bodyTextXpath!=null){
-                    if (IsElementPresent(By.xpath(bodyTextXpath), timeout)) {
+                    if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
                         bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
                         if (bodyText == null) {
                             bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" GETTEXT IS NULL";
@@ -210,7 +198,7 @@ public class BoardScrub extends CodeBase {
                         }
                     }
                     else{
-                        bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND";
+                        bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms";
                     }
                 }
                 else{
@@ -222,50 +210,60 @@ public class BoardScrub extends CodeBase {
                     
                     //find the contact button
                     String contactButtonXpath = properties.getProperty(environment.toString() + ".contactButtonXpath");
-                    final String contactInfoXpath =  properties.getProperty(environment.toString() + ".contactInfoXpath");
-                    if(IsElementPresent(By.xpath(contactButtonXpath))){
+                    final String contactInfoAnchorXpaths =  properties.getProperty(environment.toString() + ".contactInfoAnchorXpaths");
+                    final String contactInfoLiXpaths =  properties.getProperty(environment.toString() + ".contactInfoLiXpaths");
+                    if(IsElementPresent(By.xpath(contactButtonXpath),quickWaitMilliSeconds)){
                         
-                        //CLICK CONTACT BUTTON
-                        ((JavascriptExecutor)driver).executeScript("$('section > button').click();");
+                        //JQUERY APPROACH
+//                      String contactButtonJQueryExcecute = properties.getProperty(environment.toString() + ".contactButtonJQueryExcecute");
+//                      ((JavascriptExecutor)driver).executeScript(contactButtonJQueryExcecute);
                         
-                        //wait for the contact form to appear
-                        try
-                        {
-                            (new WebDriverWait(driver,10))
-                            .until(new ExpectedCondition<Boolean>(){
-                            @Override
-                            public Boolean apply(WebDriver d) {
-                                return IsElementPresent(By.xpath(contactInfoXpath));
-                            }});
-                        }
-                        catch(Exception ex)
-                        {
-                            System.out.println("WARNING: TIMED OUT WAITING FOR CONTACT INFO AT :"+contactInfoXpath);
-                        }
+                        driver.findElement(By.xpath(contactButtonXpath)).click();
                         
-                        //get the contact information
+                        //ACTIONS APPROACH
+//                      WebElement contactButton = driver.findElement(By.xpath(contactButtonXpath));
+//                      Actions builder = new Actions(driver);
+//                      builder.moveToElement(contactButton).click(contactButton).build().perform();
+                        
+                        //get the contact information anchors
                         StringBuilder contactInfoString = new StringBuilder();
-                        contactInfoString.append("<br />CONTACT:");
+                        contactInfoString.append("<br />CONTACT INFORMATION:<br />");
                         
-                        String contactInfoStringPart;
-                        List<WebElement> contactInfoUls = driver.findElements(By.xpath(contactInfoXpath));
-                        for(WebElement we: contactInfoUls){
-                            contactInfoStringPart = we.getText();
-                            System.out.println(contactInfoStringPart);
-                            contactInfoString.append("<br />").append(contactInfoStringPart);
+                        //WRITE OUT CONTACT INFORMAITON LIST ITEMS WITH TEXT ONLY
+                        String contactInfoLiText;
+                        List<WebElement> contactInfoLis = driver.findElements(By.xpath(contactInfoLiXpaths));
+                        for(WebElement weLi: contactInfoLis){
+                            contactInfoLiText = weLi.getText();
+                            contactInfoString.append(contactInfoLiText).append("<br />");
                         }
                         
+
+                        //WRITE OUT CONTACT INFORMAITON ANCHORS WITH TEXT AND HREFS
+                        String contactInfoAnchorHref, contactInfoAnchorText;
+                        List<WebElement> contactInfoAnchors = driver.findElements(By.xpath(contactInfoAnchorXpaths));
+                        for(WebElement weA: contactInfoAnchors){
+                            contactInfoAnchorText = weA.getText();
+                            contactInfoAnchorHref = weA.getAttribute("href");
+                            contactInfoString.append("<a href='");
+                            contactInfoString.append(contactInfoAnchorHref);
+                            contactInfoString.append("' target='_blank'>");
+                            contactInfoString.append(contactInfoAnchorHref);
+                            contactInfoString.append("</a><br />");
+                        }
+
                         //append contact info to body
                         bodyText += contactInfoString;
+                        
+
                     }
                     else{
-                        System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath);
+                        System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath+" AFTER:"+quickWaitMilliSeconds+"ms");
                     }
                 }
                 
                 // check for images
                 String imageSrc = "";
-                if (IsElementPresent(By.xpath(imageXpath), timeout)) {
+                if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
                     for (WebElement i : imageElements) {
@@ -281,7 +279,7 @@ public class BoardScrub extends CodeBase {
                     }
                 }
                 else{
-                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND");
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
                 }
                 
                 
@@ -321,24 +319,29 @@ public class BoardScrub extends CodeBase {
         // build web page
         String fileName = "Index-BoardScrub-" + getDateStamp() + ".htm";
         PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-        writer.println(HtmlReportHeader("BoardScrub"));
+        writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
 
         String oldHref = new String();
         for (String[] entry : results) {
             if (!oldHref.equals(entry[0])) {
                 oldHref = entry[0];
-                writer.println("<a href='" + oldHref + "' target='_blank'>" + oldHref + "</a><br />");
-                writer.println("<span>" + entry[2] + "</span><br />");
-                writer.println("<span>" + entry[3] + "</span><br />");
+                writer.println("<hr size=10>");
+                writer.println("<center>");
+                writer.println("<h2><u>FROM RESULT:</u></h2>");
+                writer.println("<h2><a href='" + oldHref + "' target='_blank'>" + oldHref + "</a></h2>");
+                writer.println("</center>");
+                writer.println("<h3>TITLE:</h3><span>" + entry[2] + "</span><br />");
+                writer.println("<h3>BODY:</h3><span>" + entry[3] + "</span><br />");
             }
-            writer.println("<center><img src='" + entry[1] + "' /></center><br />");
+            writer.println("<h3>IMAGES:</h3><center><img src='" + entry[1] + "' /></center><br />");
         }
         writer.println(HtmlReportFooter());
 
         writer.flush();
         writer.close();
 
-        System.out.println("INDEX FILE WRITTEN:" + jenkinsReportPath + fileName);
+        System.out.println("INDEX FILE WRITTEN:" + fileName);
+        System.out.println("INDEX FILE COPIED (IF RUN FROM JENKINS):" + jenkinsReportPath + fileName);
     }
 
     @After
