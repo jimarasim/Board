@@ -289,8 +289,8 @@ public class BoardScrub extends CodeBase {
                     results.add(new String[] { href, imageSrc, titleText, bodyText });
                 }                
                 
-                // get a copy of the page
-                RestRequest(href);
+                // get a copy of the page DEBUGGING ONLY
+//                RestRequest(href); 
                 
                 //check the desired image count, and break if it's been reached
                 if((maxVisits>0) && (++visitCount>maxVisits)){
