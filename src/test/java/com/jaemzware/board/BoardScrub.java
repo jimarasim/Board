@@ -120,7 +120,7 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("MISSING:" + environment.toString() + ".imageXpath");
             }
 
-            // NAVIGATE TO URL
+// NAVIGATE TO URL
             driverGetWithTime(url);
 
             // wait for links to be loaded
@@ -141,7 +141,7 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("COULDN'T FIND ANY RESULTS");
             }
 
-            // GET THE links
+// GET THE links
             System.out.println("FINDING RESULTS");
 
             List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
@@ -156,7 +156,7 @@ public class BoardScrub extends CodeBase {
             System.out.println("VISITING RESULT LINKS");
             List<String[]> results = new ArrayList<String[]>();
 
-            // navigate to links and get images
+// navigate to links and get images
             int maxVisits = (aNumber!=null)?Integer.parseInt(aNumber):0; //check if the max number was specified
             int visitCount = 0;
             for (String href : urls) {
@@ -168,7 +168,14 @@ public class BoardScrub extends CodeBase {
                 String titleText;
                 if(titleTextXpath!=null){
                     if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
-                        titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
+                        try{
+                            titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
+                        }
+                        catch(Exception ex){
+                            System.out.println("WARNING: STALE ELEMENT REFERENCE WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
+                            break;
+                        }
+                        
                         if (titleText == null) {
                             titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
                         }
