@@ -213,60 +213,60 @@ public class BoardScrub extends CodeBase {
                 }
 
                 //if this is craigslist, get the contact info
-                if(environment.equals(EnvironmentType.craigslist)){
-                    
-                    //find the contact button
-                    String contactButtonXpath = properties.getProperty(environment.toString() + ".contactButtonXpath");
-                    final String contactInfoAnchorXpaths =  properties.getProperty(environment.toString() + ".contactInfoAnchorXpaths");
-                    final String contactInfoLiXpaths =  properties.getProperty(environment.toString() + ".contactInfoLiXpaths");
-                    if(IsElementPresent(By.xpath(contactButtonXpath),quickWaitMilliSeconds)){
-                        
-                        //JQUERY APPROACH
-//                      String contactButtonJQueryExcecute = properties.getProperty(environment.toString() + ".contactButtonJQueryExcecute");
-//                      ((JavascriptExecutor)driver).executeScript(contactButtonJQueryExcecute);
-                        
-                        driver.findElement(By.xpath(contactButtonXpath)).click();
-                        
-                        //ACTIONS APPROACH
-//                      WebElement contactButton = driver.findElement(By.xpath(contactButtonXpath));
-//                      Actions builder = new Actions(driver);
-//                      builder.moveToElement(contactButton).click(contactButton).build().perform();
-                        
-                        //get the contact information anchors
-                        StringBuilder contactInfoString = new StringBuilder();
-                        contactInfoString.append("<br />CONTACT INFORMATION:<br />");
-                        
-                        //WRITE OUT CONTACT INFORMAITON LIST ITEMS WITH TEXT ONLY
-                        String contactInfoLiText;
-                        List<WebElement> contactInfoLis = driver.findElements(By.xpath(contactInfoLiXpaths));
-                        for(WebElement weLi: contactInfoLis){
-                            contactInfoLiText = weLi.getText();
-                            contactInfoString.append(contactInfoLiText).append("<br />");
-                        }
-                        
-
-                        //WRITE OUT CONTACT INFORMAITON ANCHORS WITH TEXT AND HREFS
-                        String contactInfoAnchorHref, contactInfoAnchorText;
-                        List<WebElement> contactInfoAnchors = driver.findElements(By.xpath(contactInfoAnchorXpaths));
-                        for(WebElement weA: contactInfoAnchors){
-                            contactInfoAnchorText = weA.getText();
-                            contactInfoAnchorHref = weA.getAttribute("href");
-                            contactInfoString.append("<a href='");
-                            contactInfoString.append(contactInfoAnchorHref);
-                            contactInfoString.append("' target='_blank'>");
-                            contactInfoString.append(contactInfoAnchorHref);
-                            contactInfoString.append("</a><br />");
-                        }
-
-                        //append contact info to body
-                        bodyText += contactInfoString;
-                        
-
-                    }
-                    else{
-                        System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath+" AFTER:"+quickWaitMilliSeconds+"ms");
-                    }
-                }
+//                if(environment.equals(EnvironmentType.craigslist)){
+//                    
+//                    //find the contact button
+//                    String contactButtonXpath = properties.getProperty(environment.toString() + ".contactButtonXpath");
+//                    final String contactInfoAnchorXpaths =  properties.getProperty(environment.toString() + ".contactInfoAnchorXpaths");
+//                    final String contactInfoLiXpaths =  properties.getProperty(environment.toString() + ".contactInfoLiXpaths");
+//                    if(IsElementPresent(By.xpath(contactButtonXpath),quickWaitMilliSeconds)){
+//                        
+//                        //JQUERY APPROACH
+////                      String contactButtonJQueryExcecute = properties.getProperty(environment.toString() + ".contactButtonJQueryExcecute");
+////                      ((JavascriptExecutor)driver).executeScript(contactButtonJQueryExcecute);
+//                        
+//                        driver.findElement(By.xpath(contactButtonXpath)).click();
+//                        
+//                        //ACTIONS APPROACH
+////                      WebElement contactButton = driver.findElement(By.xpath(contactButtonXpath));
+////                      Actions builder = new Actions(driver);
+////                      builder.moveToElement(contactButton).click(contactButton).build().perform();
+//                        
+//                        //get the contact information anchors
+//                        StringBuilder contactInfoString = new StringBuilder();
+//                        contactInfoString.append("<br />CONTACT INFORMATION:<br />");
+//                        
+//                        //WRITE OUT CONTACT INFORMAITON LIST ITEMS WITH TEXT ONLY
+//                        String contactInfoLiText;
+//                        List<WebElement> contactInfoLis = driver.findElements(By.xpath(contactInfoLiXpaths));
+//                        for(WebElement weLi: contactInfoLis){
+//                            contactInfoLiText = weLi.getText();
+//                            contactInfoString.append(contactInfoLiText).append("<br />");
+//                        }
+//                        
+//
+//                        //WRITE OUT CONTACT INFORMAITON ANCHORS WITH TEXT AND HREFS
+//                        String contactInfoAnchorHref, contactInfoAnchorText;
+//                        List<WebElement> contactInfoAnchors = driver.findElements(By.xpath(contactInfoAnchorXpaths));
+//                        for(WebElement weA: contactInfoAnchors){
+//                            contactInfoAnchorText = weA.getText();
+//                            contactInfoAnchorHref = weA.getAttribute("href");
+//                            contactInfoString.append("<a href='");
+//                            contactInfoString.append(contactInfoAnchorHref);
+//                            contactInfoString.append("' target='_blank'>");
+//                            contactInfoString.append(contactInfoAnchorHref);
+//                            contactInfoString.append("</a><br />");
+//                        }
+//
+//                        //append contact info to body
+//                        bodyText += contactInfoString;
+//                        
+//
+//                    }
+//                    else{
+//                        System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath+" AFTER:"+quickWaitMilliSeconds+"ms");
+//                    }
+//                }
                 
                 // check for images
                 String imageSrc = "";
