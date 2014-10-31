@@ -50,7 +50,7 @@ public class BoardScrub extends CodeBase {
             }
 
             //start driver
-            StartDriver();
+            StartDriver("../SeleniumCodeBase/SeleniumGrid");
             
             //set implicit wait
             driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
