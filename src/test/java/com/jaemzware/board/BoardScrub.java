@@ -69,6 +69,86 @@ public class BoardScrub extends CodeBase {
         }
     }
 
+    @Test 
+    public void ResultPlace(){
+        try{
+            // set implicit wait for this test
+            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+
+            // get base url
+            String url;
+            if (input != null) {
+                url = input;
+            } else {
+                throw new Exception("URL NOT SPECIFIED (-Dinput)");
+            }
+
+            // MAKE SURE IT'S BEEN SPECIFIED
+            if (url == null) {
+                throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+            }
+
+            // get xpaths to search for
+
+            // indicator that page of links has completely loaded
+            final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()
+                    + ".linksLoadedIndicatorXpath");
+
+            // xpath of each link on page of links
+            final String linkXpath = properties.getProperty(environment.toString() + ".linkXpath");
+            
+            // CHECK FOR REQUIRED PARAMETERS
+            if (linksLoadedIndicatorXpath == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".linksLoadedIndicatorXpath");
+            }
+
+            if (linkXpath == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".linkXpath");
+            }
+            
+            // NAVIGATE TO URL
+            driverGetWithTime(url);
+
+            // wait for links to be loaded
+            (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver d) {
+                    return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
+                }
+            });
+
+            // list for links
+            List<String> urls = new ArrayList<String>();
+
+            // make sure there are some links
+            System.out.println("CHECKING FOR RESULTS");
+
+            if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
+                throw new Exception("COULDN'T FIND ANY RESULTS");
+            }
+
+// GET THE links
+            System.out.println("FINDING RESULTS");
+
+            List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
+
+            // store off the hrefs
+            System.out.println("SAVING RESULT LINKS");
+            
+            for (WebElement we : webElements) {
+                urls.add(we.getAttribute("href"));
+            }
+            
+            System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
+        }
+        catch(Exception ex){
+            ScreenShot();
+            System.out.println("EXCEPTION MESSAGE:"+ex.getMessage());
+            CustomStackTrace("EXCEPTION TRACE", ex);
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
     @Test
     public void BuildPageOfFoundLinks() {
         try {
