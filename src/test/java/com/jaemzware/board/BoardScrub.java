@@ -69,11 +69,14 @@ public class BoardScrub extends CodeBase {
         }
     }
 
+    
+    
     @Test 
     public void ResultPlace(){
         
         int numResultsOnPage = 100;
         int numCurrentPageFirstResult=1;
+        int maxVisits = (aNumber!=null||!aNumber.isEmpty())?Integer.parseInt(aNumber):0;
         
         try{
             // set implicit wait for this test
@@ -142,7 +145,11 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("MISSING:" + environment.toString() + ".startParm");
             }
             
-//ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
+            List<Integer>resultPlacesOfTarget = new ArrayList<>(); 
+            
+            System.out.println("IS THERE A NEXT LINK?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
+            
+            //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
             String urlWithParms = url + 
                     "&"+
                     numResultsParm+
@@ -152,57 +159,80 @@ public class BoardScrub extends CodeBase {
                     startParm+
                     "="+
                     Integer.toString(numCurrentPageFirstResult);
-            
-            
-// NAVIGATE TO URL
+            // NAVIGATE TO URL
             driverGetWithTime(urlWithParms);
 
-            // wait for links to be loaded
-            (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver d) {
-                    return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
+            while(IsElementPresent(By.xpath(nextLinkXpath),5000)){
+// wait for links to be loaded
+//                (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
+//                    @Override
+//                    public Boolean apply(WebDriver d) {
+//                        return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
+//                    }
+//                });
+
+                // make sure there are some links
+                System.out.println("CHECKING FOR RESULTS");
+
+                if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
+                    throw new Exception("COULDN'T FIND ANY RESULTS");
                 }
-            });
-
-            // list for links
-            List<String> urls = new ArrayList<String>();
-
-            // make sure there are some links
-            System.out.println("CHECKING FOR RESULTS");
-
-            if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
-                throw new Exception("COULDN'T FIND ANY RESULTS");
-            }
 
 // GET THE LINKS
-            System.out.println("FINDING RESULTS");
+                System.out.println("FINDING RESULTS");
 
-            List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
+                List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
 
-            // store off the hrefs
-            System.out.println("SAVING RESULT LINKS");
-            
-            String linkHref="";
-            String linkText="";
-            List<Integer>resultPlacesOfTarget = new ArrayList<Integer>(); 
-            for(int i=0;i<webElements.size();i++){
-                               
-                linkHref=webElements.get(i).getAttribute("href");
-                linkText=webElements.get(i).getText();
-                
-                urls.add(linkHref);
-                
-                if(linkHref.contains(targetUrl)){
-                    resultPlacesOfTarget.add(i);
+                System.out.println("RESULT COUNT:"+webElements.size());
+
+                // store off the hrefs
+                System.out.println("REVIEWING LINKS");
+
+//CHECK IF TARGET LINK IS IN THE LINKS
+                String linkHref;
+                String linkText;
+                for(int i=0;i<webElements.size();i++){
+
+                    linkHref=webElements.get(i).getAttribute("href");
+                    linkText=webElements.get(i).getText();
+
+                    if(linkHref.contains(targetUrl)){
+                        resultPlacesOfTarget.add(i);
+                    }
+
+                    System.out.println((i+numCurrentPageFirstResult)+":\t"+linkHref);
+                    System.out.println((i+numCurrentPageFirstResult)+":\t"+linkText);
                 }
                 
-                System.out.println(i+":\t"+linkHref);
-                System.out.println(i+":\t"+linkText);
+//CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
+                if(numCurrentPageFirstResult/numResultsOnPage > maxVisits){
+                    break;
+                }
+                else{
+                    //SET FIRST RESULT TO BE ON THE NEXT PAGE OF RESULTS
+                    numCurrentPageFirstResult += numResultsOnPage;
+                    
+                    urlWithParms = url + 
+                    "&"+
+                    numResultsParm+
+                    "="+
+                    Integer.toString(numResultsOnPage)+
+                    "&"+
+                    startParm+
+                    "="+
+                    Integer.toString(numCurrentPageFirstResult);
+                    
+                    // NAVIGATE TO URL
+                    driverGetWithTime(urlWithParms);
+                }
+                
             }
             
-//CHECK FOR TARGET LINK IN RESULTS
-            System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
+            
+            
+            
+//REPORT TEST RESULTS
+//            System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
             if(resultPlacesOfTarget.size()<1){
                 throw new Exception("TARGET:"+targetUrl+" NOT FOUND IN RESULTS");
             }
