@@ -135,8 +135,18 @@ public class BoardScrub extends CodeBase {
             // store off the hrefs
             System.out.println("SAVING RESULT LINKS");
             
+            String linkHref="";
+            String linkText="";
             for (WebElement we : webElements) {
-                urls.add(we.getAttribute("href"));
+                
+                linkHref=we.getAttribute("href");
+                linkText=we.getText();
+                
+                urls.add(linkHref);
+                
+                System.out.println(linkHref);
+                System.out.println(linkText);
+                
             }
             
             System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
