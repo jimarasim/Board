@@ -50,7 +50,7 @@ public class BoardScrub extends CodeBase {
             }
 
             //start driver
-            StartDriver("../SeleniumCodeBase/SeleniumGrid");
+            StartDriver("../SeleniumCodeBase/SeleniumGrid/");
             
             //set implicit wait
             driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
@@ -85,10 +85,21 @@ public class BoardScrub extends CodeBase {
 
             // MAKE SURE IT'S BEEN SPECIFIED
             if (url == null) {
-                throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+                throw new Exception("URL SPECIFIED WAS NULL (-Dinput)");
+            }
+            
+            // get target result link string to look for
+            String targetUrl;
+            if (aString != null) {
+                targetUrl = aString;
+            } else {
+                throw new Exception("URL NOT SPECIFIED (-DaString)");
             }
 
-            // get xpaths to search for
+            // MAKE SURE IT'S BEEN SPECIFIED
+            if (targetUrl == null) {
+                throw new Exception("TARGET NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+            }
 
             // indicator that page of links has completely loaded
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()
@@ -137,19 +148,33 @@ public class BoardScrub extends CodeBase {
             
             String linkHref="";
             String linkText="";
-            for (WebElement we : webElements) {
-                
-                linkHref=we.getAttribute("href");
-                linkText=we.getText();
+            List<Integer>resultPlacesOfTarget = new ArrayList<Integer>(); 
+            for(int i=0;i<webElements.size();i++){
+                               
+                linkHref=webElements.get(i).getAttribute("href");
+                linkText=webElements.get(i).getText();
                 
                 urls.add(linkHref);
                 
-                System.out.println(linkHref);
-                System.out.println(linkText);
+                if(linkHref.contains(targetUrl)){
+                    resultPlacesOfTarget.add(i);
+                }
                 
+                System.out.println(i+":\t"+linkHref);
+                System.out.println(i+":\t"+linkText);
             }
             
             System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
+            if(resultPlacesOfTarget.size()<1){
+                System.out.println("TARGET NOT FOUND IN RESULTS");
+            }
+            else{
+                System.out.println("TARGET FOUND AT PLACE (0-based):");
+                for(Integer place:resultPlacesOfTarget){
+                    System.out.println("PLACE:"+place);
+
+                }
+            }
         }
         catch(Exception ex){
             ScreenShot();
@@ -176,7 +201,7 @@ public class BoardScrub extends CodeBase {
 
             // MAKE SURE IT'S BEEN SPECIFIED
             if (url == null) {
-                throw new Exception("URL NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+                throw new Exception("URL SPECIFIED WAS NULL (-Dinput)");
             }
 
             // get xpaths to search for

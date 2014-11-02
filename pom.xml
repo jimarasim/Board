@@ -75,10 +75,10 @@ mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment
  
 RESULT PLACE 
 NOGRID
-mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -Dnogrid test
+mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop&num=50" -DaString=pop.com -Dnogrid test
 
 GRID
-mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROMELINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" test
+mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" test
   -->
 </project>
 
