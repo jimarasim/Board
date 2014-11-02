@@ -166,7 +166,7 @@ public class BoardScrub extends CodeBase {
             
             System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
             if(resultPlacesOfTarget.size()<1){
-                System.out.println("TARGET:"+targetUrl+" NOT FOUND IN RESULTS");
+                throw new Exception("TARGET:"+targetUrl+" NOT FOUND IN RESULTS");
             }
             else{
                 System.out.println("TARGET:"+targetUrl+" FOUND AT PLACE (0-based):");
