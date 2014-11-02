@@ -71,10 +71,15 @@ public class BoardScrub extends CodeBase {
 
     @Test 
     public void ResultPlace(){
+        
+        int numResultsOnPage = 100;
+        int numCurrentPageFirstResult=1;
+        
         try{
             // set implicit wait for this test
             driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
 
+//GET REQUIRED COMMAND LINE PARMS
             // get base url
             String url;
             if (input != null) {
@@ -101,14 +106,22 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("TARGET NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
             }
 
+//GET REQUIRED PROPERTIES FILE PARMS
             // indicator that page of links has completely loaded
-            final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()
-                    + ".linksLoadedIndicatorXpath");
+            final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()+ ".linksLoadedIndicatorXpath");
 
             // xpath of each link on page of links
             final String linkXpath = properties.getProperty(environment.toString() + ".linkXpath");
             
-            // CHECK FOR REQUIRED PARAMETERS
+            // xpath of next link
+            final String nextLinkXpath = properties.getProperty(environment.toString() + ".nextLinkXpath");
+            
+            //num parameter name to use in url, for number of results to return (used for paging)
+            final String numResultsParm = properties.getProperty(environment.toString() + ".numResultsParm");
+            
+            //start parameter name to use in url, for nth result to get results from (used for paging)
+            final String startParm = properties.getProperty(environment.toString() + ".startParm");
+            
             if (linksLoadedIndicatorXpath == null) {
                 throw new Exception("MISSING:" + environment.toString() + ".linksLoadedIndicatorXpath");
             }
@@ -117,8 +130,32 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("MISSING:" + environment.toString() + ".linkXpath");
             }
             
-            // NAVIGATE TO URL
-            driverGetWithTime(url);
+            if (nextLinkXpath == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".nextLinkXpath");
+            }
+
+            if (numResultsParm == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".numResultsParm");
+            }
+            
+            if (startParm == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".startParm");
+            }
+            
+//ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
+            String urlWithParms = url + 
+                    "&"+
+                    numResultsParm+
+                    "="+
+                    Integer.toString(numResultsOnPage)+
+                    "&"+
+                    startParm+
+                    "="+
+                    Integer.toString(numCurrentPageFirstResult);
+            
+            
+// NAVIGATE TO URL
+            driverGetWithTime(urlWithParms);
 
             // wait for links to be loaded
             (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
@@ -138,7 +175,7 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("COULDN'T FIND ANY RESULTS");
             }
 
-// GET THE links
+// GET THE LINKS
             System.out.println("FINDING RESULTS");
 
             List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
@@ -164,6 +201,7 @@ public class BoardScrub extends CodeBase {
                 System.out.println(i+":\t"+linkText);
             }
             
+//CHECK FOR TARGET LINK IN RESULTS
             System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
             if(resultPlacesOfTarget.size()<1){
                 throw new Exception("TARGET:"+targetUrl+" NOT FOUND IN RESULTS");
@@ -191,6 +229,7 @@ public class BoardScrub extends CodeBase {
             // set implicit wait for this test
             driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
 
+//GET REQUIRED COMMAND LINE PARMS
             // get base url
             String url;
             if (input != null) {
@@ -203,9 +242,8 @@ public class BoardScrub extends CodeBase {
             if (url == null) {
                 throw new Exception("URL SPECIFIED WAS NULL (-Dinput)");
             }
-
-            // get xpaths to search for
-
+            
+//GET REQUIRED PROPERTIES FILE PARMS
             // indicator that page of links has completely loaded
             final String linksLoadedIndicatorXpath = properties.getProperty(environment.toString()
                     + ".linksLoadedIndicatorXpath");
@@ -463,7 +501,7 @@ public class BoardScrub extends CodeBase {
         writer.close();
 
         System.out.println("INDEX FILE WRITTEN:" + fileName);
-        System.out.println("INDEX FILE COPIED (IF RUN FROM JENKINS):" + jenkinsReportPath + fileName);
+//        System.out.println("INDEX FILE COPIED (IF RUN FROM JENKINS):" + jenkinsReportPath + fileName);
     }
 
     @After
