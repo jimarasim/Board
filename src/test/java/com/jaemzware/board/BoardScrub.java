@@ -30,8 +30,8 @@ import org.openqa.selenium.JavascriptExecutor;
 public class BoardScrub extends CodeBase {
     static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     static Properties properties = new Properties();
+    static final int sleepForGoogleResultsPage = 3000;
     
-
     @Before
     public void BeforeTest() {
         try {// start the webdriver
@@ -69,13 +69,33 @@ public class BoardScrub extends CodeBase {
         }
     }
 
-    
+    /**
+     * This method waits for the google search page to change, when paging through results
+     * @param oldValue - old value of what should be at resultStatsTextXpath
+     * @param urlWithParms - informational only just used to print out to console, what page is being loaded
+     * @throws Exception 
+     */
+    private void WaitForGoogleResultsPageChange(String oldUrl, String urlWithParms) throws Exception{
+            final String waitTillUrlIsNot=oldUrl; //string to wait for to change when the page is loaded
+            
+            // wait for links to be loaded by waiting for the resultStatsText to change
+            (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
+                @Override
+                public Boolean apply(WebDriver d) {
+                    return !driver.getCurrentUrl().equals(waitTillUrlIsNot);
+                }
+            });
+            
+            //hardcoded wait (i hate these) to avoid stale element references later.
+            Thread.sleep(sleepForGoogleResultsPage);
+     
+    }
     
     @Test 
     public void ResultPlace(){
         
         int numResultsOnPage = 100;
-        int numCurrentPageFirstResult=1;
+        int numCurrentPageFirstResult=0;
         int maxVisits = (aNumber!=null||!aNumber.isEmpty())?Integer.parseInt(aNumber):0;
         
         try{
@@ -147,31 +167,24 @@ public class BoardScrub extends CodeBase {
             
             List<Integer>resultPlacesOfTarget = new ArrayList<>(); 
             
-            System.out.println("IS THERE A NEXT LINK?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
-            
             //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
             String urlWithParms = url + 
                     "&"+
                     numResultsParm+
                     "="+
-                    Integer.toString(numResultsOnPage)+
-                    "&"+
-                    startParm+
-                    "="+
-                    Integer.toString(numCurrentPageFirstResult);
+                    Integer.toString(numResultsOnPage);
+            
             // NAVIGATE TO URL
+            
+            String oldUrl=driver.getCurrentUrl();
             driverGetWithTime(urlWithParms);
-
+            WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
+            
+            System.out.println("IS THERE A NEXT LINK ON THIS PAGE:"+driver.getCurrentUrl()+" ?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
+                
             while(IsElementPresent(By.xpath(nextLinkXpath),5000)){
-// wait for links to be loaded
-//                (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
-//                    @Override
-//                    public Boolean apply(WebDriver d) {
-//                        return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
-//                    }
-//                });
-
-                // make sure there are some links
+                
+// make sure there are some links
                 System.out.println("CHECKING FOR RESULTS");
 
                 if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
@@ -197,7 +210,8 @@ public class BoardScrub extends CodeBase {
                     linkText=webElements.get(i).getText();
 
                     if(linkHref.contains(targetUrl)){
-                        resultPlacesOfTarget.add(i);
+                        //report the link position with the first result offset
+                        resultPlacesOfTarget.add(numCurrentPageFirstResult + i);
                     }
 
                     System.out.println((i+numCurrentPageFirstResult)+":\t"+linkHref);
@@ -205,13 +219,17 @@ public class BoardScrub extends CodeBase {
                 }
                 
 //CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
-                if(numCurrentPageFirstResult/numResultsOnPage > maxVisits){
+                if(numCurrentPageFirstResult/numResultsOnPage >= maxVisits){
+                    System.out.println("numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
                     break;
                 }
                 else{
                     //SET FIRST RESULT TO BE ON THE NEXT PAGE OF RESULTS
                     numCurrentPageFirstResult += numResultsOnPage;
                     
+                    System.out.println("numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
+                    
+                    //CONSTRUCT THE NEW URL
                     urlWithParms = url + 
                     "&"+
                     numResultsParm+
@@ -222,8 +240,15 @@ public class BoardScrub extends CodeBase {
                     "="+
                     Integer.toString(numCurrentPageFirstResult);
                     
+                    //GO TO THE NEXT PAGE
+                    //get results text string, so we can tell when its changed in WaitForGoogleResultsPageChange
+                    oldUrl=driver.getCurrentUrl();
+                    
                     // NAVIGATE TO URL
                     driverGetWithTime(urlWithParms);
+
+                    //WAIT FOR NEW RESULTS PAGE TO LOAD
+                    WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
                 }
                 
             }

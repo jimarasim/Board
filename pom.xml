@@ -60,23 +60,40 @@
   </dependencies>
 <!-- #
 
-BUILDPAGEOFFOUNDLINKS-NOGRID
+BUILDPAGEOFFOUNDLINKS
+REQUIRED PARAMETERS:
+    -Dtest
+    -Dbrowser
+    -Denvironment   web site that -Dinput is specific to. e.g. ebay,craigslist,backpage,tnaboard
+    -Dinput         search string that brings up a page of links to visit]
+OPTIONAL PARAMETERS:
+    -DaNumber       integer- maximum number of links to visit. 0 or unspecified means all]
+    -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
+NOGRID SAMPLES:
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://boise.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=0 test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://portland.craigslist.org/search/mca?query=shadow+750&hasPic=1#list" -DaNumber=0 -Dnogrid test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=0 test
-
-BUILDPAGEOFFOUNDLINKS-GRID
+GRID SAMPLES:
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 test
 
-RESULT PLACE-NOGRID
-mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
-mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
-
-RESULT PLACE-GRID
-mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 test
+RESULTPLACE
+REQUIRED PARMETERS:
+    -Dtest
+    -Dbrowser
+    -Denvironment   web site that -Dinput is specific to. e.g. google
+    -Dinput
+    -DaString
+OPTIONAL PARAMETERS:
+    -DaNumber       maximum of pages to cycle through while paging. 0 or unspecified means all
+    -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
+NOGRID SAMPLES:
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
+GRID SAMPLES:
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 test
   -->
 </project>
 
