@@ -95,7 +95,7 @@ public class BoardScrub extends CodeBase {
     public void ResultPlace(){
         
         int numResultsOnPage = 100;
-        int numCurrentPageFirstResult=0;
+        int numCurrentPageFirstResult=1;
         int maxVisits = (aNumber!=null||!aNumber.isEmpty())?Integer.parseInt(aNumber):0;
         
         try{
