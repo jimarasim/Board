@@ -180,9 +180,11 @@ public class BoardScrub extends CodeBase {
             driverGetWithTime(urlWithParms);
             WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
             
-            System.out.println("IS THERE A NEXT LINK ON THIS PAGE:"+driver.getCurrentUrl()+" ?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
+ 
                 
-            while(IsElementPresent(By.xpath(nextLinkXpath),5000)){
+            while(IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
+                
+                System.out.println("IS THERE A NEXT LINK ON THIS PAGE:"+driver.getCurrentUrl()+" ?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
                 
 // make sure there are some links
                 System.out.println("CHECKING FOR RESULTS");
