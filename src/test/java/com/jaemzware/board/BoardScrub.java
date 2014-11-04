@@ -221,7 +221,7 @@ public class BoardScrub extends CodeBase {
                 }
                 
 //CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
-                if(numCurrentPageFirstResult/numResultsOnPage >= maxVisits){
+                if(numCurrentPageFirstResult >= maxVisits){
                     System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
                     break;
                 }
@@ -252,14 +252,9 @@ public class BoardScrub extends CodeBase {
                     //WAIT FOR NEW RESULTS PAGE TO LOAD
                     WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
                 }
-                
             }
             
-            
-            
-            
 //REPORT TEST RESULTS
-//            System.out.println("NUMBER OF LINKS FOUND:"+urls.size());
             if(resultPlacesOfTarget.size()<1){
                 throw new Exception("TARGET:"+targetUrl+" NOT FOUND IN RESULTS");
             }

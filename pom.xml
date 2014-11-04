@@ -87,14 +87,17 @@ REQUIRED PARMETERS:
     -Dinput
     -DaString
 OPTIONAL PARAMETERS:
-    -DaNumber       maximum of pages to cycle through while paging. 0 or unspecified means all
+    -DaNumber       maximum of RESULTS to cycle through while paging. 0 or unspecified means all
     -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
 NOGRID SAMPLES:
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle" -DaString=seattlerules.com -DaNumber=5 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=500 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle" -DaString=seattlerules.com -DaNumber=500 -Dnogrid test
 GRID SAMPLES:
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 test
+NETBEANS DEBUG SAMPLES:
+    test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=pop -DaString=pop.com -DaNumber=500 -Dnogrid
+    test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=seattle+rules -DaString=seattlerules.com -DaNumber=500 -Dnogrid
   -->
 </project>
 
