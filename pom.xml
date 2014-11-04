@@ -92,6 +92,7 @@ OPTIONAL PARAMETERS:
 NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle" -DaString=seattlerules.com -DaNumber=5 -Dnogrid test
 GRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=2 test
   -->

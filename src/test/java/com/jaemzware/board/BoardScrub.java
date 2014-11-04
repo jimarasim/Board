@@ -227,7 +227,7 @@ public class BoardScrub extends CodeBase {
                 }
                 else{
                     //SET FIRST RESULT TO BE ON THE NEXT PAGE OF RESULTS
-                    numCurrentPageFirstResult += numResultsOnPage+1;
+                    numCurrentPageFirstResult += numResultsOnPage;
                     
                     System.out.println("numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
                     
