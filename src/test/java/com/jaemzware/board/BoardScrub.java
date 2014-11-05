@@ -552,7 +552,7 @@ public class BoardScrub extends CodeBase {
         writer.flush();
         writer.close();
 
-        System.out.println("INDEX FILE WRITTEN:" + fileName);
+        System.out.println("INDEX FILE WRITTEN:" + "http://50.251.226.90:8080/view/Scratch/job/SeleniumCodeBase%20-%20VerifyLogos%20-%20seattlerules.com/ws/" + fileName);
 //        System.out.println("INDEX FILE COPIED (IF RUN FROM JENKINS):" + jenkinsReportPath + fileName);
     }
 
