@@ -221,7 +221,8 @@ public class BoardScrub extends CodeBase {
                 }
                 
 //CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
-                if(numCurrentPageFirstResult >= maxVisits){
+                if(maxVisits!=0 &&
+                        (numCurrentPageFirstResult >= maxVisits)){
                     System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
                     break;
                 }
