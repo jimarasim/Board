@@ -53,7 +53,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-support</artifactId>
-      <version>2.42.2</version>
+      <version>2.43.1</version>
       <scope>test</scope>
       <type>jar</type>
     </dependency>
@@ -92,12 +92,14 @@ OPTIONAL PARAMETERS:
 NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=500 -Dnogrid test
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle" -DaString=seattlerules.com -DaNumber=500 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=500 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUMLOCAL -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=500 -Dnogrid test
 GRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 test
 NETBEANS DEBUG SAMPLES:
     test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=pop -DaString=pop.com -DaNumber=500 -Dnogrid
     test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=seattle+rules -DaString=seattlerules.com -DaNumber=500 -Dnogrid
+    test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=seattle+rules -DaString=seattlerules.com -DaNumber=500 -Dnogrid
   -->
 </project>
 

@@ -18,11 +18,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.jaemzware.seleniumcodebase.CodeBase;
-import com.jaemzware.seleniumcodebase.EnvironmentType;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import org.openqa.selenium.JavascriptExecutor;
 
 /**
  * @author jaemzware@hotmail.com
@@ -338,7 +336,7 @@ public class BoardScrub extends CodeBase {
             });
 
             // list for links
-            List<String> urls = new ArrayList<String>();
+            List<String> urls = new ArrayList<>();
 
             // make sure there are some links
             System.out.println("CHECKING FOR RESULTS");
@@ -360,7 +358,7 @@ public class BoardScrub extends CodeBase {
             }
 
             System.out.println("VISITING RESULT LINKS");
-            List<String[]> results = new ArrayList<String[]>();
+            List<String[]> results = new ArrayList<>();
 
 // navigate to links and get images
             int maxVisits = (aNumber!=null)?Integer.parseInt(aNumber):0; //check if the max number was specified
