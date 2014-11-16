@@ -179,7 +179,7 @@ public class BoardScrub extends CodeBase {
             WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
             
  
-                
+            //TODO BUG WILL NOT DO FIRST PAGE IF THERE'S NOT A NEXT LINK
             while(IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
                 
                 System.out.println("IS THERE A NEXT LINK ON THIS PAGE:"+driver.getCurrentUrl()+" ?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
