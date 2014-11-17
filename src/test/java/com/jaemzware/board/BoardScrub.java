@@ -178,20 +178,19 @@ public class BoardScrub extends CodeBase {
             driverGetWithTime(urlWithParms);
             WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
             
- 
-            //TODO BUG WILL NOT DO FIRST PAGE IF THERE'S NOT A NEXT LINK
-            while(IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
+            Boolean continueProcessing = true;
+            
+ //PAGE THROUGH ALL RESULTS
+            while(continueProcessing){
                 
-                System.out.println("IS THERE A NEXT LINK ON THIS PAGE:"+driver.getCurrentUrl()+" ?"+IsElementPresent(By.xpath(nextLinkXpath),5000));
-                
-// make sure there are some links
+                // make sure there are some links
                 System.out.println("CHECKING FOR RESULTS");
 
                 if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
                     throw new Exception("COULDN'T FIND ANY RESULTS");
                 }
 
-// GET THE LINKS
+                // GET THE LINKS
                 System.out.println("FINDING RESULTS");
 
                 List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
@@ -219,17 +218,24 @@ public class BoardScrub extends CodeBase {
                 }
                 
 //CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
-                if(maxVisits!=0 &&
-                        (numCurrentPageFirstResult >= maxVisits)){
+                
+                //SET FIRST RESULT TO BE ON THE NEXT PAGE OF RESULTS
+                numCurrentPageFirstResult += numResultsOnPage;
+
+                if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
                     System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
-                    break;
+                    
+                    //tell the loop to stop
+                    continueProcessing=false;
+                }
+                else if(!IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
+                    System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
+                    
+                    //there is no next link, we're done, tell the while loop to stop
+                    continueProcessing=false;
                 }
                 else{
-                    //SET FIRST RESULT TO BE ON THE NEXT PAGE OF RESULTS
-                    numCurrentPageFirstResult += numResultsOnPage;
-                    
-                    System.out.println("numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
-                    
+
                     //CONSTRUCT THE NEW URL
                     urlWithParms = url + 
                     "&"+
@@ -240,16 +246,17 @@ public class BoardScrub extends CodeBase {
                     startParm+
                     "="+
                     Integer.toString(numCurrentPageFirstResult);
-                    
+
                     //GO TO THE NEXT PAGE
                     //get results text string, so we can tell when its changed in WaitForGoogleResultsPageChange
                     oldUrl=driver.getCurrentUrl();
-                    
+
                     // NAVIGATE TO URL
                     driverGetWithTime(urlWithParms);
 
                     //WAIT FOR NEW RESULTS PAGE TO LOAD
                     WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
+ 
                 }
             }
             

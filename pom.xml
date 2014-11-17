@@ -90,7 +90,7 @@ OPTIONAL PARAMETERS:
     -DaNumber       maximum of RESULTS to cycle through while paging. 0 or unspecified means all
     -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
 NOGRID SAMPLES:
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=500 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUM -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=500 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=APPIUMLOCAL -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=500 -Dnogrid test
