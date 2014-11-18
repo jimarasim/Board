@@ -559,7 +559,7 @@ public class BoardScrub extends CodeBase {
         writer.close();
 
         System.out.println("INDEX FILE WRITTEN:" + "http://50.251.226.90:8081/job/Board%20-%20BoardScrub/ws/" + fileName);
-//        System.out.println("INDEX FILE COPIED (IF RUN FROM JENKINS):" + jenkinsReportPath + fileName);
+        System.out.println("INDEX FILE COPIED:" + jenkinsReportPath + fileName);
     }
 
     @After
