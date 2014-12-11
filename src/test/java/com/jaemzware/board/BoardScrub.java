@@ -313,10 +313,9 @@ public class BoardScrub extends CodeBase {
             final String imageXpath = properties.getProperty(environment.toString() + ".imageXpath");
 
             // xpath of text to gather after following each link
-            final String titleTextXpath = properties.getProperty(environment.toString() + ".titleTextXpath"); // NOT
-                                                                                                              // REQUIRED
-            final String bodyTextXpath = properties.getProperty(environment.toString() + ".bodyTextXpath"); // NOT
-                                                                                                            // REQUIRED
+            final String titleTextXpath = properties.getProperty(environment.toString() + ".titleTextXpath");
+            
+            final String bodyTextXpath = properties.getProperty(environment.toString() + ".bodyTextXpath"); 
 
             // CHECK FOR REQUIRED PARAMETERS
             if (linksLoadedIndicatorXpath == null) {
@@ -330,6 +329,16 @@ public class BoardScrub extends CodeBase {
             if (imageXpath == null) {
                 throw new Exception("MISSING:" + environment.toString() + ".imageXpath");
             }
+            
+            if (titleTextXpath == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".titleTextXpath");
+            }
+
+            if (bodyTextXpath == null) {
+                throw new Exception("MISSING:" + environment.toString() + ".bodyTextXpath");
+            }
+            
+            System.out.println("linksLoadedIndicatorXpath:"+linksLoadedIndicatorXpath+" linkXpath:"+linkXpath+" imageXpath:"+imageXpath+" titleTextXpath:"+titleTextXpath+" bodyTextXpath:"+bodyTextXpath);
 
 // NAVIGATE TO URL
             driverGetWithTime(url);

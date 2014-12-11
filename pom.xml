@@ -79,6 +79,7 @@ BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://portland.craigslist.org/search/mca?query=shadow+750&hasPic=1#list" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=0 test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 test
 BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 test
 
