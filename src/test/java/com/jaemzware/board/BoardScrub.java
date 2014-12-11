@@ -413,23 +413,28 @@ public class BoardScrub extends CodeBase {
                 
 
                 // check for the body text
-                String bodyText;
-                if(bodyTextXpath!=null){
-                    if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
-                        bodyText = driver.findElement(By.xpath(bodyTextXpath)).getText();
-                        if (bodyText == null) {
-                            bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" GETTEXT IS NULL";
-                        }
-                        else if(bodyText.isEmpty()){
-                            bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" GETTEXT IS EMPTY";
-                        }
-                    }
-                    else{
-                        bodyText = "WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms";
-                    }
+                List<WebElement> allBodyTexts = new ArrayList<WebElement>();
+                
+                if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
+                    allBodyTexts = driver.findElements(By.xpath(bodyTextXpath));
                 }
                 else{
-                    bodyText = "WARNING: BODYTEXT NOT SPECIFIED";
+                    System.out.println("WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                }
+
+                
+                //add all body text into one string
+                StringBuilder bodyText=new StringBuilder();
+                String tempString;
+                for(WebElement we: allBodyTexts){
+                    try{
+                        tempString = we.getText();
+                        bodyText.append(tempString);
+                    }
+                    catch(Exception ex){
+                        System.out.println("WARNING: allBodyTexts ELEMENTS WENT STALE WHILE TRYING TO GET TEXT FROM THEM");
+                        continue;
+                    }
                 }
 
                 //if this is craigslist, get the contact info
@@ -498,7 +503,7 @@ public class BoardScrub extends CodeBase {
                             imageSrc=i.getAttribute("src");
                             
                             //add result entry image
-                            results.add(new String[] { href, imageSrc, titleText, bodyText });
+                            results.add(new String[] { href, imageSrc, titleText, bodyText.toString() });
                         } 
                         catch (Exception ex) {
                             System.out.println("WARNING: IMAGE WENT STALE");
@@ -513,7 +518,7 @@ public class BoardScrub extends CodeBase {
 
                 //add at least one result entry if no images were found
                 if(imageSrc.isEmpty()){
-                    results.add(new String[] { href, imageSrc, titleText, bodyText });
+                    results.add(new String[] { href, imageSrc, titleText, bodyText.toString() });
                 }                
                 
                 // get a copy of the page DEBUGGING ONLY
@@ -546,7 +551,7 @@ public class BoardScrub extends CodeBase {
         // build web page
         String fileName = "Index-BoardScrub-" + getDateStamp() + ".htm";
         PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-        writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
+        writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>PAGE</a>"));
 
         String oldHref = new String();
         for (String[] entry : results) {
@@ -554,8 +559,7 @@ public class BoardScrub extends CodeBase {
                 oldHref = entry[0];
                 writer.println("<hr size=10>");
                 writer.println("<center>");
-                writer.println("<h2><u>FROM RESULT:</u></h2>");
-                writer.println("<h2><a href='" + oldHref + "' target='_blank'>" + oldHref + "</a></h2>");
+                writer.println("<h2><a href='" + oldHref + "' target='_blank'>LINK</a></h2>");
                 writer.println("</center>");
                 writer.println("<h3>TITLE:</h3><span>" + entry[2] + "</span><br />");
                 writer.println("<h3>BODY:</h3><span>" + entry[3] + "</span><br />");
