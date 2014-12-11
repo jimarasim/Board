@@ -52,6 +52,8 @@ public class BoardScrub extends CodeBase {
             
             //set implicit wait
             driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(defaultImplicitWait, TimeUnit.SECONDS);
+            driver.manage().timeouts().setScriptTimeout(defaultImplicitWait, TimeUnit.SECONDS);
         } 
         catch (InvalidParameterException ipex) {
             Assert.fail("INVALID PARAMETERS FOUND");
@@ -383,7 +385,13 @@ public class BoardScrub extends CodeBase {
             for (String href : urls) {
                 final String targetHref = href;
 
-                driverGetWithTime(href);
+                try{
+                    driverGetWithTime(href);
+                }
+                catch(Exception ex){
+                    System.out.println("WARNING: EXCEPTION GETTING PAGE:"+href+", PROBABLY HUNG... MOVING ON");
+                    continue;
+                }
                 
                 //wait a little bit for everything to load
                 System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES. TODO: FIND LAST ELEMENT LOADED ON THIS PAGE WITH INSPECTOR:"+href);
