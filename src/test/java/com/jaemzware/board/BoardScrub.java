@@ -398,7 +398,7 @@ public class BoardScrub extends CodeBase {
                 Thread.sleep(sleepForPageLoad);
 
                 // check for the title text
-                String titleText;
+                String titleText="";
                 
                 if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
                     try{
@@ -410,14 +410,14 @@ public class BoardScrub extends CodeBase {
                     }
 
                     if (titleText == null) {
-                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
+                        System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL");
                     }
                     else if (titleText.isEmpty()){
-                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS EMPTY";
+                        System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS EMPTY");
                     }
                 }
                 else{
-                    titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms";
+                    System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
                 }
                 
 
