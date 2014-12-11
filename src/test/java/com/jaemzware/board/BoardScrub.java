@@ -565,7 +565,7 @@ public class BoardScrub extends CodeBase {
                 writer.println("<h3>TITLE:</h3><span>" + entry[2] + "</span><br />");
                 writer.println("<h3>BODY:</h3><span>" + entry[3] + "</span><br />");
             }
-            writer.println("<h3>IMAGES:</h3><center><a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a></center><br />");
+            writer.println("<center><a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a></center><br />");
         }
         writer.println(HtmlReportFooter());
 
