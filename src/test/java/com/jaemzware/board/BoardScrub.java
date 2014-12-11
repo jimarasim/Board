@@ -28,7 +28,7 @@ import java.security.InvalidParameterException;
 public class BoardScrub extends CodeBase {
     static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     static Properties properties = new Properties();
-    static final int sleepForGoogleResultsPage = 3000;
+    static final int sleepForPageLoad = 3000;
     
     @Before
     public void BeforeTest() {
@@ -85,7 +85,8 @@ public class BoardScrub extends CodeBase {
             });
             
             //hardcoded wait (i hate these) to avoid stale element references later.
-            Thread.sleep(sleepForGoogleResultsPage);
+            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES. TODO: FIND LAST ELEMENT LOADED ON THIS PAGE WITH INSPECTOR:"+urlWithParms);
+            Thread.sleep(sleepForPageLoad);
      
     }
     
@@ -383,32 +384,32 @@ public class BoardScrub extends CodeBase {
                 final String targetHref = href;
 
                 driverGetWithTime(href);
+                
+                //wait a little bit for everything to load
+                System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES. TODO: FIND LAST ELEMENT LOADED ON THIS PAGE WITH INSPECTOR:"+href);
+                Thread.sleep(sleepForPageLoad);
 
                 // check for the title text
                 String titleText;
-                if(titleTextXpath!=null){
-                    if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
-                        try{
-                            titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
-                        }
-                        catch(Exception ex){
-                            System.out.println("WARNING: STALE ELEMENT REFERENCE WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
-                            break;
-                        }
-                        
-                        if (titleText == null) {
-                            titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
-                        }
-                        else if (titleText.isEmpty()){
-                            titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS EMPTY";
-                        }
+                
+                if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
+                    try{
+                        titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                     }
-                    else{
-                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms";
+                    catch(Exception ex){
+                        System.out.println("WARNING: STALE ELEMENT REFERENCE WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
+                        break;
+                    }
+
+                    if (titleText == null) {
+                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL";
+                    }
+                    else if (titleText.isEmpty()){
+                        titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS EMPTY";
                     }
                 }
                 else{
-                    titleText = "WARNING: TITLETEXT NOT SPECIFIED";
+                    titleText = "WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms";
                 }
                 
 
