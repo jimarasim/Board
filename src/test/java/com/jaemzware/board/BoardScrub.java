@@ -526,7 +526,7 @@ public class BoardScrub extends CodeBase {
                 
 
                 //add at least one result entry if no images were found
-                if(imageSrc.isEmpty()){
+                if(imageSrc!=null && imageSrc.isEmpty()){
                     results.add(new String[] { href, imageSrc, titleText, bodyText.toString() });
                 }                
                 
