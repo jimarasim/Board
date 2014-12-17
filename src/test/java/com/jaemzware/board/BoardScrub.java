@@ -28,7 +28,7 @@ import java.security.InvalidParameterException;
 public class BoardScrub extends CodeBase {
     private static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     private static Properties properties = new Properties();
-    private static final int sleepForPageLoad = 3000;
+    private static final int sleepForPageLoad = 10000;
     
     //url to navigate to 
     private static String url = null;
@@ -72,9 +72,9 @@ public class BoardScrub extends CodeBase {
             StartDriver("../SeleniumCodeBase/SeleniumGrid/");
             
             //set implicit wait
-            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
-            driver.manage().timeouts().pageLoadTimeout(defaultImplicitWait, TimeUnit.SECONDS);
-            driver.manage().timeouts().setScriptTimeout(defaultImplicitWait, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+            driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
         } 
         catch (InvalidParameterException ipex) {
             Assert.fail("INVALID PARAMETERS FOUND");
@@ -459,7 +459,7 @@ public class BoardScrub extends CodeBase {
             });
             
             //hardcoded wait (i hate these) to avoid stale element references later.
-            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES. TODO: FIND LAST ELEMENT LOADED ON THIS PAGE WITH INSPECTOR:"+urlWithParms);
+            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+urlWithParms);
             Thread.sleep(sleepForPageLoad);
      
     }
@@ -485,7 +485,7 @@ public class BoardScrub extends CodeBase {
                 driverGetWithTime(href);
             }
             catch(Exception ex){
-                System.out.println("WARNING: EXCEPTION GETTING PAGE:"+href+", PROBABLY HUNG... MOVING ON");
+                System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
                 continue;
             }
 
