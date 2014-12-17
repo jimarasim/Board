@@ -28,7 +28,6 @@ import java.security.InvalidParameterException;
 public class BoardScrub extends CodeBase {
     private static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     private static Properties properties = new Properties();
-    private static final int sleepForPageLoad = 10000;
     
     //url to navigate to 
     private static String url = null;
@@ -460,7 +459,7 @@ public class BoardScrub extends CodeBase {
             
             //hardcoded wait (i hate these) to avoid stale element references later.
             System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+urlWithParms);
-            Thread.sleep(sleepForPageLoad);
+            Thread.sleep(quickWaitMilliSeconds);
      
     }
     
@@ -490,8 +489,8 @@ public class BoardScrub extends CodeBase {
             }
 
             //wait a little bit for everything to load
-            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES. TODO: FIND LAST ELEMENT LOADED ON THIS PAGE WITH INSPECTOR:"+href);
-            Thread.sleep(sleepForPageLoad);
+//            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES FROM:"+href);
+//            Thread.sleep(sleepForPageLoad);
 
             // check for the title text
             String titleText="";
