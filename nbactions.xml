@@ -5,13 +5,13 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#ResultPlace</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=google</goal>
-                <goal>-Dinput=https://www.google.com/?gws_rd=ssl#q=seattle+rules</goal>
-                <goal>-DaString=seattlerules.com</goal>
-                <goal>-DaNumber=500</goal>
+                <goal>-Denvironment=googlenews</goal>
+                <goal>-Dinput=https://news.google.com/</goal>
                 <goal>-Dnogrid</goal>
+                <goal>-DaNumber=0</goal>
+                
                 
                 
                 
@@ -28,13 +28,13 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#ResultPlace</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
                 <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=google</goal>
-                <goal>-Dinput=https://www.google.com/?gws_rd=ssl#q=pop</goal>
-                <goal>-DaString=pop.com</goal>
-                <goal>-DaNumber=500</goal>
+                <goal>-Denvironment=googlenews</goal>
+                <goal>-Dinput=https://news.google.com/</goal>
                 <goal>-Dnogrid</goal>
+                <goal>-DaNumber=0</goal>
+                
                 
                 
             </goals>

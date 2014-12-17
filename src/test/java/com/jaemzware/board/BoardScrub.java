@@ -488,10 +488,6 @@ public class BoardScrub extends CodeBase {
                 continue;
             }
 
-            //wait a little bit for everything to load
-//            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES FROM:"+href);
-//            Thread.sleep(sleepForPageLoad);
-
             // check for the title text
             String titleText="";
 
