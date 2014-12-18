@@ -21,6 +21,7 @@ import com.jaemzware.seleniumcodebase.CodeBase;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author jaemzware@hotmail.com
@@ -51,6 +52,8 @@ public class BoardScrub extends CodeBase {
     private static int maxVisits=0;
     //target url to look for
     private static String targetUrl=null;
+    //whether or not to show images
+    private static Boolean showImages=true;
     
     @Before
     public void BeforeTest() {
@@ -236,6 +239,14 @@ public class BoardScrub extends CodeBase {
         if (targetUrl == null) {
             throw new Exception("TARGET NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
         }   
+    }
+    
+    /**
+     * This method sets the showImages according to the noImages command line parameter
+     * @throws Exception 
+     */
+    private void SetShowImagesCommandLineParameter() throws Exception{
+        showImages=StringUtils.isEmpty(System.getProperty("noImages"));
     }
     
     /**
