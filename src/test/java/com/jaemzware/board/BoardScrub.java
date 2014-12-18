@@ -248,7 +248,7 @@ public class BoardScrub extends CodeBase {
      * @throws Exception 
      */
     private void SetShowImagesCommandLineParameter() throws Exception{
-        showImages=!StringUtils.isEmpty(System.getProperty("noImages"));
+        showImages=StringUtils.isEmpty(System.getProperty("noImages"));
     }
     
     /**
@@ -638,23 +638,25 @@ public class BoardScrub extends CodeBase {
 
             // check for images
             String imageSrc = "";
-            if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
-                // add images to images list
-                List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
-                for (WebElement i : imageElements) {
-                    try {
-                        imageSrc=i.getAttribute("src");
+            if(showImages){
+                if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
+                    // add images to images list
+                    List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    for (WebElement i : imageElements) {
+                        try {
+                            imageSrc=i.getAttribute("src");
 
-                        //add result entry image
-                        results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
-                    } 
-                    catch (Exception ex) {
-                        System.out.println("WARNING: IMAGE WENT STALE");
+                            //add result entry image
+                            results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                        } 
+                        catch (Exception ex) {
+                            System.out.println("WARNING: IMAGE WENT STALE");
+                        }
                     }
                 }
-            }
-            else{
-                System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                else{
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                }
             }
 
 

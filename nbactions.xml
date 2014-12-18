@@ -10,7 +10,9 @@
                 <goal>-Denvironment=googlenews</goal>
                 <goal>-Dinput=https://news.google.com/</goal>
                 <goal>-Dnogrid</goal>
+                <goal>-DnoImages</goal>
                 <goal>-DaNumber=5</goal>
+                <goal>-DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/</goal>
                 
                 
                 
@@ -34,7 +36,9 @@
                 <goal>-Denvironment=googlenews</goal>
                 <goal>-Dinput=https://news.google.com/</goal>
                 <goal>-Dnogrid</goal>
+                <goal>-DnoImages</goal>
                 <goal>-DaNumber=5</goal>
+                <goal>-DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/</goal>
                 
                 
                 
