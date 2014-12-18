@@ -59,13 +59,18 @@
     </dependency>
   </dependencies>
 <!-- #
-
+BUILDPAGEOFFOUNDLINKSVIAREST-REQUIRED PARAMETERS:
+    -Dtest
+    -Dbrowser
+    -Denvironment   web site that -Dinput is specific to. e.g. ebay,craigslist,backpage,tnaboard
+    -Dinput         search string that brings up a page of links to visit
+    -DaString       path to work space
 BUILDPAGEOFFOUNDLINKS-REQUIRED PARAMETERS:
     -Dtest
     -Dbrowser
     -Denvironment   web site that -Dinput is specific to. e.g. ebay,craigslist,backpage,tnaboard
-    -Dinput         search string that brings up a page of links to visit]
-BUILDPAGEOFFOUNDLINKS-OPTIONAL PARAMETERS:
+    -Dinput         search string that brings up a page of links to visit
+BUILDPAGEOFFOUNDLINKS/BUILDPAGEOFFOUNDLINKSVIAREST-OPTIONAL PARAMETERS:
     -DaNumber       integer- maximum number of links to visit. 0 or unspecified means all]
     -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
     -DaHubPort      port to use for selenium grid server, when not 4444
@@ -83,13 +88,15 @@ BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 test
 BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 test
+BUILDPAGEOFFOUNDLINKSVIAREST
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=5 -DaString=/Users/jameskarasim/Documents/STATIC/jaemzware/java/Board/ test
 
 RESULTPLACE-REQUIRED PARMETERS:
     -Dtest
     -Dbrowser
     -Denvironment   web site that -Dinput is specific to. e.g. google
-    -Dinput
-    -DaString
+    -Dinput - query to get results
+    -DaString - target url to look for in results
 RESULTPLACE-OPTIONAL PARAMETERS:
     -DaNumber       maximum of RESULTS to cycle through while paging. 0 or unspecified means all
     -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
@@ -97,7 +104,7 @@ RESULTPLACE-OPTIONAL PARAMETERS:
     -DaHubServer    port to use for selenium grid server, when not localhost
 RESULTPLACE-NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=0 -Dnogrid test
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=500 -Dnogrid test
+    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=0 -Dnogrid test
 RESULTPLACE-GRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 test
 RESULTPLACE-NETBEANS DEBUG SAMPLES:

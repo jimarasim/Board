@@ -5,12 +5,13 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinksViaRest</goal>
                 <goal>-Dbrowser=CHROME</goal>
                 <goal>-Denvironment=googlenews</goal>
                 <goal>-Dinput=https://news.google.com/</goal>
                 <goal>-Dnogrid</goal>
-                <goal>-DaNumber=0</goal>
+                <goal>-DaNumber=5</goal>
+                
                 
                 
                 
@@ -28,12 +29,13 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinksViaRest</goal>
                 <goal>-Dbrowser=CHROME</goal>
                 <goal>-Denvironment=googlenews</goal>
                 <goal>-Dinput=https://news.google.com/</goal>
                 <goal>-Dnogrid</goal>
-                <goal>-DaNumber=0</goal>
+                <goal>-DaNumber=5</goal>
+                
                 
                 
                 
