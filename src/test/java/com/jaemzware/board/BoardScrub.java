@@ -144,8 +144,8 @@ public class BoardScrub extends CodeBase {
 
         } catch (Exception ex) {
             ScreenShot();
-            System.out.println("BuildPageOfFoundLinks EXCEPTION MESSAGE:"+ex.getMessage());
-            CustomStackTrace("BuildPageOfFoundLinks EXCEPTION TRACE", ex);
+            System.out.println("BuildPageOfFoundLinksViaRest EXCEPTION MESSAGE:"+ex.getMessage());
+            CustomStackTrace("BuildPageOfFoundLinksViaRest EXCEPTION TRACE", ex);
             Assert.fail(ex.getMessage());
         }
     }
@@ -442,6 +442,8 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
+                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
+                Thread.sleep(quickWaitMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
@@ -561,6 +563,8 @@ public class BoardScrub extends CodeBase {
                 
                 
                 driverGetWithTime(rawHtmlLocalFile);
+                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
+                Thread.sleep(quickWaitMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
