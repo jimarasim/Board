@@ -231,15 +231,15 @@ public class BoardScrub extends CodeBase {
      */
     private void SetTargetUrlCommandLineParameter() throws Exception{
         // get target result link string to look for
-        if (aString != null) {
+        if (!StringUtils.isEmpty(aString)) {
             targetUrl = aString;
         } else {
             throw new Exception("URL NOT SPECIFIED (-DaString)");
         }
 
         // MAKE SURE IT'S BEEN SPECIFIED
-        if (targetUrl == null) {
-            throw new Exception("TARGET NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+        if (StringUtils.isEmpty(targetUrl)) {
+            throw new Exception("TARGET URL SPECIFIED BUT EMPTY");
         }   
     }
     
