@@ -433,8 +433,8 @@ public class BoardScrub extends CodeBase {
             });
             
             //hardcoded wait (i hate these) to avoid stale element references later.
-            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+urlWithParms);
-            Thread.sleep(quickWaitMilliSeconds);
+            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+waitForPageLoadMilliSeconds+"ms");
+            Thread.sleep(waitForPageLoadMilliSeconds);
      
     }
     
@@ -455,8 +455,8 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
-                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
-                Thread.sleep(quickWaitMilliSeconds);
+                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
+                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
@@ -578,8 +578,8 @@ public class BoardScrub extends CodeBase {
                 
                 
                 driverGetWithTime(rawHtmlLocalFile);
-                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
-                Thread.sleep(quickWaitMilliSeconds);
+                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
+                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
