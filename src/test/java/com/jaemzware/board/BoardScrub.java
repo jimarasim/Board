@@ -99,6 +99,7 @@ public class BoardScrub extends CodeBase {
             // get command line parameters
             SetUrlCommandLineParameter(); 
             SetMaxVisitsCommandLineParameter();
+            SetShowImagesCommandLineParameter();
             
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
@@ -130,6 +131,7 @@ public class BoardScrub extends CodeBase {
             SetUrlCommandLineParameter(); 
             SetMaxVisitsCommandLineParameter();
             SetTargetUrlCommandLineParameter();
+            SetShowImagesCommandLineParameter();
             
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
@@ -229,15 +231,15 @@ public class BoardScrub extends CodeBase {
      */
     private void SetTargetUrlCommandLineParameter() throws Exception{
         // get target result link string to look for
-        if (aString != null) {
+        if (!StringUtils.isEmpty(aString)) {
             targetUrl = aString;
         } else {
             throw new Exception("URL NOT SPECIFIED (-DaString)");
         }
 
         // MAKE SURE IT'S BEEN SPECIFIED
-        if (targetUrl == null) {
-            throw new Exception("TARGET NOT SPECIFIED NOR FOUND IN PROPERTIES FILE");
+        if (StringUtils.isEmpty(targetUrl)) {
+            throw new Exception("TARGET URL SPECIFIED BUT EMPTY");
         }   
     }
     
@@ -431,8 +433,8 @@ public class BoardScrub extends CodeBase {
             });
             
             //hardcoded wait (i hate these) to avoid stale element references later.
-            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+urlWithParms);
-            Thread.sleep(quickWaitMilliSeconds);
+            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+waitForPageLoadMilliSeconds+"ms");
+            Thread.sleep(waitForPageLoadMilliSeconds);
      
     }
     
@@ -453,8 +455,8 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
-                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
-                Thread.sleep(quickWaitMilliSeconds);
+                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
+                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
@@ -512,23 +514,25 @@ public class BoardScrub extends CodeBase {
 
             // check for images
             String imageSrc = "";
-            if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
-                // add images to images list
-                List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
-                for (WebElement i : imageElements) {
-                    try {
-                        imageSrc=i.getAttribute("src");
+            if(showImages){
+                if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
+                    // add images to images list
+                    List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    for (WebElement i : imageElements) {
+                        try {
+                            imageSrc=i.getAttribute("src");
 
-                        //add result entry image
-                        results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
-                    } 
-                    catch (Exception ex) {
-                        System.out.println("WARNING: IMAGE WENT STALE");
+                            //add result entry image
+                            results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                        } 
+                        catch (Exception ex) {
+                            System.out.println("WARNING: IMAGE WENT STALE");
+                        }
                     }
                 }
-            }
-            else{
-                System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                else{
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                }
             }
 
 
@@ -574,8 +578,8 @@ public class BoardScrub extends CodeBase {
                 
                 
                 driverGetWithTime(rawHtmlLocalFile);
-                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
-                Thread.sleep(quickWaitMilliSeconds);
+                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
+                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
@@ -604,12 +608,12 @@ public class BoardScrub extends CodeBase {
             }
             else{
                 System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
-                ScreenShot();
+                
             }
 
 
             // check for the body text
-            List<WebElement> allBodyTexts = new ArrayList<WebElement>();
+            List<WebElement> allBodyTexts = new ArrayList<>();
 
             if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
                 allBodyTexts = driver.findElements(By.xpath(bodyTextXpath));
@@ -635,23 +639,25 @@ public class BoardScrub extends CodeBase {
 
             // check for images
             String imageSrc = "";
-            if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
-                // add images to images list
-                List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
-                for (WebElement i : imageElements) {
-                    try {
-                        imageSrc=i.getAttribute("src");
+            if(showImages){
+                if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
+                    // add images to images list
+                    List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    for (WebElement i : imageElements) {
+                        try {
+                            imageSrc=i.getAttribute("src");
 
-                        //add result entry image
-                        results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
-                    } 
-                    catch (Exception ex) {
-                        System.out.println("WARNING: IMAGE WENT STALE");
+                            //add result entry image
+                            results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                        } 
+                        catch (Exception ex) {
+                            System.out.println("WARNING: IMAGE WENT STALE");
+                        }
                     }
                 }
-            }
-            else{
-                System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                else{
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                }
             }
 
 
