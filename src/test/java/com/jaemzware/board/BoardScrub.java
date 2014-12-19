@@ -578,8 +578,8 @@ public class BoardScrub extends CodeBase {
                 rawHtmlLocalFile = targetUrl + WriteHtmlContentToFile(rawHtml);
                 
                 driverGetWithTime(rawHtmlLocalFile);
-//                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
-//                Thread.sleep(waitForPageLoadMilliSeconds);
+                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
+                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
