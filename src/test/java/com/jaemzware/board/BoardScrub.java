@@ -574,7 +574,10 @@ public class BoardScrub extends CodeBase {
                 rawHtml = HttpGetReturnResponse(href);
                 
                 //write it to a file
+                
                 rawHtmlLocalFile = targetUrl + WriteHtmlContentToFile(rawHtml);
+                
+                System.out.println("rawHtmlLocalFile:"+rawHtmlLocalFile);
                 
                 
                 driverGetWithTime(rawHtmlLocalFile);
