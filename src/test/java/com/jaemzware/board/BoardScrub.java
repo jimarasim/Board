@@ -608,7 +608,7 @@ public class BoardScrub extends CodeBase {
             }
             else{
                 System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
-                ScreenShot();
+                
             }
 
 
