@@ -577,9 +577,6 @@ public class BoardScrub extends CodeBase {
                 
                 rawHtmlLocalFile = targetUrl + WriteHtmlContentToFile(rawHtml);
                 
-                System.out.println("rawHtmlLocalFile:"+rawHtmlLocalFile);
-                
-                
                 driverGetWithTime(rawHtmlLocalFile);
                 System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
                 Thread.sleep(waitForPageLoadMilliSeconds);
