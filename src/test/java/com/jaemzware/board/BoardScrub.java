@@ -455,8 +455,8 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
-                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
-                Thread.sleep(waitForPageLoadMilliSeconds);
+//                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
+//                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
