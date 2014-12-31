@@ -91,6 +91,7 @@ BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 test
 BUILDPAGEOFFOUNDLINKS-APPIUM SAMPLE:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=3 -DaHubPort=4723 -DaHubServer=localhost test
 BUILDPAGEOFFOUNDLINKSVIAREST-NOGRID,NOIMAGES
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=5 -DaString=/Users/jameskarasim/Documents/STATIC/jaemzware/java/Board/ test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DnoImages -DaNumber=5 -DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/ test
