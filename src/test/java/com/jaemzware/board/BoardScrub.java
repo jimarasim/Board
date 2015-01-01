@@ -523,7 +523,7 @@ public class BoardScrub extends CodeBase {
                             imageSrc=i.getAttribute("src");
 
                             //add result entry image
-                            results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                            results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()) });
                         } 
                         catch (Exception ex) {
                             System.out.println("WARNING: IMAGE WENT STALE");
@@ -539,7 +539,7 @@ public class BoardScrub extends CodeBase {
 
             //add at least one result entry if no images were found
             if(imageSrc!=null && imageSrc.isEmpty()){
-                results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString())});
             }                
 
             //check the desired image count, and break if it's been reached
@@ -648,7 +648,7 @@ public class BoardScrub extends CodeBase {
                             imageSrc=i.getAttribute("src");
 
                             //add result entry image
-                            results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                            results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString())});
                         } 
                         catch (Exception ex) {
                             System.out.println("WARNING: IMAGE WENT STALE");
@@ -664,7 +664,7 @@ public class BoardScrub extends CodeBase {
 
             //add at least one result entry if no images were found
             if(imageSrc!=null && imageSrc.isEmpty()){
-                results.add(new String[] { href, imageSrc, titleText, bodyText.toString().substring(0, 1000) });
+                results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()) });
             }                
 
             //check the desired image count, and break if it's been reached
@@ -675,6 +675,20 @@ public class BoardScrub extends CodeBase {
         }
         
        return results;
+    }
+    
+    /**
+     * This method shortens a string to 1000 characters or less.  Created to deal with error of trying to shorten a string to 1000 characters, that was shorter than 1000 characters
+     * @param stringToTrim - string to trim to less than 1000 characters, if it has 1000 characters
+     * @return 
+     */
+    private String LessThan1000CharString(String stringToTrim){
+        if(stringToTrim.length()<1000){
+            return stringToTrim;
+        }
+        else{
+            return stringToTrim.substring(0,999);
+        }
     }
     
     private List<Integer> GetResultPlacesOfTarget() throws Exception{
