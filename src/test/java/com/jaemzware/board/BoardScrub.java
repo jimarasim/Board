@@ -100,6 +100,7 @@ public class BoardScrub extends CodeBase {
             SetUrlCommandLineParameter(); 
             SetMaxVisitsCommandLineParameter();
             SetShowImagesCommandLineParameter();
+            //waitForPageLoadMilliSeconds
             
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
@@ -347,26 +348,29 @@ public class BoardScrub extends CodeBase {
     {
         // build web page
         String fileName = "Index-BoardScrub-" + getDateStamp() + ".htm";
-        PrintWriter writer = new PrintWriter(fileName, "UTF-8");
-        writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>PAGE</a>"));
-
-        String oldHref = new String();
-        for (String[] entry : results) {
-            if (!oldHref.equals(entry[0])) {
-                oldHref = entry[0];
-                writer.println("<hr size=10>");
-                writer.println("<center>");
-                writer.println("<h2><a href='" + oldHref + "' target='_blank'>Article</a></h2>");
-                writer.println("</center>");
-                writer.println("<span>" + entry[2] + "</span><br />");
-                writer.println("<span>" + entry[3] + "</span><br />");
+        try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
+            writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>PAGE</a>"));
+            
+            String oldHref = new String();
+            for (String[] entry : results) {
+                if (!oldHref.equals(entry[0])) {
+                    oldHref = entry[0];
+                    writer.println("<hr size=10>");
+                    writer.println("<center>");
+                    writer.println("<h2><a href='" + oldHref + "' target='_blank'>Article</a></h2>");
+                    writer.println("</center>");
+                    writer.println("<span>" + entry[2] + "</span><br />");
+                    writer.println("<span>" + entry[3] + "</span><br />");
+                }
+                writer.println("<center><a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a></center><br />");
             }
-            writer.println("<center><a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a></center><br />");
+            writer.println(HtmlReportFooter());
+            
+            writer.flush();
         }
-        writer.println(HtmlReportFooter());
-
-        writer.flush();
-        writer.close();
+        catch(Exception ex){
+            throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
+        }
 
         System.out.println("INDEX FILE WRITTEN:" + "http://50.251.226.90:8081/job/Board%20-%20BoardScrub/ws/" + fileName);
         System.out.println("INDEX FILE COPIED:" + jenkinsReportPath + fileName);
@@ -455,8 +459,6 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
-//                System.out.println("HARDCODED SLEEP FOR "+waitForPageLoadMilliSeconds+"ms");
-//                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
@@ -574,12 +576,10 @@ public class BoardScrub extends CodeBase {
                 rawHtml = HttpGetReturnResponse(href);
                 
                 //write it to a file
-                
                 rawHtmlLocalFile = targetUrl + WriteHtmlContentToFile(rawHtml);
                 
+                //load the page locally
                 driverGetWithTime(rawHtmlLocalFile);
-                System.out.println("HARDCODED SLEEP FOR "+quickWaitMilliSeconds+"ms");
-                Thread.sleep(quickWaitMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
