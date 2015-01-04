@@ -356,10 +356,10 @@ public class BoardScrub extends CodeBase {
                 oldHref = entry[0];
                 writer.println("<hr size=10>");
                 writer.println("<center>");
-                writer.println("<h2><a href='" + oldHref + "' target='_blank'>LINK</a></h2>");
+                writer.println("<h2><a href='" + oldHref + "' target='_blank'>Article</a></h2>");
                 writer.println("</center>");
-                writer.println("<h3>TITLE:</h3><span>" + entry[2] + "</span><br />");
-                writer.println("<h3>BODY:</h3><span>" + entry[3] + "</span><br />");
+                writer.println("<span>" + entry[2] + "</span><br />");
+                writer.println("<span>" + entry[3] + "</span><br />");
             }
             writer.println("<center><a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a></center><br />");
         }
