@@ -5,14 +5,14 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinksViaRest</goal>
-                <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=googlenews</goal>
-                <goal>-Dinput=https://news.google.com/</goal>
-                <goal>-Dnogrid</goal>
-                <goal>-DnoImages</goal>
-                <goal>-DaNumber=5</goal>
-                <goal>-DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
+                <goal>-Dbrowser=APPIUM</goal>
+                <goal>-Denvironment=bbc</goal>
+                <goal>-Dinput="http://www.bbc.com/news/world/us_and_canada/"</goal>
+                <goal>-DaNumber=0</goal>
+                <goal>-DaHubPort=4723</goal>
+                <goal>-DaHubServer=localhost</goal>
+                
                 
                 
                 
@@ -31,14 +31,14 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinksViaRest</goal>
-                <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=googlenews</goal>
-                <goal>-Dinput=https://news.google.com/</goal>
-                <goal>-Dnogrid</goal>
-                <goal>-DnoImages</goal>
-                <goal>-DaNumber=5</goal>
-                <goal>-DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/</goal>
+                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
+                <goal>-Dbrowser=APPIUM</goal>
+                <goal>-Denvironment=bbc</goal>
+                <goal>-Dinput="http://www.bbc.com/news/world/us_and_canada/"</goal>
+                <goal>-DaNumber=0</goal>
+                <goal>-DaHubPort=4723</goal>
+                <goal>-DaHubServer=localhost</goal>
+                
                 
                 
                 

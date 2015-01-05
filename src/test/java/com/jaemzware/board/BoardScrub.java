@@ -400,8 +400,8 @@ public class BoardScrub extends CodeBase {
         // make sure there are some links
         System.out.println("CHECKING FOR RESULTS");
 
-        if (!IsElementPresent(By.xpath(linkXpath), waitForPageLoadMilliSeconds)) {
-            throw new Exception("COULDNT FIND ANY RESULTS ON: "+url+" WITH XPATH:"+linksLoadedIndicatorXpath);
+        if (!IsElementPresent(By.xpath(linkXpath))) {
+            throw new Exception("COULDNT FIND ANY RESULTS ON: "+url+" WITH XPATH:"+linkXpath);
         }
 
 // GET THE links
@@ -410,7 +410,7 @@ public class BoardScrub extends CodeBase {
         List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
 
         // store off the hrefs
-        System.out.println("SAVING RESULT LINKS");
+        System.out.println("SAVING RESULT LINKS. COUNT:"+webElements.size());
 
         for (WebElement we : webElements) {
             urls.add(we.getAttribute("href"));
