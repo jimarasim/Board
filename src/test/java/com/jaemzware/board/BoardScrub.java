@@ -400,8 +400,8 @@ public class BoardScrub extends CodeBase {
         // make sure there are some links
         System.out.println("CHECKING FOR RESULTS");
 
-        if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
-            throw new Exception("COULDN'T FIND ANY RESULTS");
+        if (!IsElementPresent(By.xpath(linkXpath), waitForPageLoadMilliSeconds)) {
+            throw new Exception("COULDNT FIND ANY RESULTS ON: "+url+" WITH XPATH:"+linksLoadedIndicatorXpath);
         }
 
 // GET THE links

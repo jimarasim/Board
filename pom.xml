@@ -94,6 +94,7 @@ BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
 BUILDPAGEOFFOUNDLINKS-APPIUM SAMPLE:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=3 -DaHubPort=4723 -DaHubServer=localhost test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitForPageLoadMilliSeconds=10000 test
 BUILDPAGEOFFOUNDLINKSVIAREST-NOGRID,NOIMAGES
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=5 -DaString=/Users/jameskarasim/Documents/STATIC/jaemzware/java/Board/ test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DnoImages -DaNumber=5 -DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/ test
