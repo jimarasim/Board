@@ -736,8 +736,14 @@ public class BoardScrub extends CodeBase {
             String linkText;
             for(int i=0;i<webElements.size();i++){
 
+                try{
                 linkHref=webElements.get(i).getAttribute("href");
                 linkText=webElements.get(i).getText();
+                }
+                catch(Exception ex){
+                    System.out.println("WARNING: EXCEPTION WHILE GETTING HREFS:"+ex.getMessage());
+                    break;
+                }
 
                 if(linkHref.contains(targetUrl)){
                     //report the link position with the first result offset
