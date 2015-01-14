@@ -134,7 +134,8 @@ public class BoardScrub extends CodeBase {
                     continueProcessing=false;
                 }
                 else if(!IsElementPresent(By.xpath(nextLinkXpath),waitForPageLoadMilliSeconds)||
-                        !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()){
+                        !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()||
+                        !driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()){
                     System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
 
                     //there is no next link, we're done, tell the while loop to stop
@@ -510,6 +511,7 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
+                Thread.sleep(waitForPageLoadMilliSeconds);
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
