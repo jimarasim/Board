@@ -95,24 +95,71 @@ public class BoardScrub extends CodeBase {
     @Test
     public void BuildPageOfFoundLinks() {
         try {
-
             // get command line parameters
             SetUrlCommandLineParameter(); 
             SetMaxVisitsCommandLineParameter();
             SetShowImagesCommandLineParameter();
-            //waitForPageLoadMilliSeconds
             
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
             
-            //get all the links on the target url
-            List<String> links = 
-                    GetLinksOnPage(); 
+            String currentContentPageUrl = url;  //used to navigate to next page
+            int numCurrentPageFirstResult=1; //used to track max visits
+            Boolean continueProcessing = true; //used to track if we should keep paging
+            List<String[]> contents = new ArrayList(); //contents collected from each page
             
-            //get conent from the links
-            List<String[]> contents = 
-                    GetContentFromLinks(links); 
+            //go to the first page
+            driverGetWithTime(url);
+            
+//PAGE THROUGH ALL RESULTS
+            while(continueProcessing){
+                //get all the links on the target url
+                List<String> links = GetLinksOnPage(); 
 
+                //get conent from the links
+                List<String[]> contentsOnCurrentPage=GetContentFromLinks(links);
+                contents.addAll(contentsOnCurrentPage); 
+                
+        //PAGING
+                //go back to content page with results just collected
+                driverGetWithTime(currentContentPageUrl);
+                
+                //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
+                numCurrentPageFirstResult += contentsOnCurrentPage.size();
+                
+                if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
+                    System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+maxVisits);
+
+                    //tell the loop to stop
+                    continueProcessing=false;
+                }
+                else if(!IsElementPresent(By.xpath(nextLinkXpath),waitForPageLoadMilliSeconds)||
+                        !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()){
+                    System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
+
+                    //there is no next link, we're done, tell the while loop to stop
+                    continueProcessing=false;
+                }
+                else{
+
+                    //GET NEXT page link
+                    WebElement nextPageLink = driver.findElement(By.xpath(nextLinkXpath));
+                    
+                    //GOING TO NEXT PAGE MESSAGE
+                    System.out.println("GOING TO NEXT PAGE:"+nextPageLink.getAttribute("href"));
+                    
+                    //GO TO THE NEXT PAGE
+                    nextPageLink.click();
+
+                    //WAIT FOR NEW RESULTS PAGE TO LOAD
+                    WaitForPageChange(currentContentPageUrl);
+                    
+                    //update the current page url
+                    currentContentPageUrl = driver.getCurrentUrl();
+
+                }
+            }
+            
             //generate a page of the contents
             WriteContentsToWebPage(contents);
 
@@ -136,6 +183,9 @@ public class BoardScrub extends CodeBase {
             
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
+            
+            //go to the first page
+            driverGetWithTime(url);
             
             //get all the links on the target url
             List<String> links = 
@@ -266,10 +316,14 @@ public class BoardScrub extends CodeBase {
             // xpath of images to gather after following each link
             imageXpath = properties.getProperty(environment.toString() + ".imageXpath");
 
-            // xpath of text to gather after following each link
+            // xpath of title text to gather after following each link
             titleTextXpath = properties.getProperty(environment.toString() + ".titleTextXpath");
             
+            //xpath of something to retrieve from the body
             bodyTextXpath = properties.getProperty(environment.toString() + ".bodyTextXpath"); 
+            
+            //xpath of the next link, for paging
+            nextLinkXpath = properties.getProperty(environment.toString() + ".nextLinkXpath"); 
 
             // CHECK FOR REQUIRED PARAMETERS
             if (linksLoadedIndicatorXpath == null) {
@@ -387,8 +441,6 @@ public class BoardScrub extends CodeBase {
         // list for links
         List<String> urls = new ArrayList<>();
         
-        driverGetWithTime(url);
-
         // wait for links to be loaded
         (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
             @Override
@@ -422,10 +474,9 @@ public class BoardScrub extends CodeBase {
     /**
      * This method waits for the google search page to change, when paging through results
      * @param oldValue - old value of what should be at resultStatsTextXpath
-     * @param urlWithParms - informational only just used to print out to console, what page is being loaded
      * @throws Exception 
      */
-    private void WaitForGoogleResultsPageChange(String oldUrl, String urlWithParms) throws Exception{
+    private void WaitForPageChange(String oldUrl) throws Exception{
             final String waitTillUrlIsNot=oldUrl; //string to wait for to change when the page is loaded
             
             // wait for links to be loaded by waiting for the resultStatsText to change
@@ -694,7 +745,7 @@ public class BoardScrub extends CodeBase {
     private List<Integer> GetResultPlacesOfTarget() throws Exception{
         List<Integer>resultPlacesOfTarget = new ArrayList<>(); 
         int numResultsOnPage = 100;
-        int numCurrentPageFirstResult=1;
+        int numCurrentPageFirstResult=1;  //used to track
         
         //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
         String urlWithParms = url + 
@@ -707,7 +758,7 @@ public class BoardScrub extends CodeBase {
 
         String oldUrl=driver.getCurrentUrl();
         driverGetWithTime(urlWithParms);
-        WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
+        WaitForPageChange(oldUrl);
 
         Boolean continueProcessing = true;
 
@@ -756,7 +807,7 @@ public class BoardScrub extends CodeBase {
 
 //CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
 
-            //SET FIRST RESULT TO BE ON THE NEXT PAGE OF RESULTS
+            //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
             numCurrentPageFirstResult += numResultsOnPage;
 
             if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
@@ -792,7 +843,7 @@ public class BoardScrub extends CodeBase {
                 driverGetWithTime(urlWithParms);
 
                 //WAIT FOR NEW RESULTS PAGE TO LOAD
-                WaitForGoogleResultsPageChange(oldUrl,urlWithParms);
+                WaitForPageChange(oldUrl);
 
             }
         }
