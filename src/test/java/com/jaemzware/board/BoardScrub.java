@@ -167,7 +167,7 @@ public class BoardScrub extends CodeBase {
             ScreenShot();
             System.out.println("BuildPageOfFoundLinks EXCEPTION MESSAGE:"+ex.getMessage());
             CustomStackTrace("BuildPageOfFoundLinks EXCEPTION TRACE", ex);
-            Assert.fail(ex.getMessage());
+            Assert.fail("BuildPageOfFoundLinks EXCEPTION MESSAGE:"+ex.getMessage());
         }
     }
     
@@ -519,7 +519,8 @@ public class BoardScrub extends CodeBase {
             // check for the title text
             String titleText="";
 
-            if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
+            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitForPageLoadMilliSeconds+"ms");
+            if (IsElementPresent(By.xpath(titleTextXpath), waitForPageLoadMilliSeconds)) {
                 try{
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }
@@ -641,7 +642,8 @@ public class BoardScrub extends CodeBase {
             // check for the title text
             String titleText="";
 
-            if (IsElementPresent(By.xpath(titleTextXpath), quickWaitMilliSeconds)) {
+            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitForPageLoadMilliSeconds+"ms");
+            if (IsElementPresent(By.xpath(titleTextXpath), waitForPageLoadMilliSeconds)) {
                 try{
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }

@@ -120,6 +120,13 @@ RESULTPLACE-NETBEANS DEBUG SAMPLES:
     test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=pop -DaString=pop.com -DaNumber=500 -Dnogrid
     test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=seattle+rules -DaString=seattlerules.com -DaNumber=500 -Dnogrid
     
+    
+    
+    
+    
+    
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -DaHubPort=4445 -DaHubServer="http://10.1.10.156" -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=new+york+city -DaNumber=0 -DwaitForPageLoadMilliSeconds=5000 test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOX -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=new+york+city -DaNumber=0 -DwaitForPageLoadMilliSeconds=5000 -Dnogrid test
   -->
 </project>
 
