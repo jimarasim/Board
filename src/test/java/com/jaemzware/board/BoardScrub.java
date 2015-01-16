@@ -117,10 +117,12 @@ public class BoardScrub extends CodeBase {
                 List<String> links = GetLinksOnPage(); 
 
                 //get conent from the links
-                List<String[]> contentsOnCurrentPage=GetContentFromLinks(links);
+                List<String[]> contentsOnCurrentPage
+                        =GetContentFromLinks(links);
+                
                 contents.addAll(contentsOnCurrentPage); 
                 
-        //PAGING
+        //PAGING LOGIC
                 //go back to content page with results just collected
                 driverGetWithTime(currentContentPageUrl);
                 
