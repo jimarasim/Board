@@ -77,9 +77,9 @@ BUILDPAGEOFFOUNDLINKS/BUILDPAGEOFFOUNDLINKSVIAREST-OPTIONAL PARAMETERS:
     -DaHubPort      port to use for selenium grid server, when not 4444
     -DaHubServer    port to use for selenium grid server, when not localhost
     -DwaitForPageLoadMilliSeconds   time to wait after a page has loaded. 
-BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
+BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:    
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=300 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=3 -DwaitForPageLoadMilliSeconds=5000 test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=20000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/search/w4m?hasPic=1" -DaNumber=0 -Dnogrid test
@@ -95,7 +95,7 @@ BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
 BUILDPAGEOFFOUNDLINKS-APPIUM SAMPLE:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=3 -DaHubPort=4723 -DaHubServer=localhost test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitForPageLoadMilliSeconds=10000 test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUM -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitForPageLoadMilliSeconds=20000 test
 BUILDPAGEOFFOUNDLINKSVIAREST-NOGRID,NOIMAGES
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=5 -DaString=/Users/jameskarasim/Documents/STATIC/jaemzware/java/Board/ test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DnoImages -DaNumber=5 -DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/ test
