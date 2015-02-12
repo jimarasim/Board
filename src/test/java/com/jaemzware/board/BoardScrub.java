@@ -514,6 +514,9 @@ public class BoardScrub extends CodeBase {
             try{
                 driverGetWithTime(href);
                 Thread.sleep(waitForPageLoadMilliSeconds);
+                
+                //scroll page
+                ScrollPage();
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
