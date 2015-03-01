@@ -504,6 +504,7 @@ public class BoardScrub extends CodeBase {
      * @return
      * @throws Exception 
      */
+    @SuppressWarnings("SleepWhileInLoop")
     private List<String[]> GetContentFromLinks(List<String> links) throws Exception{
     
 
