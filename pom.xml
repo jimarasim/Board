@@ -82,10 +82,8 @@ BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=30000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=300 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?137-ID-Provider-Ads&s=&pp=30&prefixid=boise&field_dvb_service_type=Escort" -Dnogrid -DaNumber=100 -DwaitForPageLoadMilliSeconds=7000 test    
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/search/w4m?hasPic=1" -DaNumber=0 -Dnogrid test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://boise.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=0 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://portland.craigslist.org/search/mca?query=shadow+750&hasPic=1#list" -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
@@ -129,6 +127,7 @@ MISC
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOX -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=new+york+city -DaNumber=0 -DwaitForPageLoadMilliSeconds=5000 -Dnogrid test    
 APPIUM RUNNING ON LOCALHOST
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaHubPort=4723 -DaHubServer=localhost -DaNumber=0 test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaHubPort=4723 -DaHubServer=localhost test
 
   -->
 </project>
