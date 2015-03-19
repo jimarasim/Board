@@ -74,9 +74,11 @@ BUILDPAGEOFFOUNDLINKS/BUILDPAGEOFFOUNDLINKSVIAREST-OPTIONAL PARAMETERS:
     -DnoImages      dont look for images
     -DaNumber       integer- maximum number of links to visit. 0 or unspecified means all]
     -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
-    -DaHubPort      port to use for selenium grid server, when not 4444
-    -DaHubServer    port to use for selenium grid server, when not localhost
+    -DaHubPort      port to use for selenium grid server, when not 4444, like 4723 for appium
+    -DaHubServer    port to use for selenium grid server or appium, when not localhost
     -DwaitForPageLoadMilliSeconds   time to wait after a page has loaded. 
+    -DappiumApp     path to ios app ipa file, if using appium to test a native app APPIUMSIMULATORAPPSCRATCH APPIUMDEVICEAPPSCRATCH
+    -DappiumUdid    path to ios device udid, if using appium ot test a device instead of a simulator APPIUMDEVICEAPPSCRATCH
 BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:    
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=5000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=30000 test
@@ -111,9 +113,11 @@ RESULTPLACE-REQUIRED PARMETERS:
 RESULTPLACE-OPTIONAL PARAMETERS:
     -DaNumber       maximum of RESULTS to cycle through while paging. 0 or unspecified means all
     -Dnogrid        launch browser locally, and not through selenium grid. if not specified, will try selenium grid first
-    -DaHubPort      port to use for selenium grid server, when not 4444
-    -DaHubServer    port to use for selenium grid server, when not localhost
+    -DaHubPort      port to use for selenium grid server, when not 4444, like 4723 for appium
+    -DaHubServer    port to use for selenium grid server or appium, when not localhost
     -DwaitForPageLoadMilliSeconds   time to wait after a page has loaded. 
+    -DappiumApp     path to ios app ipa file, if using appium to test a native app APPIUMSIMULATORAPPSCRATCH APPIUMDEVICEAPPSCRATCH
+    -DappiumUdid    path to ios device udid, if using appium ot test a device instead of a simulator APPIUMDEVICEAPPSCRATCH
 RESULTPLACE-NOGRID SAMPLES:
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=0 -Dnogrid test
