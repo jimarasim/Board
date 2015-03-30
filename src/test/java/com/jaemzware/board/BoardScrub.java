@@ -138,7 +138,7 @@ public class BoardScrub extends CodeBase {
                     //tell the loop to stop
                     continueProcessing=false;
                 }
-                else if(!IsElementPresent(By.xpath(nextLinkXpath),waitForPageLoadMilliSeconds)||
+                else if(!IsElementPresent(By.xpath(nextLinkXpath),waitAfterPageLoadMilliSeconds)||
                         !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()||
                         !driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()){
                     System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
@@ -494,8 +494,8 @@ public class BoardScrub extends CodeBase {
             });
             
             //hardcoded wait (i hate these) to avoid stale element references later.
-            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+waitForPageLoadMilliSeconds+"ms");
-            Thread.sleep(waitForPageLoadMilliSeconds);
+            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+waitAfterPageLoadMilliSeconds+"ms");
+            Thread.sleep(waitAfterPageLoadMilliSeconds);
      
     }
     
@@ -517,7 +517,7 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetWithTime(href);
-                Thread.sleep(waitForPageLoadMilliSeconds);
+                Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
                 ScrollPage();
@@ -530,8 +530,8 @@ public class BoardScrub extends CodeBase {
             // check for the title text
             String titleText="";
 
-            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitForPageLoadMilliSeconds+"ms");
-            if (IsElementPresent(By.xpath(titleTextXpath), waitForPageLoadMilliSeconds)) {
+            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitAfterPageLoadMilliSeconds+"ms");
+            if (IsElementPresent(By.xpath(titleTextXpath), waitAfterPageLoadMilliSeconds)) {
                 try{
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }
@@ -653,8 +653,8 @@ public class BoardScrub extends CodeBase {
             // check for the title text
             String titleText="";
 
-            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitForPageLoadMilliSeconds+"ms");
-            if (IsElementPresent(By.xpath(titleTextXpath), waitForPageLoadMilliSeconds)) {
+            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitAfterPageLoadMilliSeconds+"ms");
+            if (IsElementPresent(By.xpath(titleTextXpath), waitAfterPageLoadMilliSeconds)) {
                 try{
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }
