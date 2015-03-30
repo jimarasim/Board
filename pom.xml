@@ -80,7 +80,8 @@ BUILDPAGEOFFOUNDLINKS/BUILDPAGEOFFOUNDLINKSVIAREST-OPTIONAL PARAMETERS:
     -DappiumApp     path to ios app ipa file, if using appium to test a native app APPIUMSIMULATORAPPSCRATCH APPIUMDEVICEAPPSCRATCH
     -DappiumUdid    path to ios device udid, if using appium ot test a device instead of a simulator APPIUMDEVICEAPPSCRATCH
 BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:    
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=5000 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=fark -Dinput="http://www.fark.com" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=0 test    
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=5000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 -DwaitForPageLoadMilliSeconds=30000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=300 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?137-ID-Provider-Ads&s=&pp=30&prefixid=boise&field_dvb_service_type=Escort" -Dnogrid -DaNumber=100 -DwaitForPageLoadMilliSeconds=7000 test    
