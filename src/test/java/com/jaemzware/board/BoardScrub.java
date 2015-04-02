@@ -110,9 +110,6 @@ public class BoardScrub extends CodeBase {
             
             //go to the first page
             driverGetWithTime(url);
-
-            //scroll page
-            ScrollPage();
             
 //PAGE THROUGH ALL RESULTS
             while(continueProcessing){
