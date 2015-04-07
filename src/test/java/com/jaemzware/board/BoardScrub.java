@@ -111,6 +111,8 @@ public class BoardScrub extends CodeBase {
             //go to the first page
             driverGetWithTime(url);
             
+            Thread.sleep(waitAfterPageLoadMilliSeconds);
+            
 //PAGE THROUGH ALL RESULTS
             while(continueProcessing){
                 //get all the links on the target url
