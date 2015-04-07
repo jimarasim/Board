@@ -5,13 +5,16 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
-                <goal>-Dbrowser=CHROME</goal>
-                <goal>-Denvironment=bbc</goal>
-                <goal>-Dinput=http://www.bbc.com/news/world/us_and_canada/</goal>
-                <goal>-Dnogrid</goal>
+                <goal>-Dtest=Scratch#VerifyLogos</goal>
                 <goal>-DaNumber=0</goal>
-                <goal>-DwaitForPageLoadMilliSeconds=5000</goal>
+                <goal>-Dbrowser=APPIUMSIMULATORAPPSAFARI</goal>
+                <goal>-Dinput=https://seattlerules.com</goal>
+                <goal>-Duserid=seattlerules.com</goal>
+                <goal>-DaString="//a[@title='Seattle</goal>
+                <goal>Rules']"</goal>
+                <goal>-Dlogging</goal>
+                <goal>-DaHubPort=4723</goal>
+                <goal>-DaHubServer=localhost</goal>
                 
                 
                 

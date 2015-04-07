@@ -430,10 +430,6 @@ public class BoardScrub extends CodeBase {
         catch(Exception ex){
             throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
         }
-
-        System.out.println("INDEX FILE WRITTEN:" + "http://50.251.226.90:8081/job/Board%20-%20BoardScrub/ws/" + fileName);
-        System.out.println("INDEX FILE COPIED:" + jenkinsReportPath + fileName);
-        System.out.println("INDEX FILE COPIED:" + jenkinsReportPathInternal + fileName);
     }
 
     
@@ -474,28 +470,6 @@ public class BoardScrub extends CodeBase {
         }
         
         return urls;
-    }
-    
-    /**
-     * This method waits for the google search page to change, when paging through results
-     * @param oldValue - old value of what should be at resultStatsTextXpath
-     * @throws Exception 
-     */
-    private void WaitForPageChange(String oldUrl) throws Exception{
-            final String waitTillUrlIsNot=oldUrl; //string to wait for to change when the page is loaded
-            
-            // wait for links to be loaded by waiting for the resultStatsText to change
-            (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
-                @Override
-                public Boolean apply(WebDriver d) {
-                    return !driver.getCurrentUrl().equals(waitTillUrlIsNot);
-                }
-            });
-            
-            //hardcoded wait (i hate these) to avoid stale element references later.
-            System.out.println("HARDCODED SLEEP TO AVOID STALE REFERENCES:"+waitAfterPageLoadMilliSeconds+"ms");
-            Thread.sleep(waitAfterPageLoadMilliSeconds);
-     
     }
     
     /**
@@ -875,68 +849,3 @@ public class BoardScrub extends CodeBase {
     }
 
 }
-
-
-//GRAVEYARD
-
-// get a copy of the page DEBUGGING ONLY
-//                RestRequest(href); 
-
-
-
-                //if this is craigslist, get the contact info
-//                if(environment.equals(EnvironmentType.craigslist)){
-//                    
-//                    //find the contact button
-//                    String contactButtonXpath = properties.getProperty(environment.toString() + ".contactButtonXpath");
-//                    final String contactInfoAnchorXpaths =  properties.getProperty(environment.toString() + ".contactInfoAnchorXpaths");
-//                    final String contactInfoLiXpaths =  properties.getProperty(environment.toString() + ".contactInfoLiXpaths");
-//                    if(IsElementPresent(By.xpath(contactButtonXpath),quickWaitMilliSeconds)){
-//                        
-//                        //JQUERY APPROACH
-////                      String contactButtonJQueryExcecute = properties.getProperty(environment.toString() + ".contactButtonJQueryExcecute");
-////                      ((JavascriptExecutor)driver).executeScript(contactButtonJQueryExcecute);
-//                        
-//                        driver.findElement(By.xpath(contactButtonXpath)).click();
-//                        
-//                        //ACTIONS APPROACH
-////                      WebElement contactButton = driver.findElement(By.xpath(contactButtonXpath));
-////                      Actions builder = new Actions(driver);
-////                      builder.moveToElement(contactButton).click(contactButton).build().perform();
-//                        
-//                        //get the contact information anchors
-//                        StringBuilder contactInfoString = new StringBuilder();
-//                        contactInfoString.append("<br />CONTACT INFORMATION:<br />");
-//                        
-//                        //WRITE OUT CONTACT INFORMAITON LIST ITEMS WITH TEXT ONLY
-//                        String contactInfoLiText;
-//                        List<WebElement> contactInfoLis = driver.findElements(By.xpath(contactInfoLiXpaths));
-//                        for(WebElement weLi: contactInfoLis){
-//                            contactInfoLiText = weLi.getText();
-//                            contactInfoString.append(contactInfoLiText).append("<br />");
-//                        }
-//                        
-//
-//                        //WRITE OUT CONTACT INFORMAITON ANCHORS WITH TEXT AND HREFS
-//                        String contactInfoAnchorHref, contactInfoAnchorText;
-//                        List<WebElement> contactInfoAnchors = driver.findElements(By.xpath(contactInfoAnchorXpaths));
-//                        for(WebElement weA: contactInfoAnchors){
-//                            contactInfoAnchorText = weA.getText();
-//                            contactInfoAnchorHref = weA.getAttribute("href");
-//                            contactInfoString.append("<a href='");
-//                            contactInfoString.append(contactInfoAnchorHref);
-//                            contactInfoString.append("' target='_blank'>");
-//                            contactInfoString.append(contactInfoAnchorHref);
-//                            contactInfoString.append("</a><br />");
-//                        }
-//
-//                        //append contact info to body
-//                        bodyText += contactInfoString;
-//                        
-//
-//                    }
-//                    else{
-//                        System.out.println("WARNING: COULD NOT FIND CRAIGSLIST CONTACT BUTTON AT:"+contactButtonXpath+" AFTER:"+quickWaitMilliSeconds+"ms");
-//                    }
-//                }
-                
