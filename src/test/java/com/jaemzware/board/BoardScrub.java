@@ -480,7 +480,8 @@ public class BoardScrub extends CodeBase {
     @SuppressWarnings("SleepWhileInLoop")
     private List<String[]> GetContentFromLinks(List<String> links) throws Exception{
     
-
+        int waitTimeMillis=5000;
+        
         System.out.println("VISITING RESULT LINKS");
         List<String[]> results = new ArrayList<>();
 
@@ -503,13 +504,25 @@ public class BoardScrub extends CodeBase {
             // check for the title text
             String titleText="";
 
-            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitAfterPageLoadMilliSeconds+"ms");
-            if (IsElementPresent(By.xpath(titleTextXpath), waitAfterPageLoadMilliSeconds)) {
-                try{
-                    titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
+            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+            if (IsElementPresent(By.xpath(titleTextXpath), waitTimeMillis)) {
+                try{            
+                        //implictlywait cant' work with appium
+                        if(!browser.toString().contains("APPIUM")){
+                            // throttle wait time when looking for elements that should already be on the page
+                            driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
+                        }
+
+                        titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
+
+                        if(!browser.toString().contains("APPIUM")){
+                            // throttle implicit wait time back up
+                            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+                        }
+        
                 }
                 catch(Exception ex){
-                    System.out.println("WARNING: STALE ELEMENT REFERENCE WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
+                    System.out.println("WARNING: STALE ELEMENT REFERENCE ON titleTextXpath:"+titleTextXpath+" WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
                     break;
                 }
 
@@ -521,7 +534,7 @@ public class BoardScrub extends CodeBase {
                 }
             }
             else{
-                System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+waitTimeMillis +"ms");
             }
 
 

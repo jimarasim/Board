@@ -96,8 +96,9 @@ BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 test
 BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 test
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 -DaHubPort=4445 -DaHubServer=localhost test
 BUILDPAGEOFFOUNDLINKS-APPIUM SAMPLE:
+    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitAfterPageLoadMilliSeconds=20000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitAfterPageLoadMilliSeconds=20000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=3 -DaHubPort=4723 -DaHubServer=localhost -DwaitAfterPageLoadMilliSeconds=20000 test
 BUILDPAGEOFFOUNDLINKSVIAREST-NOGRID,NOIMAGES
