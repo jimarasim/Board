@@ -503,26 +503,37 @@ public class BoardScrub extends CodeBase {
 
             // check for the title text
             String titleText="";
+            
+            
+            //THROTTLE DOWN IMPLICIT WAIT //implictlywait cant' work with appium
+            if(!browser.toString().contains("APPIUM")){
+                // throttle wait time when looking for elements that should already be on the page
+                driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
+                
+                System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWait:"+defaultImplicitWait+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
+            }
 
             System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+            
             if (IsElementPresent(By.xpath(titleTextXpath), waitTimeMillis)) {
                 try{            
-                        //implictlywait cant' work with appium
-                        if(!browser.toString().contains("APPIUM")){
-                            // throttle wait time when looking for elements that should already be on the page
-                            driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
-                        }
+                        System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
 
                         titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
 
-                        if(!browser.toString().contains("APPIUM")){
-                            // throttle implicit wait time back up
-                            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
-                        }
-        
                 }
                 catch(Exception ex){
                     System.out.println("WARNING: STALE ELEMENT REFERENCE ON titleTextXpath:"+titleTextXpath+" WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
+                    
+                    //THROTTLE UP IMPLICIT WAIT //implictlywait cant' work with appium
+                    if(!browser.toString().contains("APPIUM")){
+                        // throttle implicit wait time back up
+                        driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+                        
+                        System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWait:"+defaultImplicitWait+" ms");
+                        
+                    }
+                    
                     break;
                 }
 
@@ -535,6 +546,15 @@ public class BoardScrub extends CodeBase {
             }
             else{
                 System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+waitTimeMillis +"ms");
+            }
+            
+            
+            if(!browser.toString().contains("APPIUM")){
+                //THROTTLE UP IMPLICIT WAIT //implictlywait cant' work with appium
+                driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+                
+                System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWait:"+defaultImplicitWait+" ms");
+                
             }
 
 
