@@ -513,11 +513,11 @@ public class BoardScrub extends CodeBase {
                 System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWait:"+defaultImplicitWait+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
             }
 
-            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+            System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
             
             if (IsElementPresent(By.xpath(titleTextXpath), waitTimeMillis)) {
                 try{            
-                        System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+                        System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
 
                         titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
 
@@ -659,7 +659,7 @@ public class BoardScrub extends CodeBase {
             // check for the title text
             String titleText="";
 
-            System.out.println("LOOKING FOR TITLE TEXT AT:"+titleTextXpath+" TIMEOUT:"+waitAfterPageLoadMilliSeconds+"ms");
+            System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinksViaRest):"+titleTextXpath+" TIMEOUT:"+waitAfterPageLoadMilliSeconds+"ms");
             if (IsElementPresent(By.xpath(titleTextXpath), waitAfterPageLoadMilliSeconds)) {
                 try{
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
