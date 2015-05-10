@@ -110,10 +110,9 @@ public class BoardScrub extends CodeBase {
             
             //go to the first page
             driverGetWithTime(url);
-            
             Thread.sleep(waitAfterPageLoadMilliSeconds);
             
-//PAGE THROUGH ALL RESULTS
+            //PAGE THROUGH ALL RESULTS
             while(continueProcessing){
                 //get all the links on the target url
                 List<String> links = GetLinksOnPage(); 
@@ -124,27 +123,26 @@ public class BoardScrub extends CodeBase {
                 
                 contents.addAll(contentsOnCurrentPage); 
                 
-        //PAGING LOGIC
+                //PAGING LOGIC
                 //go back to content page with results just collected
                 driverGetWithTime(currentContentPageUrl);
                 
                 //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
                 numCurrentPageFirstResult += contentsOnCurrentPage.size();
                 
+                //STOP IF MAXVISITS REACHED
                 if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
                     System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+maxVisits);
-
-                    //tell the loop to stop
                     continueProcessing=false;
                 }
+                //STOP IF THERE IS NO NEXT LINK
                 else if(!IsElementPresent(By.xpath(nextLinkXpath),waitAfterPageLoadMilliSeconds)||
                         !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()||
                         !driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()){
                     System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
-
-                    //there is no next link, we're done, tell the while loop to stop
                     continueProcessing=false;
                 }
+                //OTHERWISE CONTINUE PROCESSING
                 else{
 
                     //GET NEXT page link
@@ -406,7 +404,7 @@ public class BoardScrub extends CodeBase {
     private void WriteContentsToWebPage(List<String[]> results) throws Exception
     {
         // build web page
-        String fileName = "Index-BoardScrub-" + getDateStamp() + ".htm";
+        String fileName = "index" + report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
             writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>PAGE</a>"));
             
