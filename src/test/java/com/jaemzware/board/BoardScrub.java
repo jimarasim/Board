@@ -433,7 +433,7 @@ public class BoardScrub extends CodeBase {
     
             
     /**
-     * This method gets links on the target page
+     * This method gets links to visit from the target page
      * @return 
      */
     private List<String> GetLinksOnPage() throws Exception{
