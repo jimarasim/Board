@@ -579,7 +579,7 @@ public class BoardScrub extends CodeBase {
      */
     private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{
             
-            environmentEnumerationAsString = environment.toString();
+            String environmentEnumerationAsString = environment.toString();
         
             // indicator that page of links has completely loaded
             linksLoadedIndicatorXpath = properties.getProperty(environmentEnumerationAsString
