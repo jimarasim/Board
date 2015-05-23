@@ -166,6 +166,45 @@ public class BoardScrub extends CodeBase {
      * @return
      * @throws Exception 
      */
+    
+        /**
+     * This method gets links to visit from the target page
+     * @return 
+     */
+    private List<String> GetLinksOnPage() throws Exception{
+        // list for links
+        List<String> urls = new ArrayList<>();
+        
+        // wait for links to be loaded
+        (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver d) {
+                return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
+            }
+        });
+
+        // make sure there are some links
+        System.out.println("CHECKING FOR RESULTS");
+
+        if (!IsElementPresent(By.xpath(linkXpath))) {
+            throw new Exception("COULDNT FIND ANY RESULTS ON: "+url+" WITH XPATH:"+linkXpath);
+        }
+
+// GET THE links
+        System.out.println("FINDING RESULTS");
+
+        List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
+
+        // store off the hrefs
+        System.out.println("SAVING RESULT LINKS. COUNT:"+webElements.size());
+
+        for (WebElement we : webElements) {
+            urls.add(we.getAttribute("href"));
+        }
+        
+        return urls;
+    }
+    
     @SuppressWarnings("SleepWhileInLoop")
     private List<String[]> GetContentFromLinks(List<String> links) throws Exception{
     
@@ -704,43 +743,7 @@ public class BoardScrub extends CodeBase {
         }
     }
 
-    /**
-     * This method gets links to visit from the target page
-     * @return 
-     */
-    private List<String> GetLinksOnPage() throws Exception{
-        // list for links
-        List<String> urls = new ArrayList<>();
-        
-        // wait for links to be loaded
-        (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver d) {
-                return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
-            }
-        });
 
-        // make sure there are some links
-        System.out.println("CHECKING FOR RESULTS");
-
-        if (!IsElementPresent(By.xpath(linkXpath))) {
-            throw new Exception("COULDNT FIND ANY RESULTS ON: "+url+" WITH XPATH:"+linkXpath);
-        }
-
-// GET THE links
-        System.out.println("FINDING RESULTS");
-
-        List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
-
-        // store off the hrefs
-        System.out.println("SAVING RESULT LINKS. COUNT:"+webElements.size());
-
-        for (WebElement we : webElements) {
-            urls.add(we.getAttribute("href"));
-        }
-        
-        return urls;
-    }
    
     /**
      * This method shortens a string to 1000 characters or less.  Created to deal with error of trying to shorten a string to 1000 characters, that was shorter than 1000 characters
