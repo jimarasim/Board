@@ -715,7 +715,7 @@ public class BoardScrub extends CodeBase {
         // build web page
         String fileName = "index-jaemzware-BoardScrub-"+getDateStamp()+"-"+report==null?"":report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
-            writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>PAGE</a>"));
+            writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
             
             String oldHref = new String();
             for (String[] entry : results) {
