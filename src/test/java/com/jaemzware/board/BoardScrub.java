@@ -723,7 +723,7 @@ public class BoardScrub extends CodeBase {
                     oldHref = entry[0];
                     writer.println("<hr size=10>");
                     writer.println("<center>");
-                    writer.println("<h2><a href='" + oldHref + "' target='_blank'>Article</a></h2>");
+                    writer.println("<h2><a href='" + oldHref + "' target='_blank'>"+oldHref+"</a></h2>");
                     writer.println("</center>");
                     writer.println("<span>" + entry[2] + "</span><br />");
                     writer.println("<span>" + entry[3] + "</span><br />");
