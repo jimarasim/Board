@@ -735,8 +735,8 @@ public class BoardScrub extends CodeBase {
             writer.flush();
             
             System.out.println("INDEX FILE WRITTEN:" + fileName);
-            System.out.println("INTERNAL COPY: http://10.1.10.156/jenkinsArtifacts/"+ fileName);
-            System.out.println("EXTERNAL COPY: http://jaemzware.com/jenkinsArtifacts/"+fileName);
+            System.out.println("INTERNAL COPY: http://10.1.10.156/jaemzwareArtifacts/"+ fileName);
+            System.out.println("EXTERNAL COPY: http://jaemzware.com/jaemzwareArtifacts/"+fileName);
         }
         catch(Exception ex){
             throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
