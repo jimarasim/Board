@@ -713,7 +713,11 @@ public class BoardScrub extends CodeBase {
     private void WriteContentsToWebPage(List<String[]> results) throws Exception
     {
         // build web page
-        String fileName = "index-jaemzware-BoardScrub-"+getDateStamp()+"-"+report==null?"":report + ".htm";
+        if(report==null){
+            report = "NONAMEREPORT";
+        }
+        
+        String fileName = "index-jaemzware-BoardScrub-"+getDateStamp()+"-" + report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
             writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
             
