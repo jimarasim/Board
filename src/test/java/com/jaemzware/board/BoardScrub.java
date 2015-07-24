@@ -119,6 +119,9 @@ public class BoardScrub extends CodeBase {
                 numCurrentPageFirstResult += contentsOnCurrentPage.size();
                 
                 //STOP IF MAXVISITS REACHED
+                System.out.println("if("+maxVisits+">0 && "+numCurrentPageFirstResult+" >= "+maxVisits+"){");
+                System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+waitAfterPageLoadMilliSeconds+")||");
+                System.out.println("else");
                 if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
                     System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+maxVisits);
                     continueProcessing=false;
@@ -179,6 +182,8 @@ public class BoardScrub extends CodeBase {
         (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
+                System.out.println("IsElementPresent(By.xpath(linksLoadedIndicatorXpath))");
+                System.out.println("IsElementPresent(By.xpath("+linksLoadedIndicatorXpath+"))");
                 return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
             }
         });
@@ -288,6 +293,8 @@ public class BoardScrub extends CodeBase {
 
             // check for the body text
             List<WebElement> allBodyTexts = new ArrayList<WebElement>();
+            
+            System.out.println("IsElementPresent(By.xpath("+bodyTextXpath+"), "+quickWaitMilliSeconds+"))");
 
             if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
                 allBodyTexts = driver.findElements(By.xpath(bodyTextXpath));
@@ -314,6 +321,7 @@ public class BoardScrub extends CodeBase {
             // check for images
             String imageSrc = "";
             if(showImages){
+                System.out.println("IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
@@ -451,6 +459,7 @@ public class BoardScrub extends CodeBase {
             // check for the body text
             List<WebElement> allBodyTexts = new ArrayList<>();
 
+            System.out.println("IsElementPresent(By.xpath("+bodyTextXpath+"), "+quickWaitMilliSeconds+")");
             if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
                 allBodyTexts = driver.findElements(By.xpath(bodyTextXpath));
             }
@@ -476,6 +485,7 @@ public class BoardScrub extends CodeBase {
             // check for images
             String imageSrc = "";
             if(showImages){
+                System.out.println("IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
@@ -788,7 +798,7 @@ public class BoardScrub extends CodeBase {
 
             // make sure there are some links
             System.out.println("CHECKING FOR RESULTS");
-
+            System.out.println("!IsElementPresent(By.xpath("+linkXpath+"), "+quickWaitMilliSeconds+")");
             if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
                 throw new Exception("COULDN'T FIND ANY RESULTS");
             }
@@ -831,6 +841,9 @@ public class BoardScrub extends CodeBase {
             //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
             numCurrentPageFirstResult += numResultsOnPage;
 
+            System.out.println("if("+maxVisits+">0 && "+numCurrentPageFirstResult+" >= "+maxVisits+")");
+            System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+quickWaitMilliSeconds+")){");
+            System.out.println("else");
             if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
                 System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
 
