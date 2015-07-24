@@ -1,4 +1,16 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Dinput="https://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&sort=views&order=desc" -DaHubPort=4723 -DaHubServer=localhost -Dnogrid -DlinksLoadedIndicatorXpath="\/\/span[@class='forumtitle'\ and\ contains(text(),'Provider\ Ads')]" -DlinkXpath="\/\/a[contains(@class,'title')]" -DimageXpath="\/\/*[contains(@id,'post_message_')]\/blockquote\/\/img" -DtitleTextXpath="\/\/span[@class='threadtitle']\/a" -DbodyTextXpath="\/\/div[@class='postrow']" -DnextLinkXpath="\/\/a[@rel='next']\/img[@alt='Next'\ and\ @title='Next']" test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks
+-Dbrowser=CHROME
+-Dinput="https://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&sort=views&order=desc"
+-DaHubPort=4723
+-DaHubServer=localhost
+-Dnogrid
+-DlinksLoadedIndicatorXpath="\/\/span[@class='forumtitle'\ and\ contains(text(),'Provider\ Ads')]"
+-DlinkXpath="\/\/a[contains(@class,'title')]"
+-DimageXpath="\/\/*[contains(@id,'post_message_')]\/blockquote\/\/img"
+-DtitleTextXpath="\/\/span[@class='threadtitle']\/a"
+-DbodyTextXpath="\/\/div[@class='postrow']"
+-DnextLinkXpath="\/\/a[@rel='next']\/img[@alt='Next'\ and\ @title='Next']"
+test
 
 # TO PASS IN AN XPATH COMMAND LINE PARAMETER
 #   "//PATH" PUT QUOTES AROUND XPATH "//IMG"
