@@ -736,12 +736,13 @@ public class BoardScrub extends CodeBase {
             for (String[] entry : results) {
                 if (!oldHref.equals(entry[0])) {
                     oldHref = entry[0];
-                    writer.println(entry[4]);
                     writer.println("<h2><a href='" + oldHref + "' target='_blank'>"+oldHref+"</a></h2>");
                     writer.println("<span>" + entry[2] + "</span><br />");
                     writer.println("<span>" + entry[3] + "</span><br />");
                 }
                 writer.println("<a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a><br />");
+                writer.println(entry[4]);
+
             }
             writer.println(HtmlReportFooter());
             
