@@ -91,10 +91,12 @@ public class BoardScrub extends CodeBase {
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
             
+            //paging variables
             String currentContentPageUrl = url;  //used to navigate to next page
             int numCurrentPageFirstResult=1; //used to track max visits
             Boolean continueProcessing = true; //used to track if we should keep paging
             List<String[]> contents = new ArrayList(); //contents collected from each page
+            
             
             //go to the first page
             driverGetWithTime(url);
@@ -219,11 +221,11 @@ public class BoardScrub extends CodeBase {
         List<String[]> results = new ArrayList<>();
 
         // navigate to links and get images
-
+        String driverGetHtmlOutput = "";
         int visitCount = 0;
         for (String href : links) {
             try{
-                driverGetWithTime(href);
+                driverGetHtmlOutput = driverGetWithTime(href);
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
@@ -234,9 +236,9 @@ public class BoardScrub extends CodeBase {
                 continue;
             }
 
+            //TITLE TEXT
             // check for the title text
             String titleText="";
-            
             
             //THROTTLE DOWN IMPLICIT WAIT //implictlywait cant' work with appium
             if(!browser.toString().contains("APPIUM")){
@@ -290,9 +292,9 @@ public class BoardScrub extends CodeBase {
                 
             }
 
-
+            //BODY TEXT
             // check for the body text
-            List<WebElement> allBodyTexts = new ArrayList<WebElement>();
+            List<WebElement> allBodyTexts = new ArrayList<>();
             
             System.out.println("IsElementPresent(By.xpath("+bodyTextXpath+"), "+quickWaitMilliSeconds+"))");
 
@@ -318,6 +320,7 @@ public class BoardScrub extends CodeBase {
                 }
             }
 
+            //IMAGES
             // check for images
             String imageSrc = "";
             if(showImages){
@@ -330,7 +333,7 @@ public class BoardScrub extends CodeBase {
                             imageSrc=i.getAttribute("src");
 
                             //add result entry image
-                            results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()) });
+                            results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput });
                         } 
                         catch (Exception ex) {
                             System.out.println("WARNING: IMAGE WENT STALE");
@@ -342,11 +345,9 @@ public class BoardScrub extends CodeBase {
                 }
             }
 
-
-
             //add at least one result entry if no images were found
             if(imageSrc!=null && imageSrc.isEmpty()){
-                results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString())});
+                results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput});
             }                
 
             //check the desired image count, and break if it's been reached
@@ -735,14 +736,12 @@ public class BoardScrub extends CodeBase {
             for (String[] entry : results) {
                 if (!oldHref.equals(entry[0])) {
                     oldHref = entry[0];
-                    writer.println("<hr size=10>");
-                    writer.println("<center>");
+                    writer.println(entry[4]);
                     writer.println("<h2><a href='" + oldHref + "' target='_blank'>"+oldHref+"</a></h2>");
-                    writer.println("</center>");
                     writer.println("<span>" + entry[2] + "</span><br />");
                     writer.println("<span>" + entry[3] + "</span><br />");
                 }
-                writer.println("<center><a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a></center><br />");
+                writer.println("<a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a><br />");
             }
             writer.println(HtmlReportFooter());
             
