@@ -109,14 +109,16 @@ RESULTPLACE-APPIUM RUNNING ON LOCALHOST
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaHubPort=4723 -DaHubServer=localhost test
  
  BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?100-WA-LMA-amp-LMS" -Dnogrid -DaNumber=10 -DwaitAfterPageLoadMilliSeconds=0 -DdefaultImplicitWait=120 -DnoScroll test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=fark -Dinput="http://www.fark.com" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=0 test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=5000 test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=30000 test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/search/w4m?hasPic=1" -DaNumber=0 -Dnogrid test
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=0 test
+
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=2000 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?100-WA-LMA-amp-LMS" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=1000 -DdefaultImplicitWait=120 -DnoScroll test
+
 
 
   -->
