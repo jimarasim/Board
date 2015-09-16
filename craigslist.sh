@@ -1,1 +1,1 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=melvins" -DaNumber=10 -Dnogrid -Dreport=melvins -DwaitAfterPageLoadMilliSeconds=1000 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/search/tla?sort=priceasc&query=generator" -DaNumber=50 -Dnogrid -Dreport=generator -DwaitAfterPageLoadMilliSeconds=0 test
