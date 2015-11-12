@@ -22,8 +22,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <!--Be specific about surefire version because one of them is buggy, and won't run individual tests-->
@@ -53,7 +53,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-support</artifactId>
-      <version>2.43.1</version>
+      <version>2.48.2</version>
       <scope>test</scope>
       <type>jar</type>
     </dependency>
