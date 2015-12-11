@@ -117,7 +117,7 @@ mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craig
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
 
 mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=2000 test
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?100-WA-LMA-amp-LMS" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=1000 -DdefaultImplicitWait=120 -DnoScroll test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?100-WA-LMA-amp-LMS" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=1000 -DdefaultImplicitWaitSeconds=120 -DnoScroll test
 
 
 

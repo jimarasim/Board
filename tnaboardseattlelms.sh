@@ -1,0 +1,1 @@
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOX -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?100-WA-LMA-amp-LMS" -DaNumber=20 -Dnogrid -Dreport=seatna -DwaitAfterPageLoadMilliSeconds=1000 test

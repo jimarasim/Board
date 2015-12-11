@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.jaemzware.seleniumcodebase.CodeBase;
+import static com.jaemzware.seleniumcodebase.ParameterType.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -30,18 +31,12 @@ public class BoardScrub extends CodeBase {
     private static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
     private static final Properties properties = new Properties();
     
-    //url to navigate to 
-    private static String url = null;
+    
     //num parameter name to use in url, for number of results to return (used for paging)
     private static String numResultsParm = null;
     //start parameter name to use in url, for nth result to get results from (used for paging)
     private static String startParm = null;
-    //maximum number of visits
-    private static int maxVisits=0;
-    //target url to look for
-    private static String targetUrl=null;
-    //whether or not to show images
-    private static Boolean showImages=true;
+    
     
     @Before
     public void BeforeTest() {
@@ -64,7 +59,7 @@ public class BoardScrub extends CodeBase {
             StartDriver("../SeleniumCodeBase/SeleniumGrid/");
             
             //set implicit wait
-            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
         } 
         catch (InvalidParameterException ipex) {
             Assert.fail("INVALID PARAMETERS FOUND");
@@ -80,26 +75,29 @@ public class BoardScrub extends CodeBase {
         }
     }
     
+     /**
+     * This method visits each url, and puts its content into a results list using webdriver
+     * @return
+     * @throws Exception 
+     */
     @Test
     public void BuildPageOfFoundLinks() {
         try {
-            // get command line parameters
-            SetUrlCommandLineParameter(); 
-            SetMaxVisitsCommandLineParameter();
-            SetShowImagesCommandLineParameter();
+            VerifyCommandLineParameters();
+            
             
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
             
             //paging variables
-            String currentContentPageUrl = url;  //used to navigate to next page
+            String currentContentPageUrl = input;  //used to navigate to next page
             int numCurrentPageFirstResult=1; //used to track max visits
             Boolean continueProcessing = true; //used to track if we should keep paging
             List<String[]> contents = new ArrayList(); //contents collected from each page
             
             
             //go to the first page
-            driverGetWithTime(url);
+            driverGetWithTime(input);
             Thread.sleep(waitAfterPageLoadMilliSeconds);
             
             //PAGE THROUGH ALL RESULTS
@@ -121,11 +119,11 @@ public class BoardScrub extends CodeBase {
                 numCurrentPageFirstResult += contentsOnCurrentPage.size();
                 
                 //STOP IF MAXVISITS REACHED
-                System.out.println("if("+maxVisits+">0 && "+numCurrentPageFirstResult+" >= "+maxVisits+"){");
+                System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+"){");
                 System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+waitAfterPageLoadMilliSeconds+")||");
                 System.out.println("else");
-                if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
-                    System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+maxVisits);
+                if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
+                    System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
                     continueProcessing=false;
                 }
                 //STOP IF THERE IS NO NEXT LINK
@@ -166,13 +164,72 @@ public class BoardScrub extends CodeBase {
             Assert.fail("BuildPageOfFoundLinks EXCEPTION MESSAGE:"+ex.getMessage());
         }
     }
-        /**
-     * This method visits each url, and puts its content into a results list
+    
+     /**
+     * This method visits each url, and puts its content into a results list, using rest calls
      * @return
      * @throws Exception 
      */
+    @Test
+    public void BuildPageOfFoundLinksViaRest() {
+        try {
+
+            VerifyCommandLineParameters();
+            
+            //get properties file information
+            GetBuildPageOfFoundLinksRequiredProperties(); 
+            
+            //go to the first page
+            driverGetWithTime(input);
+            
+            //get all the links on the target url
+            List<String> links = 
+                    GetLinksOnPage(); 
+            
+            //get conent from the links
+            List<String[]> contents = 
+                    GetContentFromLinksViaRest(links); 
+
+            //generate a page of the contents
+            WriteContentsToWebPage(contents);
+
+        } catch (Exception ex) {
+            ScreenShot();
+            System.out.println("BuildPageOfFoundLinksViaRest EXCEPTION MESSAGE:"+ex.getMessage());
+            CustomStackTrace("BuildPageOfFoundLinksViaRest EXCEPTION TRACE", ex);
+            Assert.fail(ex.getMessage());
+        }
+    }
     
-        /**
+    /** This test will report where in google result stats your site sits 
+     * 
+     */
+    @Test 
+    public void ResultPlace(){
+        
+        try{
+            VerifyCommandLineParameters();
+            
+            //get properties file paths
+            GetResultPlaceRequiredProperties();
+
+            //get each place where the target url shows up
+            List<Integer>resultPlacesOfTarget = GetResultPlacesOfTarget();
+            
+            //report each place where the target url shows up
+            ReportPlacesOfTarget(resultPlacesOfTarget);
+            
+        }
+        catch(Exception ex){
+            ScreenShot();
+            System.out.println("EXCEPTION MESSAGE:"+ex.getMessage());
+            CustomStackTrace("EXCEPTION TRACE", ex);
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    
+    /**
      * This method gets links to visit from the target page
      * @return 
      */
@@ -181,7 +238,7 @@ public class BoardScrub extends CodeBase {
         List<String> urls = new ArrayList<>();
         
         // wait for links to be loaded
-        (new WebDriverWait(driver, defaultImplicitWait)).until(new ExpectedCondition<Boolean>() {
+        (new WebDriverWait(driver, defaultImplicitWaitSeconds)).until(new ExpectedCondition<Boolean>() {
             @Override
             public Boolean apply(WebDriver d) {
                 System.out.println("IsElementPresent(By.xpath(linksLoadedIndicatorXpath))");
@@ -194,7 +251,7 @@ public class BoardScrub extends CodeBase {
         System.out.println("CHECKING FOR RESULTS");
 
         if (!IsElementPresent(By.xpath(linkXpath))) {
-            throw new Exception("COULDNT FIND ANY RESULTS ON: "+url+" WITH XPATH:"+linkXpath);
+            throw new Exception("COULDNT FIND ANY RESULTS ON: "+input+" WITH XPATH:"+linkXpath);
         }
 
 // GET THE links
@@ -245,7 +302,7 @@ public class BoardScrub extends CodeBase {
                 // throttle wait time when looking for elements that should already be on the page
                 driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
                 
-                System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWait:"+defaultImplicitWait+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
+                System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
             }
 
             System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
@@ -263,9 +320,9 @@ public class BoardScrub extends CodeBase {
                     //THROTTLE UP IMPLICIT WAIT //implictlywait cant' work with appium
                     if(!browser.toString().contains("APPIUM")){
                         // throttle implicit wait time back up
-                        driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+                        driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
                         
-                        System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWait:"+defaultImplicitWait+" ms");
+                        System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
                         
                     }
                     
@@ -286,9 +343,9 @@ public class BoardScrub extends CodeBase {
             
             if(!browser.toString().contains("APPIUM")){
                 //THROTTLE UP IMPLICIT WAIT //implictlywait cant' work with appium
-                driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
                 
-                System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWait:"+defaultImplicitWait+" ms");
+                System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
                 
             }
 
@@ -323,7 +380,7 @@ public class BoardScrub extends CodeBase {
             //IMAGES
             // check for images
             String imageSrc = "";
-            if(showImages){
+            if(noImages==null){
                 System.out.println("IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
@@ -351,7 +408,7 @@ public class BoardScrub extends CodeBase {
             }                
 
             //check the desired image count, and break if it's been reached
-            if((maxVisits>0) && (++visitCount>maxVisits)){
+            if((aNumber>0) && (++visitCount>aNumber)){
                 break;
             }
 
@@ -363,40 +420,7 @@ public class BoardScrub extends CodeBase {
     /**
      * This test visits each link that appears on the page at a specified url
      */
-    @Test
-    public void BuildPageOfFoundLinksViaRest() {
-        try {
 
-            // get command line parameters
-            SetUrlCommandLineParameter(); 
-            SetMaxVisitsCommandLineParameter();
-            SetTargetUrlCommandLineParameter();
-            SetShowImagesCommandLineParameter();
-            
-            //get properties file information
-            GetBuildPageOfFoundLinksRequiredProperties(); 
-            
-            //go to the first page
-            driverGetWithTime(url);
-            
-            //get all the links on the target url
-            List<String> links = 
-                    GetLinksOnPage(); 
-            
-            //get conent from the links
-            List<String[]> contents = 
-                    GetContentFromLinksViaRest(links); 
-
-            //generate a page of the contents
-            WriteContentsToWebPage(contents);
-
-        } catch (Exception ex) {
-            ScreenShot();
-            System.out.println("BuildPageOfFoundLinksViaRest EXCEPTION MESSAGE:"+ex.getMessage());
-            CustomStackTrace("BuildPageOfFoundLinksViaRest EXCEPTION TRACE", ex);
-            Assert.fail(ex.getMessage());
-        }
-    }
      
     /**
      * This method visits each url, locally after getting it from a rest request, and puts its content into a results list
@@ -420,7 +444,7 @@ public class BoardScrub extends CodeBase {
                 rawHtml = HttpGetReturnResponse(href);
                 
                 //write it to a file
-                rawHtmlLocalFile = targetUrl + WriteHtmlContentToFile(rawHtml);
+                rawHtmlLocalFile = aString + WriteHtmlContentToFile(rawHtml);
                 
                 //load the page locally
                 driverGetWithTime(rawHtmlLocalFile);
@@ -485,7 +509,7 @@ public class BoardScrub extends CodeBase {
 
             // check for images
             String imageSrc = "";
-            if(showImages){
+            if(noImages==null){
                 System.out.println("IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
@@ -515,7 +539,7 @@ public class BoardScrub extends CodeBase {
             }                
 
             //check the desired image count, and break if it's been reached
-            if((maxVisits>0) && (++visitCount>maxVisits)){
+            if((aNumber>0) && (++visitCount>aNumber)){
                 break;
             }
 
@@ -524,46 +548,13 @@ public class BoardScrub extends CodeBase {
        return results;
     }
     
-    /** This test will report where in google result stats your site sits 
-     * 
-     */
-    @Test 
-    public void ResultPlace(){
-        
-        try{
-            // set implicit wait for this test
-            driver.manage().timeouts().implicitlyWait(defaultImplicitWait, TimeUnit.SECONDS);
-
-            //GET REQUIRED COMMAND LINE PARMS
-            SetUrlCommandLineParameter();
-            SetMaxVisitsCommandLineParameter();
-            SetTargetUrlCommandLineParameter();
-            
-            //get properties file paths
-            GetResultPlaceRequiredProperties();
-
-            //get each place where the target url shows up
-            List<Integer>resultPlacesOfTarget = GetResultPlacesOfTarget();
-            
-            //report each place where the target url shows up
-            ReportPlacesOfTarget(resultPlacesOfTarget);
-            
-        }
-        catch(Exception ex){
-            ScreenShot();
-            System.out.println("EXCEPTION MESSAGE:"+ex.getMessage());
-            CustomStackTrace("EXCEPTION TRACE", ex);
-            Assert.fail(ex.getMessage());
-        }
-    }
-    
-    private void ReportPlacesOfTarget(List<Integer> resultPlacesOfTarget) throws Exception{
+    private void ReportPlacesOfTarget(List<Integer> resultPlacesOfTarget) {
         //REPORT TEST RESULTS
             if(resultPlacesOfTarget.size()<1){
-                throw new Exception("TARGET:"+targetUrl+" NOT FOUND IN RESULTS");
+                System.out.println("TARGET:"+aString+" NOT FOUND IN RESULTS");
             }
             else{
-                System.out.println("TARGET:"+targetUrl+" FOUND AT PLACE (0-based):");
+                System.out.println("TARGET:"+aString+" FOUND AT PLACE (0-based):");
                 for(Integer place:resultPlacesOfTarget){
                     System.out.println("PLACE:"+place);
 
@@ -571,58 +562,7 @@ public class BoardScrub extends CodeBase {
             }
     }
     
-    /**
-     * This method sets url to the input command line parameter, and fails if not specified
-     * @throws Exception 
-     */
-    private void SetUrlCommandLineParameter() throws Exception{
-        // get base url
-        if (input != null) {
-            url = input;
-        } else {
-            throw new Exception("URL NOT SPECIFIED (-Dinput)");
-        }
-
-        // MAKE SURE IT'S BEEN SPECIFIED
-        if (url == null) {
-            throw new Exception("URL SPECIFIED WAS NULL (-Dinput)");
-        }
-    }
-    
-    /**
-     * This method sets the maxvists to the aNumber command line parameter, or 0 if not specified
-     * @throws Exception 
-     */
-    private void SetMaxVisitsCommandLineParameter() throws Exception{
-        maxVisits = (aNumber!=null)?Integer.parseInt(aNumber):0; //check if the max number was specified
-    }
-    
-    /**
-     * This method sets the targetUrl to the aString command line parameter, and fails if not specified
-     * @throws Exception 
-     */
-    private void SetTargetUrlCommandLineParameter() throws Exception{
-        // get target result link string to look for
-        if (!StringUtils.isEmpty(aString)) {
-            targetUrl = aString;
-        } else {
-            throw new Exception("URL NOT SPECIFIED (-DaString)");
-        }
-
-        // MAKE SURE IT'S BEEN SPECIFIED
-        if (StringUtils.isEmpty(targetUrl)) {
-            throw new Exception("TARGET URL SPECIFIED BUT EMPTY");
-        }   
-    }
-    
-    /**
-     * This method sets the showImages according to the noImages command line parameter
-     * @throws Exception 
-     */
-    private void SetShowImagesCommandLineParameter() throws Exception{
-        //show images if noImages was not specified 
-        showImages=(noImages==null);
-    }
+ 
     
     /**
      * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
@@ -678,7 +618,9 @@ public class BoardScrub extends CodeBase {
      * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
      */
     private void GetResultPlaceRequiredProperties() throws Exception{
-            
+        
+            System.out.println("GETRESULTPLACEREQUIREDPROPERTIES");
+        
             String environmentEnumerationAsString = environment.toString();
             //GET REQUIRED PROPERTIES FILE PARMS
             // indicator that page of links has completely loaded
@@ -750,16 +692,12 @@ public class BoardScrub extends CodeBase {
             writer.flush();
             
             System.out.println("INDEX FILE WRITTEN:" + fileName);
-            System.out.println("INTERNAL COPY: http://10.1.10.156/jaemzwareArtifacts/"+ fileName);
-            System.out.println("EXTERNAL COPY: http://jaemzware.com/jaemzwareArtifacts/"+fileName);
         }
         catch(Exception ex){
             throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
         }
     }
 
-
-   
     /**
      * This method shortens a string to 1000 characters or less.  Created to deal with error of trying to shorten a string to 1000 characters, that was shorter than 1000 characters
      * @param stringToTrim - string to trim to less than 1000 characters, if it has 1000 characters
@@ -779,8 +717,10 @@ public class BoardScrub extends CodeBase {
         int numResultsOnPage = 100;
         int numCurrentPageFirstResult=1;  //used to track
         
+        System.out.println("GETRESULTPLACESOFTARGET");
+        
         //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
-        String urlWithParms = url + 
+        String urlWithParms = input + 
                 "&"+
                 numResultsParm+
                 "="+
@@ -828,7 +768,7 @@ public class BoardScrub extends CodeBase {
                     break;
                 }
 
-                if(linkHref.contains(targetUrl)){
+                if(linkHref.contains(aString)){
                     //report the link position with the first result offset
                     resultPlacesOfTarget.add(numCurrentPageFirstResult + i);
                 }
@@ -842,11 +782,11 @@ public class BoardScrub extends CodeBase {
             //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
             numCurrentPageFirstResult += numResultsOnPage;
 
-            System.out.println("if("+maxVisits+">0 && "+numCurrentPageFirstResult+" >= "+maxVisits+")");
+            System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+")");
             System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+quickWaitMilliSeconds+")){");
             System.out.println("else");
-            if(maxVisits>0 && numCurrentPageFirstResult >= maxVisits){
-                System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+maxVisits);
+            if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
+                System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+aNumber);
 
                 //tell the loop to stop
                 continueProcessing=false;
@@ -860,7 +800,7 @@ public class BoardScrub extends CodeBase {
             else{
 
                 //CONSTRUCT THE NEW URL
-                urlWithParms = url + 
+                urlWithParms = input + 
                 "&"+
                 numResultsParm+
                 "="+
@@ -884,6 +824,40 @@ public class BoardScrub extends CodeBase {
         }
         
         return resultPlacesOfTarget;
+    }
+    
+    private void VerifyCommandLineParameters() throws Exception{
+        VerifyTargetUrlCommandLineParameterSpecified();
+        VerifyUrlCommandLineParameterSpecified(); 
+    }
+       /**
+     * This method sets url to the input command line parameter, and fails if not specified
+     * @throws Exception 
+     */
+    private void VerifyUrlCommandLineParameterSpecified() throws Exception{
+        
+        // MAKE SURE IT'S BEEN SPECIFIED
+        if (input == null) {
+            throw new Exception("URL SPECIFIED WAS NULL (-Dinput)");
+        }
+        else if(input.isEmpty()){
+            throw new Exception("URL SPECIFIED WAS EMPTY (-Dinput)");
+        }
+    }
+    
+    /**
+     * This method sets the targetUrl to the aString command line parameter, and fails if not specified
+     * @throws Exception 
+     */
+    private void VerifyTargetUrlCommandLineParameterSpecified() throws Exception{
+        // MAKE SURE IT'S BEEN SPECIFIED
+        if (aString == null) {
+            throw new Exception("TARGET URL SPECIFIED WAS NULL (-Dinput)");
+        }
+        else if(aString.isEmpty()){
+            throw new Exception("TARGET URL SPECIFIED WAS EMPTY (-Dinput)");
+        }
+
     }
     
     @After
