@@ -220,6 +220,9 @@ public class BoardScrub extends CodeBase {
             if (input == null || input.isEmpty()) {
                 throw new Exception("URL NOT SPECIFIED -Dinput");
             }
+            if (report == null || report.isEmpty()) {
+                throw new Exception("URL NOT SPECIFIED -Dreport");
+            }
             
             System.out.println("linksLoadedIndicatorXpath:"+
                     linksLoadedIndicatorXpath+
@@ -240,7 +243,9 @@ public class BoardScrub extends CodeBase {
                     " aString:"+
                     aString+ 
                     " input:"+
-                    input);
+                    input+ 
+                    " report:"+
+                    report);
     }
    
     
