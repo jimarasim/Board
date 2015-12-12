@@ -1,10 +1,8 @@
 package com.jaemzware.board;
 
-import java.io.FileInputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -19,31 +17,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.jaemzware.seleniumcodebase.CodeBase;
 import static com.jaemzware.seleniumcodebase.ParameterType.*;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.security.InvalidParameterException;
-import org.apache.commons.lang.StringUtils;
 
 /**
- * @author jaemzware@hotmail.com
+ * @author jaemzware.org
  */
 public class BoardScrub extends CodeBase {
-    private static final String propertiesFile = "src/test/java/com/jaemzware/board/selenium.properties";
-    private static final Properties properties = new Properties();
-    
-    
-    //num parameter name to use in url, for number of results to return (used for paging)
-    private static String numResultsParm = null;
-    //start parameter name to use in url, for nth result to get results from (used for paging)
-    private static String startParm = null;
-    
-    
     @Before
     public void BeforeTest() {
         try {// start the webdriver
 
             // properties file is in same directory as pom.xml
-            properties.load(new FileInputStream(propertiesFile));
+//            properties.load(new FileInputStream(propertiesFile));
 
             // initialize verifification errors
             verificationErrors = new StringBuilder();
@@ -64,18 +49,18 @@ public class BoardScrub extends CodeBase {
         catch (InvalidParameterException ipex) {
             Assert.fail("INVALID PARAMETERS FOUND");
         }
-        catch (FileNotFoundException fnfex){
-            Assert.fail(propertiesFile+" NOT FOUND");
-        }
-        catch(IOException ioex){
-            Assert.fail(propertiesFile+" IO EXCEPTION");
-        }
+//        catch (FileNotFoundException fnfex){
+//            Assert.fail(propertiesFile+" NOT FOUND");
+//        }
+//        catch(IOException ioex){
+//            Assert.fail(propertiesFile+" IO EXCEPTION");
+//        }
         catch(Exception ex){
             Assert.fail(ex.getMessage());
         }
     }
     
-     /**
+    /**
      * This method visits each url, and puts its content into a results list using webdriver
      * @return
      * @throws Exception 
@@ -83,9 +68,6 @@ public class BoardScrub extends CodeBase {
     @Test
     public void BuildPageOfFoundLinks() {
         try {
-            VerifyCommandLineParameters();
-            
-            
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
             
@@ -165,7 +147,7 @@ public class BoardScrub extends CodeBase {
         }
     }
     
-     /**
+    /**
      * This method visits each url, and puts its content into a results list, using rest calls
      * @return
      * @throws Exception 
@@ -173,9 +155,6 @@ public class BoardScrub extends CodeBase {
     @Test
     public void BuildPageOfFoundLinksViaRest() {
         try {
-
-            VerifyCommandLineParameters();
-            
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
             
@@ -208,10 +187,8 @@ public class BoardScrub extends CodeBase {
     public void ResultPlace(){
         
         try{
-            VerifyCommandLineParameters();
-            
             //get properties file paths
-            GetResultPlaceRequiredProperties();
+            GetBuildPageOfFoundLinksRequiredProperties();
 
             //get each place where the target url shows up
             List<Integer>resultPlacesOfTarget = GetResultPlacesOfTarget();
@@ -228,7 +205,6 @@ public class BoardScrub extends CodeBase {
         }
     }
 
-    
     /**
      * This method gets links to visit from the target page
      * @return 
@@ -269,6 +245,12 @@ public class BoardScrub extends CodeBase {
         return urls;
     }
     
+    /**
+     * This method visits the links and gets the content from each of them, for the html report
+     * @param links
+     * @return
+     * @throws Exception 
+     */
     @SuppressWarnings("SleepWhileInLoop")
     private List<String[]> GetContentFromLinks(List<String> links) throws Exception{
     
@@ -416,11 +398,6 @@ public class BoardScrub extends CodeBase {
         
        return results;
     }
-    
-    /**
-     * This test visits each link that appears on the page at a specified url
-     */
-
      
     /**
      * This method visits each url, locally after getting it from a rest request, and puts its content into a results list
@@ -530,14 +507,10 @@ public class BoardScrub extends CodeBase {
                     System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
                 }
             }
-
-
-
             //add at least one result entry if no images were found
             if(imageSrc!=null && imageSrc.isEmpty()){
                 results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()) });
-            }                
-
+            }                   
             //check the desired image count, and break if it's been reached
             if((aNumber>0) && (++visitCount>aNumber)){
                 break;
@@ -548,6 +521,7 @@ public class BoardScrub extends CodeBase {
        return results;
     }
     
+    //ITERATE THROUGH AND REPORT THE NUMBER POSITION IN THE RESULTS OF THE QUERY WHERE THE URL SHOWED UP
     private void ReportPlacesOfTarget(List<Integer> resultPlacesOfTarget) {
         //REPORT TEST RESULTS
             if(resultPlacesOfTarget.size()<1){
@@ -557,107 +531,74 @@ public class BoardScrub extends CodeBase {
                 System.out.println("TARGET:"+aString+" FOUND AT PLACE (0-based):");
                 for(Integer place:resultPlacesOfTarget){
                     System.out.println("PLACE:"+place);
-
                 }
             }
     }
-    
- 
-    
+       
     /**
      * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
      */
-    private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{
-            
-            String environmentEnumerationAsString = environment.toString();
-        
-            // indicator that page of links has completely loaded
-            linksLoadedIndicatorXpath = properties.getProperty(environmentEnumerationAsString
-                    + ".linksLoadedIndicatorXpath");
-
-            // xpath of each link on page of links
-            linkXpath = properties.getProperty(environmentEnumerationAsString + ".linkXpath");
-
-            // xpath of images to gather after following each link
-            imageXpath = properties.getProperty(environmentEnumerationAsString + ".imageXpath");
-
-            // xpath of title text to gather after following each link
-            titleTextXpath = properties.getProperty(environmentEnumerationAsString + ".titleTextXpath");
-            
-            //xpath of something to retrieve from the body
-            bodyTextXpath = properties.getProperty(environmentEnumerationAsString + ".bodyTextXpath"); 
-            
-            //xpath of the next link, for paging
-            nextLinkXpath = properties.getProperty(environmentEnumerationAsString + ".nextLinkXpath"); 
-
+    private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{           
             // CHECK FOR REQUIRED PARAMETERS
-            if (linksLoadedIndicatorXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".linksLoadedIndicatorXpath");
+            if (linksLoadedIndicatorXpath==null || linksLoadedIndicatorXpath.isEmpty()) {
+                throw new Exception("MISSING: -DlinksLoadedIndicatorXpath");
             }
 
-            if (linkXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".linkXpath");
+            if (linkXpath == null || linkXpath.isEmpty()) {
+                throw new Exception("MISSING: -DlinkXpath");
             }
 
-            if (imageXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".imageXpath");
+            if (imageXpath == null||imageXpath.isEmpty()) {
+                throw new Exception("MISSING: -DimageXpath");
             }
             
-            if (titleTextXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".titleTextXpath");
+            if (titleTextXpath == null || titleTextXpath.isEmpty()) {
+                throw new Exception("MISSING: -DtitleTextXpath");
             }
 
-            if (bodyTextXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".bodyTextXpath");
+            if (bodyTextXpath == null||bodyTextXpath.isEmpty()) {
+                throw new Exception("MISSING: -DbodyTextXpath");
             }
-            
-            System.out.println("linksLoadedIndicatorXpath:"+linksLoadedIndicatorXpath+" linkXpath:"+linkXpath+" imageXpath:"+imageXpath+" titleTextXpath:"+titleTextXpath+" bodyTextXpath:"+bodyTextXpath);
-    }
-    
-    /**
-     * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
-     */
-    private void GetResultPlaceRequiredProperties() throws Exception{
-        
-            System.out.println("GETRESULTPLACEREQUIREDPROPERTIES");
-        
-            String environmentEnumerationAsString = environment.toString();
-            //GET REQUIRED PROPERTIES FILE PARMS
-            // indicator that page of links has completely loaded
-            linksLoadedIndicatorXpath = properties.getProperty(environmentEnumerationAsString+ ".linksLoadedIndicatorXpath");
-            // xpath of each link on page of links
-            linkXpath = properties.getProperty(environmentEnumerationAsString + ".linkXpath");
-            // xpath of next link
-            nextLinkXpath = properties.getProperty(environmentEnumerationAsString + ".nextLinkXpath");
+            if (nextLinkXpath == null||nextLinkXpath.isEmpty()){                
+                throw new Exception("MISSING: -DnextLinkXpath");
+            }
             //num parameter name to use in url, for number of results to return (used for paging)
-            numResultsParm = properties.getProperty(environmentEnumerationAsString + ".numResultsParm");
+            if (numResultsParm == null||numResultsParm.isEmpty() ){                
+                throw new Exception("MISSING: -DnumResultsParm");
+            } 
             //start parameter name to use in url, for nth result to get results from (used for paging)
-            startParm = properties.getProperty(environmentEnumerationAsString + ".startParm");
-            
-            if (linksLoadedIndicatorXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".linksLoadedIndicatorXpath");
+            if (startParm == null||startParm.isEmpty()){                
+                throw new Exception("MISSING: -DstartParm");
+            } 
+            if (aString == null || aString.isEmpty()) {
+                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
             }
-
-            if (linkXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".linkXpath");
-            }
-            
-            if (nextLinkXpath == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".nextLinkXpath");
-            }
-
-            if (numResultsParm == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".numResultsParm");
+            if (input == null || input.isEmpty()) {
+                throw new Exception("URL NOT SPECIFIED -Dinput");
             }
             
-            if (startParm == null) {
-                throw new Exception("MISSING:" + environmentEnumerationAsString + ".startParm");
-            }
-            
-            
-            System.out.println("linksLoadedIndicatorXpath:"+linksLoadedIndicatorXpath+" linkXpath:"+linkXpath+" nextLinkXpath:"+nextLinkXpath+" numResultsParm:"+numResultsParm+" startParm:"+startParm);
+            System.out.println("linksLoadedIndicatorXpath:"+
+                    linksLoadedIndicatorXpath+
+                    " linkXpath:"+
+                    linkXpath+
+                    " imageXpath:"+
+                    imageXpath+
+                    " titleTextXpath:"+
+                    titleTextXpath+
+                    " bodyTextXpath:"+
+                    bodyTextXpath+
+                    " nextLinkXpath:"+
+                    nextLinkXpath+ 
+                    " numResultsParm:"+
+                    numResultsParm+ 
+                    " startParm:"+
+                    startParm +
+                    " aString:"+
+                    aString+ 
+                    " input:"+
+                    input);
     }
-    
+   
     /**
      * Write results from a BoardScrub to a web page
      * @param results
@@ -825,40 +766,7 @@ public class BoardScrub extends CodeBase {
         
         return resultPlacesOfTarget;
     }
-    
-    private void VerifyCommandLineParameters() throws Exception{
-        VerifyTargetUrlCommandLineParameterSpecified();
-        VerifyUrlCommandLineParameterSpecified(); 
-    }
-       /**
-     * This method sets url to the input command line parameter, and fails if not specified
-     * @throws Exception 
-     */
-    private void VerifyUrlCommandLineParameterSpecified() throws Exception{
-        
-        // MAKE SURE IT'S BEEN SPECIFIED
-        if (input == null) {
-            throw new Exception("URL SPECIFIED WAS NULL (-Dinput)");
-        }
-        else if(input.isEmpty()){
-            throw new Exception("URL SPECIFIED WAS EMPTY (-Dinput)");
-        }
-    }
-    
-    /**
-     * This method sets the targetUrl to the aString command line parameter, and fails if not specified
-     * @throws Exception 
-     */
-    private void VerifyTargetUrlCommandLineParameterSpecified() throws Exception{
-        // MAKE SURE IT'S BEEN SPECIFIED
-        if (aString == null) {
-            throw new Exception("TARGET URL SPECIFIED WAS NULL (-Dinput)");
-        }
-        else if(aString.isEmpty()){
-            throw new Exception("TARGET URL SPECIFIED WAS EMPTY (-Dinput)");
-        }
-
-    }
+   
     
     @After
     public void AfterTest() {

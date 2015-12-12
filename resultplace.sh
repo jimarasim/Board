@@ -1,1 +1,1 @@
-mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=0 -Dnogrid test
+mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -DdefaultImplicitWaitSeconds=25 -DwaitAfterPageLoadMilliSeconds=2000 -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=0 -Dnogrid test
