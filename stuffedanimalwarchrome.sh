@@ -1,1 +1,0 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROMEMAC -Denvironment=stuffedanimalwar -Dinput=http://localhost:3000 -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=0 test

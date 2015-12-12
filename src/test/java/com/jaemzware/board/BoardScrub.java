@@ -79,7 +79,7 @@ public class BoardScrub extends CodeBase {
             
             
             //go to the first page
-            driverGetWithTime(input);
+            driverGetWithTime(input,1);
             Thread.sleep(waitAfterPageLoadMilliSeconds);
             
             //PAGE THROUGH ALL RESULTS
@@ -95,7 +95,7 @@ public class BoardScrub extends CodeBase {
                 
                 //PAGING LOGIC
                 //go back to content page with results just collected
-                driverGetWithTime(currentContentPageUrl);
+                driverGetWithTime(currentContentPageUrl,1);
                 
                 //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
                 numCurrentPageFirstResult += contentsOnCurrentPage.size();
@@ -159,7 +159,7 @@ public class BoardScrub extends CodeBase {
             GetBuildPageOfFoundLinksRequiredProperties(); 
             
             //go to the first page
-            driverGetWithTime(input);
+            driverGetWithTime(input,1);
             
             //get all the links on the target url
             List<String> links = 
@@ -264,7 +264,7 @@ public class BoardScrub extends CodeBase {
         int visitCount = 0;
         for (String href : links) {
             try{
-                driverGetHtmlOutput = driverGetWithTime(href);
+                driverGetHtmlOutput = driverGetWithTime(href,1);
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
@@ -424,7 +424,7 @@ public class BoardScrub extends CodeBase {
                 rawHtmlLocalFile = aString + WriteHtmlContentToFile(rawHtml);
                 
                 //load the page locally
-                driverGetWithTime(rawHtmlLocalFile);
+                driverGetWithTime(rawHtmlLocalFile,1);
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
@@ -708,7 +708,7 @@ public class BoardScrub extends CodeBase {
         // NAVIGATE TO URL
 
         String oldUrl=driver.getCurrentUrl();
-        driverGetWithTime(urlWithParms);
+        driverGetWithTime(urlWithParms,1);
         WaitForPageChange(oldUrl);
 
         Boolean continueProcessing = true;
@@ -792,7 +792,7 @@ public class BoardScrub extends CodeBase {
                 oldUrl=driver.getCurrentUrl();
 
                 // NAVIGATE TO URL
-                driverGetWithTime(urlWithParms);
+                driverGetWithTime(urlWithParms,1);
 
                 //WAIT FOR NEW RESULTS PAGE TO LOAD
                 WaitForPageChange(oldUrl);

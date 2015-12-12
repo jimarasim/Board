@@ -1,1 +1,0 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads" -DaNumber=100 -Dnogrid -Dreport=seatna -DwaitAfterPageLoadMilliSeconds=0 test

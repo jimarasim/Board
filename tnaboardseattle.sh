@@ -1,1 +1,0 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOX -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=3 -Dnogrid -Dreport=seatna -DwaitAfterPageLoadMilliSeconds=0 test
