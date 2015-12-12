@@ -188,7 +188,7 @@ public class BoardScrub extends CodeBase {
         
         try{
             //get properties file paths
-            GetBuildPageOfFoundLinksRequiredProperties();
+            GetResultPlaceRequiredProperties();
 
             //get each place where the target url shows up
             List<Integer>resultPlacesOfTarget = GetResultPlacesOfTarget();
@@ -562,13 +562,11 @@ public class BoardScrub extends CodeBase {
             if (nextLinkXpath == null||nextLinkXpath.isEmpty()){                
                 throw new Exception("MISSING: -DnextLinkXpath");
             }
-            //num parameter name to use in url, for number of results to return (used for paging)
-            if (numResultsParm == null||numResultsParm.isEmpty() ){                
-                throw new Exception("MISSING: -DnumResultsParm");
+            if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){                
+                throw new Exception("MISSING: -DnumResultsRESTParm");
             } 
-            //start parameter name to use in url, for nth result to get results from (used for paging)
-            if (startParm == null||startParm.isEmpty()){                
-                throw new Exception("MISSING: -DstartParm");
+            if (startRESTParm == null||startRESTParm.isEmpty()){                
+                throw new Exception("MISSING: -DstartRESTParm");
             } 
             if (aString == null || aString.isEmpty()) {
                 throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
@@ -589,10 +587,50 @@ public class BoardScrub extends CodeBase {
                     bodyTextXpath+
                     " nextLinkXpath:"+
                     nextLinkXpath+ 
-                    " numResultsParm:"+
-                    numResultsParm+ 
-                    " startParm:"+
-                    startParm +
+                    " numResultsRESTParm:"+
+                    numResultsRESTParm+ 
+                    " startRESTParm:"+
+                    startRESTParm +
+                    " aString:"+
+                    aString+ 
+                    " input:"+
+                    input);
+    }
+    
+    /**
+     * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
+     */
+    private void GetResultPlaceRequiredProperties() throws Exception{           
+            // CHECK FOR REQUIRED PARAMETERS
+            if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){                
+                throw new Exception("MISSING: -DnumResultsRESTParm");
+            } 
+            if (startRESTParm == null||startRESTParm.isEmpty()){                
+                throw new Exception("MISSING: -DstartRESTParm");
+            } 
+            if (aString == null || aString.isEmpty()) {
+                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
+            }
+            if (input == null || input.isEmpty()) {
+                throw new Exception("URL NOT SPECIFIED -Dinput");
+            }
+            
+            System.out.println("linksLoadedIndicatorXpath:"+
+                    linksLoadedIndicatorXpath+
+                    " linkXpath:"+
+                    linkXpath+
+                    " imageXpath:"+
+                    imageXpath+
+                    " titleTextXpath:"+
+                    titleTextXpath+
+                    " bodyTextXpath:"+
+                    bodyTextXpath+
+                    " nextLinkXpath:"+
+                    nextLinkXpath+ 
+                    " numResultsRESTParm:"+
+                    numResultsRESTParm+ 
+                    " startRESTParm:"+
+                    startRESTParm +
                     " aString:"+
                     aString+ 
                     " input:"+
@@ -663,7 +701,7 @@ public class BoardScrub extends CodeBase {
         //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
         String urlWithParms = input + 
                 "&"+
-                numResultsParm+
+                numResultsRESTParm+
                 "="+
                 Integer.toString(numResultsOnPage);
 
@@ -718,8 +756,6 @@ public class BoardScrub extends CodeBase {
                 System.out.println((i+numCurrentPageFirstResult)+":\t"+linkText);
             }
 
-//CHECK IF WE WANT TO KEEP GOING (DEPENDING ON HOW MANY PAGES TO VISIT)
-
             //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
             numCurrentPageFirstResult += numResultsOnPage;
 
@@ -743,11 +779,11 @@ public class BoardScrub extends CodeBase {
                 //CONSTRUCT THE NEW URL
                 urlWithParms = input + 
                 "&"+
-                numResultsParm+
+                numResultsRESTParm+
                 "="+
                 Integer.toString(numResultsOnPage)+
                 "&"+
-                startParm+
+                startRESTParm+
                 "="+
                 Integer.toString(numCurrentPageFirstResult);
 
@@ -766,7 +802,6 @@ public class BoardScrub extends CodeBase {
         
         return resultPlacesOfTarget;
     }
-   
     
     @After
     public void AfterTest() {
