@@ -180,6 +180,70 @@ public class BoardScrub extends CodeBase {
         }
     }
     
+       
+    /**
+     * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
+     */
+    private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{           
+            // CHECK FOR REQUIRED PARAMETERS
+            if (linksLoadedIndicatorXpath==null || linksLoadedIndicatorXpath.isEmpty()) {
+                throw new Exception("MISSING: -DlinksLoadedIndicatorXpath");
+            }
+
+            if (linkXpath == null || linkXpath.isEmpty()) {
+                throw new Exception("MISSING: -DlinkXpath");
+            }
+
+            if (imageXpath == null||imageXpath.isEmpty()) {
+                throw new Exception("MISSING: -DimageXpath");
+            }
+            
+            if (titleTextXpath == null || titleTextXpath.isEmpty()) {
+                throw new Exception("MISSING: -DtitleTextXpath");
+            }
+
+            if (bodyTextXpath == null||bodyTextXpath.isEmpty()) {
+                throw new Exception("MISSING: -DbodyTextXpath");
+            }
+            if (nextLinkXpath == null||nextLinkXpath.isEmpty()){                
+                throw new Exception("MISSING: -DnextLinkXpath");
+            }
+            if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){                
+                throw new Exception("MISSING: -DnumResultsRESTParm");
+            } 
+            if (startRESTParm == null||startRESTParm.isEmpty()){                
+                throw new Exception("MISSING: -DstartRESTParm");
+            } 
+            if (aString == null || aString.isEmpty()) {
+                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
+            }
+            if (input == null || input.isEmpty()) {
+                throw new Exception("URL NOT SPECIFIED -Dinput");
+            }
+            
+            System.out.println("linksLoadedIndicatorXpath:"+
+                    linksLoadedIndicatorXpath+
+                    " linkXpath:"+
+                    linkXpath+
+                    " imageXpath:"+
+                    imageXpath+
+                    " titleTextXpath:"+
+                    titleTextXpath+
+                    " bodyTextXpath:"+
+                    bodyTextXpath+
+                    " nextLinkXpath:"+
+                    nextLinkXpath+ 
+                    " numResultsRESTParm:"+
+                    numResultsRESTParm+ 
+                    " startRESTParm:"+
+                    startRESTParm +
+                    " aString:"+
+                    aString+ 
+                    " input:"+
+                    input);
+    }
+   
+    
     /** This test will report where in google result stats your site sits 
      * 
      */
@@ -204,7 +268,162 @@ public class BoardScrub extends CodeBase {
             Assert.fail(ex.getMessage());
         }
     }
+    
+        /**
+     * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
+     */
+    private void GetResultPlaceRequiredProperties() throws Exception{           
+            // CHECK FOR REQUIRED PARAMETERS
+            
+            if (aString == null || aString.isEmpty()) {
+                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
+            }
+            if (input == null || input.isEmpty()) {
+                throw new Exception("URL NOT SPECIFIED -Dinput");
+            }
+            
+            if (linkXpath == null || linkXpath.isEmpty()) {
+                throw new Exception("MISSING: -DlinkXpath");
+            }
+            if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){                
+                throw new Exception("MISSING: -DnumResultsRESTParm");
+            } 
+            
+            System.out.println("linksLoadedIndicatorXpath:"+
+                    linksLoadedIndicatorXpath+
+                    " linkXpath:"+
+                    linkXpath+
+                    " imageXpath:"+
+                    imageXpath+
+                    " titleTextXpath:"+
+                    titleTextXpath+
+                    " bodyTextXpath:"+
+                    bodyTextXpath+
+                    " nextLinkXpath:"+
+                    nextLinkXpath+ 
+                    " numResultsRESTParm:"+
+                    numResultsRESTParm+ 
+                    " startRESTParm:"+
+                    startRESTParm +
+                    " aString:"+
+                    aString+ 
+                    " input:"+
+                    input);
+    }
 
+    private List<Integer> GetResultPlacesOfTarget() throws Exception{
+        List<Integer>resultPlacesOfTarget = new ArrayList<>(); 
+        int numResultsOnPage = 100;
+        int numCurrentPageFirstResult=1;  //used to track
+        
+        System.out.println("GETRESULTPLACESOFTARGET");
+        
+        //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
+        String urlWithParms = input + 
+                "&"+
+                numResultsRESTParm+
+                "="+
+                Integer.toString(numResultsOnPage);
+
+        // NAVIGATE TO URL
+
+        String oldUrl=driver.getCurrentUrl();
+        driverGetWithTime(urlWithParms,1);
+        WaitForPageChange(oldUrl);
+
+        Boolean continueProcessing = true;
+
+//PAGE THROUGH ALL RESULTS
+        while(continueProcessing){
+
+            // make sure there are some links
+            System.out.println("CHECKING FOR RESULTS");
+            System.out.println("!IsElementPresent(By.xpath("+linkXpath+"), "+quickWaitMilliSeconds+")");
+            if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
+                throw new Exception("COULDN'T FIND ANY RESULTS");
+            }
+
+            // GET THE LINKS
+            System.out.println("FINDING RESULTS");
+
+            List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
+
+            System.out.println("RESULT COUNT:"+webElements.size());
+
+            // store off the hrefs
+            System.out.println("REVIEWING LINKS");
+
+//CHECK IF TARGET LINK IS IN THE LINKS
+            String linkHref;
+            String linkText;
+            for(int i=0;i<webElements.size();i++){
+
+                try{
+                linkHref=webElements.get(i).getAttribute("href");
+                linkText=webElements.get(i).getText();
+                }
+                catch(Exception ex){
+                    System.out.println("WARNING: EXCEPTION WHILE GETTING HREFS:"+ex.getMessage());
+                    break;
+                }
+
+                if(linkHref.contains(aString)){
+                    //report the link position with the first result offset
+                    resultPlacesOfTarget.add(numCurrentPageFirstResult + i);
+                }
+
+                System.out.println((i+numCurrentPageFirstResult)+":\t"+linkHref);
+                System.out.println((i+numCurrentPageFirstResult)+":\t"+linkText);
+            }
+
+            //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
+            numCurrentPageFirstResult += numResultsOnPage;
+
+            System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+")");
+            System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+quickWaitMilliSeconds+")){");
+            System.out.println("else");
+            if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
+                System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+aNumber);
+
+                //tell the loop to stop
+                continueProcessing=false;
+            }
+            else if(!IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
+                System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
+
+                //there is no next link, we're done, tell the while loop to stop
+                continueProcessing=false;
+            }
+            else{
+
+                //CONSTRUCT THE NEW URL
+                urlWithParms = input + 
+                "&"+
+                numResultsRESTParm+
+                "="+
+                Integer.toString(numResultsOnPage)+
+                "&"+
+                startRESTParm+
+                "="+
+                Integer.toString(numCurrentPageFirstResult);
+
+                //GO TO THE NEXT PAGE
+                //get results text string, so we can tell when its changed in WaitForGoogleResultsPageChange
+                oldUrl=driver.getCurrentUrl();
+
+                // NAVIGATE TO URL
+                driverGetWithTime(urlWithParms,1);
+
+                //WAIT FOR NEW RESULTS PAGE TO LOAD
+                WaitForPageChange(oldUrl);
+
+            }
+        }
+        
+        return resultPlacesOfTarget;
+    }
+     
+    
     /**
      * This method gets links to visit from the target page
      * @return 
@@ -534,109 +753,7 @@ public class BoardScrub extends CodeBase {
                 }
             }
     }
-       
-    /**
-     * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
-     */
-    private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{           
-            // CHECK FOR REQUIRED PARAMETERS
-            if (linksLoadedIndicatorXpath==null || linksLoadedIndicatorXpath.isEmpty()) {
-                throw new Exception("MISSING: -DlinksLoadedIndicatorXpath");
-            }
-
-            if (linkXpath == null || linkXpath.isEmpty()) {
-                throw new Exception("MISSING: -DlinkXpath");
-            }
-
-            if (imageXpath == null||imageXpath.isEmpty()) {
-                throw new Exception("MISSING: -DimageXpath");
-            }
-            
-            if (titleTextXpath == null || titleTextXpath.isEmpty()) {
-                throw new Exception("MISSING: -DtitleTextXpath");
-            }
-
-            if (bodyTextXpath == null||bodyTextXpath.isEmpty()) {
-                throw new Exception("MISSING: -DbodyTextXpath");
-            }
-            if (nextLinkXpath == null||nextLinkXpath.isEmpty()){                
-                throw new Exception("MISSING: -DnextLinkXpath");
-            }
-            if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){                
-                throw new Exception("MISSING: -DnumResultsRESTParm");
-            } 
-            if (startRESTParm == null||startRESTParm.isEmpty()){                
-                throw new Exception("MISSING: -DstartRESTParm");
-            } 
-            if (aString == null || aString.isEmpty()) {
-                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
-            }
-            if (input == null || input.isEmpty()) {
-                throw new Exception("URL NOT SPECIFIED -Dinput");
-            }
-            
-            System.out.println("linksLoadedIndicatorXpath:"+
-                    linksLoadedIndicatorXpath+
-                    " linkXpath:"+
-                    linkXpath+
-                    " imageXpath:"+
-                    imageXpath+
-                    " titleTextXpath:"+
-                    titleTextXpath+
-                    " bodyTextXpath:"+
-                    bodyTextXpath+
-                    " nextLinkXpath:"+
-                    nextLinkXpath+ 
-                    " numResultsRESTParm:"+
-                    numResultsRESTParm+ 
-                    " startRESTParm:"+
-                    startRESTParm +
-                    " aString:"+
-                    aString+ 
-                    " input:"+
-                    input);
-    }
     
-    /**
-     * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
-     */
-    private void GetResultPlaceRequiredProperties() throws Exception{           
-            // CHECK FOR REQUIRED PARAMETERS
-            if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){                
-                throw new Exception("MISSING: -DnumResultsRESTParm");
-            } 
-            if (startRESTParm == null||startRESTParm.isEmpty()){                
-                throw new Exception("MISSING: -DstartRESTParm");
-            } 
-            if (aString == null || aString.isEmpty()) {
-                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
-            }
-            if (input == null || input.isEmpty()) {
-                throw new Exception("URL NOT SPECIFIED -Dinput");
-            }
-            
-            System.out.println("linksLoadedIndicatorXpath:"+
-                    linksLoadedIndicatorXpath+
-                    " linkXpath:"+
-                    linkXpath+
-                    " imageXpath:"+
-                    imageXpath+
-                    " titleTextXpath:"+
-                    titleTextXpath+
-                    " bodyTextXpath:"+
-                    bodyTextXpath+
-                    " nextLinkXpath:"+
-                    nextLinkXpath+ 
-                    " numResultsRESTParm:"+
-                    numResultsRESTParm+ 
-                    " startRESTParm:"+
-                    startRESTParm +
-                    " aString:"+
-                    aString+ 
-                    " input:"+
-                    input);
-    }
-   
     /**
      * Write results from a BoardScrub to a web page
      * @param results
@@ -691,118 +808,7 @@ public class BoardScrub extends CodeBase {
         }
     }
     
-    private List<Integer> GetResultPlacesOfTarget() throws Exception{
-        List<Integer>resultPlacesOfTarget = new ArrayList<>(); 
-        int numResultsOnPage = 100;
-        int numCurrentPageFirstResult=1;  //used to track
-        
-        System.out.println("GETRESULTPLACESOFTARGET");
-        
-        //ADD NUM AND START PARMS TO SEARCH STRING (GOOGLE SPECIFIC)
-        String urlWithParms = input + 
-                "&"+
-                numResultsRESTParm+
-                "="+
-                Integer.toString(numResultsOnPage);
-
-        // NAVIGATE TO URL
-
-        String oldUrl=driver.getCurrentUrl();
-        driverGetWithTime(urlWithParms,1);
-        WaitForPageChange(oldUrl);
-
-        Boolean continueProcessing = true;
-
-//PAGE THROUGH ALL RESULTS
-        while(continueProcessing){
-
-            // make sure there are some links
-            System.out.println("CHECKING FOR RESULTS");
-            System.out.println("!IsElementPresent(By.xpath("+linkXpath+"), "+quickWaitMilliSeconds+")");
-            if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
-                throw new Exception("COULDN'T FIND ANY RESULTS");
-            }
-
-            // GET THE LINKS
-            System.out.println("FINDING RESULTS");
-
-            List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
-
-            System.out.println("RESULT COUNT:"+webElements.size());
-
-            // store off the hrefs
-            System.out.println("REVIEWING LINKS");
-
-//CHECK IF TARGET LINK IS IN THE LINKS
-            String linkHref;
-            String linkText;
-            for(int i=0;i<webElements.size();i++){
-
-                try{
-                linkHref=webElements.get(i).getAttribute("href");
-                linkText=webElements.get(i).getText();
-                }
-                catch(Exception ex){
-                    System.out.println("WARNING: EXCEPTION WHILE GETTING HREFS:"+ex.getMessage());
-                    break;
-                }
-
-                if(linkHref.contains(aString)){
-                    //report the link position with the first result offset
-                    resultPlacesOfTarget.add(numCurrentPageFirstResult + i);
-                }
-
-                System.out.println((i+numCurrentPageFirstResult)+":\t"+linkHref);
-                System.out.println((i+numCurrentPageFirstResult)+":\t"+linkText);
-            }
-
-            //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
-            numCurrentPageFirstResult += numResultsOnPage;
-
-            System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+")");
-            System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+quickWaitMilliSeconds+")){");
-            System.out.println("else");
-            if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
-                System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+aNumber);
-
-                //tell the loop to stop
-                continueProcessing=false;
-            }
-            else if(!IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
-                System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
-
-                //there is no next link, we're done, tell the while loop to stop
-                continueProcessing=false;
-            }
-            else{
-
-                //CONSTRUCT THE NEW URL
-                urlWithParms = input + 
-                "&"+
-                numResultsRESTParm+
-                "="+
-                Integer.toString(numResultsOnPage)+
-                "&"+
-                startRESTParm+
-                "="+
-                Integer.toString(numCurrentPageFirstResult);
-
-                //GO TO THE NEXT PAGE
-                //get results text string, so we can tell when its changed in WaitForGoogleResultsPageChange
-                oldUrl=driver.getCurrentUrl();
-
-                // NAVIGATE TO URL
-                driverGetWithTime(urlWithParms,1);
-
-                //WAIT FOR NEW RESULTS PAGE TO LOAD
-                WaitForPageChange(oldUrl);
-
-            }
-        }
-        
-        return resultPlacesOfTarget;
-    }
-    
+   
     @After
     public void AfterTest() {
         try {
