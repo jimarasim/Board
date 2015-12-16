@@ -172,14 +172,14 @@ public class BoardScrubREST extends CodeBase {
         String fileName = "index"+getDateStamp()+"-" + report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
             
-            
+            HtmlReportHeader(report);
             for (String entry : results) {
                 writer.println(entry);
             }
             
             writer.flush();
             
-            System.out.println("INDEX FILE WRITTEN:" + fileName);
+            System.out.println("open " + fileName);
         }
         catch(Exception ex){
             throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
