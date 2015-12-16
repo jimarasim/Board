@@ -141,7 +141,7 @@ public class BoardScrub extends CodeBase {
      * This method gets links to visit from the target page
      * @return 
      */
-    private List<String> GetLinksOnPage() throws Exception{
+    public static List<String> GetLinksOnPage() throws Exception{
         // list for links
         List<String> urls = new ArrayList<>();
         
@@ -397,7 +397,7 @@ public class BoardScrub extends CodeBase {
      * @param results
      * @throws Exception 
      */
-    private void WriteContentsToWebPage(List<String[]> results) throws Exception
+    public static void WriteContentsToWebPage(List<String[]> results) throws Exception
     {
         // build web page
         if(report==null){
@@ -446,112 +446,7 @@ public class BoardScrub extends CodeBase {
     }
 
     
-    /**
-     * This method visits each url, and puts its content into a results list, using rest calls
-     * @return
-     * @throws Exception 
-     */
-    @Test
-    public void BuildPageOfFoundLinksViaRest() {
-        try {
-            //get properties file information
-            GetBuildPageOfFoundLinksRequiredPropertiesREST(); 
-            
-            //go to the first page
-            driverGetWithTime(input,1);
-            
-            //get all the links on the target url
-            List<String> links = 
-                    GetLinksOnPage(); 
-            
-            //get conent from the links
-            List<String[]> contents = 
-                    GetContentFromLinksViaRest(links); 
-
-            //generate a page of the contents
-            WriteContentsToWebPage(contents);
-
-        } catch (Exception ex) {
-            ScreenShot();
-            System.out.println("BuildPageOfFoundLinksViaRest EXCEPTION MESSAGE:"+ex.getMessage());
-            CustomStackTrace("BuildPageOfFoundLinksViaRest EXCEPTION TRACE", ex);
-            Assert.fail(ex.getMessage());
-        }
-    }
-    private void GetBuildPageOfFoundLinksRequiredPropertiesREST() throws Exception{           
-            // CHECK FOR REQUIRED PARAMETERS
-            
-            if (aString == null || aString.isEmpty()) {
-                throw new Exception("TARGET URL NOT SPECIFIED -DaString)");
-            }
-            if (input == null || input.isEmpty()) {
-                throw new Exception("URL NOT SPECIFIED -Dinput");
-            }
-            if (report == null || report.isEmpty()) {
-                throw new Exception("URL NOT SPECIFIED -Dreport");
-            }
-            if (linksLoadedIndicatorXpath == null || linksLoadedIndicatorXpath.isEmpty()) {
-                throw new Exception("URL NOT SPECIFIED -DlinksLoadedIndicatorXpath");
-            }
-            if (aNumber == -1 ) {
-                aNumber=0;
-                throw new Exception("URL NOT SPECIFIED -aNumber");
-            }
-            if (linkXpath == null || linkXpath.isEmpty()) {
-                throw new Exception("URL NOT SPECIFIED -DlinkXpath");
-            }
-            
-            
-            System.out.println("aString:"+
-                    aString+ 
-                    " input:"+
-                    input+ 
-                    " report:"+
-                    report+ 
-                    " aNumber:"+
-                    aNumber+ 
-                    " linksLoadedIndicatorXpath:"+
-                    linksLoadedIndicatorXpath+ 
-                    " linkXpath:"+
-                    linkXpath);
-    }
-    /**
-     * This method visits each url, locally after getting it from a rest request, and puts its content into a results list
-     * @return
-     * @throws Exception 
-     */
-    private List<String[]> GetContentFromLinksViaRest(List<String> links) throws Exception{
-    
-        List<String[]> results = new ArrayList<>();
-
-        int visitCount = 0;
-        String rawHtml="";
-        String rawHtmlLocalFile="";
-        for (String href : links) {
-            try{
-                //do an http get of the page
-                rawHtml = HttpGetReturnResponse(href);
-                
-                //write it to a file
-                rawHtmlLocalFile = WriteHtmlContentToFile(rawHtml);
-                
-            }
-            catch(Exception ex){
-                System.out.println("WARNING: EXCEPTION GETTING:"+rawHtmlLocalFile+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
-                this.CustomStackTrace("CUSTOM STACK TRACE", ex);
-                continue;
-            }
-
-                    
-            //check the desired image count, and break if it's been reached
-            if((aNumber>0) && (visitCount++>aNumber)){
-                break;
-            }
-
-        }
-        
-       return results;
-    }
+   
        
     /** This test will report where in google result stats your site sits 
      * 
