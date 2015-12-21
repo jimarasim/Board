@@ -425,7 +425,7 @@ public class BoardScrub extends CodeBase {
             
             writer.flush();
             
-            System.out.println("INDEX FILE WRITTEN:" + fileName);
+            System.out.println("open " + fileName);
         }
         catch(Exception ex){
             throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
