@@ -141,7 +141,7 @@ public class BoardScrub extends CodeBase {
      * This method gets links to visit from the target page
      * @return 
      */
-    public static List<String> GetLinksOnPage() throws Exception{
+    public List<String> GetLinksOnPage() throws Exception{
         // list for links
         List<String> urls = new ArrayList<>();
         
@@ -397,7 +397,7 @@ public class BoardScrub extends CodeBase {
      * @param results
      * @throws Exception 
      */
-    public static void WriteContentsToWebPage(List<String[]> results) throws Exception
+    public void WriteContentsToWebPage(List<String[]> results) throws Exception
     {
         // build web page
         if(report==null){
