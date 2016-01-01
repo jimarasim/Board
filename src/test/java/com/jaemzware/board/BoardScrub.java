@@ -10,10 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.jaemzware.seleniumcodebase.CodeBase;
 import static com.jaemzware.seleniumcodebase.ParameterType.*;
@@ -52,9 +49,7 @@ public class BoardScrub extends CodeBase {
     }
     
     /**
-     * This method visits each url, and puts its content into a results list using webdriver
-     * @return
-     * @throws Exception 
+     * This method visits each url, and puts its content into a results list using webdriver 
      */
     @Test
     public void BuildPageOfFoundLinks() {
@@ -137,45 +132,7 @@ public class BoardScrub extends CodeBase {
             Assert.fail("BuildPageOfFoundLinks EXCEPTION MESSAGE:"+ex.getMessage());
         }
     }
-        /**
-     * This method gets links to visit from the target page
-     * @return 
-     */
-    public List<String> GetLinksOnPage() throws Exception{
-        // list for links
-        List<String> urls = new ArrayList<>();
         
-        // wait for links to be loaded
-        (new WebDriverWait(driver, defaultImplicitWaitSeconds)).until(new ExpectedCondition<Boolean>() {
-            @Override
-            public Boolean apply(WebDriver d) {
-                System.out.println("IsElementPresent(By.xpath(linksLoadedIndicatorXpath))");
-                System.out.println("IsElementPresent(By.xpath("+linksLoadedIndicatorXpath+"))");
-                return IsElementPresent(By.xpath(linksLoadedIndicatorXpath));
-            }
-        });
-
-        // make sure there are some links
-        System.out.println("CHECKING FOR RESULTS");
-
-        if (!IsElementPresent(By.xpath(linkXpath))) {
-            throw new Exception("COULDNT FIND ANY RESULTS ON: "+input+" WITH XPATH:"+linkXpath);
-        }
-
-// GET THE links
-        System.out.println("FINDING RESULTS");
-
-        List<WebElement> webElements = driver.findElements(By.xpath(linkXpath));
-
-        // store off the hrefs
-        System.out.println("SAVING RESULT LINKS. COUNT:"+webElements.size());
-
-        for (WebElement we : webElements) {
-            urls.add(we.getAttribute("href"));
-        }
-        
-        return urls;
-    }
     private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{           
         // CHECK FOR REQUIRED PARAMETERS
         if (linksLoadedIndicatorXpath==null || linksLoadedIndicatorXpath.isEmpty()) {

@@ -9,11 +9,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.jaemzware.seleniumcodebase.CodeBase;
 import static com.jaemzware.seleniumcodebase.ParameterType.*;
@@ -54,8 +49,7 @@ public class BoardScrubREST extends CodeBase {
     
     /**
      * This method visits each url, and puts its content into a results list, using rest calls
-     * @return
-     * @throws Exception 
+     * @return 
      */
     @Test
     public void BuildPageOfFoundLinksViaRest() {
@@ -68,7 +62,7 @@ public class BoardScrubREST extends CodeBase {
             
             //get all the links on the target url
             List<String> links = 
-                    BoardScrub.GetLinksOnPage(); 
+                   GetLinksOnPage(); 
             
             //get conent from the links
             List<String> contents = 
