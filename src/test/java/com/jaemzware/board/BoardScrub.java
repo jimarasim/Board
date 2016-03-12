@@ -219,7 +219,7 @@ public class BoardScrub extends CodeBase {
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
-                ScrollPage();
+//                ScrollPage();
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
