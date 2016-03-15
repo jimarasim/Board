@@ -361,7 +361,7 @@ public class BoardScrub extends CodeBase {
             report = "NONAMEREPORT";
         }
         
-        String fileName = "index"+getDateStamp()+"-" + report + ".htm";
+        String fileName = "index" + report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
             writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
             
