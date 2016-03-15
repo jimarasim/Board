@@ -363,12 +363,13 @@ public class BoardScrub extends CodeBase {
         
         String fileName = "index" + report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
-            writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
+            writer.println(HtmlReportHeader("From:<a href='"+input+"' target='_blank'>"+input+"</a>"));
             
             String oldHref = new String();
             for (String[] entry : results) {
                 if (!oldHref.equals(entry[0])) {
                     oldHref = entry[0];
+                    writer.println("<hr />");
                     writer.println("<h2><a href='" + oldHref + "' target='_blank'>"+oldHref+"</a></h2>");
                     writer.println("<span>" + entry[2] + "</span><br />");
                     writer.println("<span>" + entry[3] + "</span><br />");
