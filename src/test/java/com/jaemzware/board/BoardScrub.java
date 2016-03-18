@@ -319,6 +319,8 @@ public class BoardScrub extends CodeBase {
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    System.out.println("IMAGE COUNT:"+imageElements.size());
+
                     for (WebElement i : imageElements) {
                         try {
                             imageSrc=i.getAttribute("src");
