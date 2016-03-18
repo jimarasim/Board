@@ -314,7 +314,8 @@ public class BoardScrub extends CodeBase {
             // check for images
             String imageSrc = "";
             if(noImages==null){
-                System.out.println("IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
+                
+                System.out.println("CHECKING IMAGES IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
