@@ -219,7 +219,7 @@ public class BoardScrub extends CodeBase {
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
-                ScrollPage();
+//                ScrollPage();
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
@@ -314,10 +314,13 @@ public class BoardScrub extends CodeBase {
             // check for images
             String imageSrc = "";
             if(noImages==null){
-                System.out.println("IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
+                
+                System.out.println("CHECKING IMAGES IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
                 if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
+                    System.out.println("IMAGE COUNT:"+imageElements.size());
+
                     for (WebElement i : imageElements) {
                         try {
                             imageSrc=i.getAttribute("src");
@@ -361,22 +364,21 @@ public class BoardScrub extends CodeBase {
             report = "NONAMEREPORT";
         }
         
-        String fileName = "index"+getDateStamp()+"-" + report + ".htm";
+        String fileName = "index" + report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
-            writer.println(HtmlReportHeader("BoardScrub:<a href='"+input+"' target='_blank'>"+input+"</a>"));
+            writer.println(HtmlReportHeader("From:<a href='"+input+"' target='_blank'>"+input+"</a>"));
             
             String oldHref = new String();
             for (String[] entry : results) {
                 if (!oldHref.equals(entry[0])) {
                     oldHref = entry[0];
+                    writer.println("<hr />");
                     writer.println("<h2><a href='" + oldHref + "' target='_blank'>"+oldHref+"</a></h2>");
                     writer.println("<span>" + entry[2] + "</span><br />");
                     writer.println("<span>" + entry[3] + "</span><br />");
                     writer.println(entry[4]);
-
                 }
                 writer.println("<a href='"+oldHref+"' target='_blank'><img src='" + entry[1] + "' /></a><br />");
-
             }
             writer.println(HtmlReportFooter());
             
