@@ -65,7 +65,7 @@ public class BoardScrubREST extends CodeBase {
                    GetLinksOnPage(); 
             
             //get conent from the links
-            List<String> contents = 
+            List<String[]> contents = 
                     GetContentFromLinksViaRest(links); 
 
             //generate a page of the contents
@@ -120,9 +120,10 @@ public class BoardScrubREST extends CodeBase {
      * @return
      * @throws Exception 
      */
-    private List<String> GetContentFromLinksViaRest(List<String> links) throws Exception{
+    private List<String[]> GetContentFromLinksViaRest(List<String> links) throws Exception{
     
-        List<String> results = new ArrayList<>();
+        //using string array where first entry will be url and next will be raw html
+        List<String[]> results = new ArrayList<>();
 
         int visitCount = 0;
         
@@ -132,7 +133,7 @@ public class BoardScrubREST extends CodeBase {
                 String rawHtml = HttpGetReturnResponse(href);
                 
                 //return in results
-                results.add(rawHtml);
+                results.add(new String[]{href,rawHtml});
                 
             }
             catch(Exception ex){
@@ -156,7 +157,7 @@ public class BoardScrubREST extends CodeBase {
      * @param results
      * @throws Exception 
      */
-    public static void WriteMultipleWebPagesToOneWebPage(List<String> results) throws Exception
+    public static void WriteMultipleWebPagesToOneWebPage(List<String[]> results) throws Exception
     {
         // build web page
         if(report==null){
@@ -166,9 +167,15 @@ public class BoardScrubREST extends CodeBase {
         String fileName = "index"+ report + ".htm";
         try (PrintWriter writer = new PrintWriter(fileName, "UTF-8")) {
             
+            //first entry is the href, second entry is the raw html
+            
             HtmlReportHeader(report);
-            for (String entry : results) {
-                writer.println(entry);
+            for (String[] entry : results) {
+                String href=entry[0];
+                String rawHtml=entry[1];
+                
+                writer.println("<h1><a href="+href+" target='_blank'>"+href+"</a></h1>");
+                writer.println(rawHtml);
             }
             
             writer.flush();

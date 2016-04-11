@@ -9,4 +9,4 @@
 #-Dreport="craigslistREST"                                                  - substring to put in the report name to identify this scrub
 #-DwaitAfterPageLoadMilliSeconds="0"                                        - time in milliseconds to wait after the page has loaded
 
-mvn -Dtest="BoardScrubREST#BuildPageOfFoundLinksViaRest"  -DlinkXpath="//span[@class='pl']/a" -DlinksLoadedIndicatorXpath="//input[@id='query']" -DaNumber="50" -DaString="//p" -Dinput="http://seattle.craigslist.org/search/sss?query=${1:-skateboard}" -Dbrowser="FIREFOX" -Dnogrid -Dreport="craigslistREST" -DwaitAfterPageLoadMilliSeconds="0" test
+mvn -Dtest="BoardScrubREST#BuildPageOfFoundLinksViaRest"  -DlinkXpath="//span[@class='pl']/a" -DlinksLoadedIndicatorXpath="//input[@id='query']" -DaNumber="5" -DaString="//p" -Dinput="http://seattle.craigslist.org/search/sss?query=${1:-skateboard}" -Dbrowser="CHROME" -Dnogrid -Dreport="craigslistREST" -DwaitAfterPageLoadMilliSeconds="0" test
