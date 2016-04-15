@@ -215,7 +215,7 @@ public class BoardScrub extends CodeBase {
         int visitCount = 0;
         for (String href : links) {
             try{
-                driverGetHtmlOutput = driverGetWithTime(href,1);
+                driverGetHtmlOutput = driverGetWithTime(href);
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
