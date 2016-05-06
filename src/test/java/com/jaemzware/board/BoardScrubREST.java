@@ -130,10 +130,14 @@ public class BoardScrubREST extends CodeBase {
                 if(!href.contains("mailto") 
                         && !href.contains("javascript")
                         && !href.isEmpty()){
+                    System.out.println("GET:"+href);
                     //do an http get of the page
                     String rawHtml = HttpGetReturnResponse(href);
                     //return in results
                     results.add(new String[]{href,rawHtml});
+                }
+                else{
+                    System.out.println("SKIP:"+href);
                 }
             }
             catch(Exception ex){
