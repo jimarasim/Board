@@ -45,8 +45,6 @@ public class BoardScrubREST extends CodeBase {
             Assert.fail(ex.getMessage());
         }
     }
-
-    
     /**
      * This method visits each url, and puts its content into a results list, using rest calls
      * @return 
@@ -129,12 +127,14 @@ public class BoardScrubREST extends CodeBase {
         
         for (String href : links) {
             try{
-                //do an http get of the page
-                String rawHtml = HttpGetReturnResponse(href);
-                
-                //return in results
-                results.add(new String[]{href,rawHtml});
-                
+                if(!href.contains("mailto") 
+                        && !href.contains("javascript")
+                        && !href.isEmpty()){
+                    //do an http get of the page
+                    String rawHtml = HttpGetReturnResponse(href);
+                    //return in results
+                    results.add(new String[]{href,rawHtml});
+                }
             }
             catch(Exception ex){
                 System.out.println("WARNING: EXCEPTION GETTING:"+href+", ... MOVING ON. EXCEPTION:"+ex.getMessage());
@@ -151,7 +151,6 @@ public class BoardScrubREST extends CodeBase {
         
        return results;
     }
-   
     /**
      * Write results from a BoardScrub to a web page
      * @param results
@@ -185,8 +184,7 @@ public class BoardScrubREST extends CodeBase {
         catch(Exception ex){
             throw new Exception("COULD NOT USE PRINTWRITER TO STORE COLLECTED PAGE CONTENT");
         }
-    }
-   
+    }  
     @After
     public void AfterTest() {
         try {
