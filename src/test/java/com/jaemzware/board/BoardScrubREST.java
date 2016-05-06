@@ -176,8 +176,9 @@ public class BoardScrubREST extends CodeBase {
             for (String[] entry : results) {
                 String href=entry[0];
                 String rawHtml=entry[1];
-                
-                writer.println("<h1><a href="+href+" target='_blank'>"+href+"</a></h1>");
+                                
+                writer.println("<hr />");
+                writer.println("<h1><a style='color:red;' href="+href+" target='_blank'>"+href+"</a></h1>");
                 writer.println(rawHtml);
             }
             
