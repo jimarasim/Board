@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-mvn -Dtest=ResultPlace#ResultPlace -Dbrowser=CHROME -DdefaultImplicitWaitSeconds=10 -DwaitAfterPageLoadMilliSeconds=0 -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=0 -Dnogrid -DnumResultsRESTParm="num" -DstartRESTParm="start" -DnextLinkXpath="//a[@id='pnnext']" -DlinkXpath="//h3[@class='r']/a" test
+mvn -Dtest=ResultPlace#ResultPlace -Dbrowser=CHROME -DdefaultImplicitWaitSeconds=10 -DwaitAfterPageLoadMilliSeconds=0 -Dinput="https://www.google.com/?gws_rd=ssl#q=seattlerules" -DaString=seattlerules.com -DaNumber=1000 -Dnogrid -DnumResultsRESTParm="num" -DstartRESTParm="start" -DnextLinkXpath="//a[@id='pnnext']" -DlinkXpath="//h3[@class='r']/a" test

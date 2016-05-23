@@ -96,11 +96,11 @@ public class ResultPlace extends CodeBase {
             throw new Exception("MISSING: -DstartRESTParm");
         }
         if (nextLinkXpath==null ||nextLinkXpath.isEmpty()){
-            throw new Exception("MISSING: -nextLinkXpath");
+            throw new Exception("MISSING: -DnextLinkXpath");
         }
 
-
         System.out.println(
+                "aNumber:"+aNumber+
                 " linkXpath:"+
                 linkXpath+
                 " numResultsRESTParm:"+
@@ -184,9 +184,7 @@ public class ResultPlace extends CodeBase {
             //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
             numCurrentPageFirstResult += numResultsOnPage;
 
-            System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+")");
-            System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+quickWaitMilliSeconds+")){");
-            System.out.println("else");
+
             if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
                 System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+numResultsOnPage+" maxVisits:"+aNumber);
 
