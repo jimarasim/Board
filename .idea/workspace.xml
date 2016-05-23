@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3574383d-203c-49de-8dec-7bb1983ba69a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/backpage.sh" afterPath="$PROJECT_DIR$/backpage.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/craigslist.sh" afterPath="$PROJECT_DIR$/craigslist.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/craigslistHouse.sh" afterPath="$PROJECT_DIR$/craigslistHouse.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ebay.sh" afterPath="$PROJECT_DIR$/ebay.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/googlenews.sh" afterPath="$PROJECT_DIR$/googlenews.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resultplace.sh" afterPath="$PROJECT_DIR$/resultplace.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" afterPath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tnaboard.sh" afterPath="$PROJECT_DIR$/tnaboard.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tnaboardbellevue.sh" afterPath="$PROJECT_DIR$/tnaboardbellevue.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" afterPath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" />
     </list>
     <ignored path="Board.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BoardScrub.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
+      <file leaf-file-name="ResultPlace.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
+            <state relative-caret-position="447">
+              <caret line="108" column="24" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -45,71 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="backpage.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/backpage.sh">
+      <file leaf-file-name="resultplace.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resultplace.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
-              <caret line="1" column="457" selection-start-line="1" selection-start-column="457" selection-end-line="1" selection-end-column="457" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="craigslist.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/craigslist.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="692" selection-start-line="1" selection-start-column="692" selection-end-line="1" selection-end-column="692" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="craigslistHouse.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/craigslistHouse.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="219" selection-start-line="1" selection-start-column="219" selection-end-line="1" selection-end-column="219" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ebay.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ebay.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="googlenews.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/googlenews.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="105" selection-start-line="1" selection-start-column="105" selection-end-line="1" selection-end-column="105" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tnaboard.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tnaboard.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tnaboardbellevue.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tnaboardbellevue.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="166" selection-start-line="1" selection-start-column="164" selection-end-line="1" selection-end-column="166" />
+              <caret line="1" column="277" selection-start-line="1" selection-start-column="277" selection-end-line="1" selection-end-column="277" />
               <folding />
             </state>
           </provider>
@@ -135,8 +68,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" />
-        <option value="$PROJECT_DIR$/resultplace.sh" />
         <option value="$PROJECT_DIR$/tnaboardbellevue.sh" />
         <option value="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" />
         <option value="$PROJECT_DIR$/backpage.sh" />
@@ -145,6 +76,8 @@
         <option value="$PROJECT_DIR$/googlenews.sh" />
         <option value="$PROJECT_DIR$/tnaboard.sh" />
         <option value="$PROJECT_DIR$/craigslist.sh" />
+        <option value="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" />
+        <option value="$PROJECT_DIR$/resultplace.sh" />
       </list>
     </option>
   </component>
@@ -250,12 +183,14 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -567,6 +502,72 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2460">
+          <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backpage.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="457" selection-start-line="1" selection-start-column="457" selection-end-line="1" selection-end-column="457" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/craigslist.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/craigslistHouse.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="219" selection-start-line="1" selection-start-column="219" selection-end-line="1" selection-end-column="219" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ebay.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/googlenews.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="105" selection-start-line="1" selection-start-column="105" selection-end-line="1" selection-end-column="105" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tnaboard.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tnaboardbellevue.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="166" selection-start-line="1" selection-start-column="164" selection-end-line="1" selection-end-column="166" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
           <folding>
@@ -579,34 +580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resultplace.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="176" selection-start-line="1" selection-start-column="176" selection-end-line="1" selection-end-column="176" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2661">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -665,6 +638,34 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="692" selection-start-line="1" selection-start-column="692" selection-end-line="1" selection-end-column="692" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="108" column="24" selection-start-line="108" selection-start-column="24" selection-end-line="108" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resultplace.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="277" selection-start-line="1" selection-start-column="277" selection-end-line="1" selection-end-column="277" />
           <folding />
         </state>
       </provider>

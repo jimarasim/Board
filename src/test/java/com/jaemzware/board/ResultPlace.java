@@ -86,34 +86,32 @@ public class ResultPlace extends CodeBase {
         if (input == null || input.isEmpty()) {
             throw new Exception("URL NOT SPECIFIED -Dinput");
         }
-
         if (linkXpath == null || linkXpath.isEmpty()) {
             throw new Exception("MISSING: -DlinkXpath");
         }
         if (numResultsRESTParm == null||numResultsRESTParm.isEmpty() ){
             throw new Exception("MISSING: -DnumResultsRESTParm");
         }
+        if (startRESTParm == null||startRESTParm.isEmpty() ){
+            throw new Exception("MISSING: -DstartRESTParm");
+        }
+        if (nextLinkXpath==null ||nextLinkXpath.isEmpty()){
+            throw new Exception("MISSING: -nextLinkXpath");
+        }
 
-        System.out.println("linksLoadedIndicatorXpath:"+
-                linksLoadedIndicatorXpath+
+
+        System.out.println(
                 " linkXpath:"+
                 linkXpath+
-                " imageXpath:"+
-                imageXpath+
-                " titleTextXpath:"+
-                titleTextXpath+
-                " bodyTextXpath:"+
-                bodyTextXpath+
-                " nextLinkXpath:"+
-                nextLinkXpath+
                 " numResultsRESTParm:"+
                 numResultsRESTParm+
                 " startRESTParm:"+
-                startRESTParm +
+                        startRESTParm+
                 " aString:"+
                 aString+
                 " input:"+
-                input);
+                input+
+                "nextLinkXpath:"+nextLinkXpath);
     }
     /**
      * this method gets required properties from the properties file for the BuildPageOfFoundLinks test
@@ -229,6 +227,7 @@ public class ResultPlace extends CodeBase {
 
         return resultPlacesOfTarget;
     }
+
     //ITERATE THROUGH AND REPORT THE NUMBER POSITION IN THE RESULTS OF THE QUERY WHERE THE URL SHOWED UP
     private void ReportPlacesOfTarget(List<Integer> resultPlacesOfTarget) {
         //REPORT TEST RESULTS
@@ -242,9 +241,6 @@ public class ResultPlace extends CodeBase {
             }
         }
     }
-
-
-
 
     @After
     public void AfterTest() {
