@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3574383d-203c-49de-8dec-7bb1983ba69a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resultplace.sh" afterPath="$PROJECT_DIR$/resultplace.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" afterPath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" afterPath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" />
     </list>
     <ignored path="Board.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,24 +25,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ResultPlace.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java">
+      <file leaf-file-name="BoardScrub.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="187" column="22" selection-start-line="187" selection-start-column="15" selection-end-line="187" selection-end-column="22" />
+            <state relative-caret-position="181">
+              <caret line="362" column="51" selection-start-line="362" selection-start-column="51" selection-end-line="362" selection-end-column="51" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#BoardScrub#0" expanded="false" />
+                <element signature="method#BeforeTest#0;class#BoardScrub#0" expanded="false" />
+                <element signature="docComment;method#BuildPageOfFoundLinks#0;class#BoardScrub#0" expanded="false" />
+                <element signature="e#2721#2735#0" expanded="false" />
+                <element signature="method#GetBuildPageOfFoundLinksRequiredProperties#0;class#BoardScrub#0" expanded="false" />
+                <element signature="docComment;method#GetContentFromLinks#0;class#BoardScrub#0" expanded="false" />
+                <element signature="e#7881#7894#0" expanded="false" />
+                <element signature="e#8122#8134#0" expanded="false" />
+                <element signature="e#11131#11142#0" expanded="false" />
+                <element signature="e#12254#12262#0" expanded="false" />
+                <element signature="docComment;method#WriteContentsToWebPage#0;class#BoardScrub#0" expanded="false" />
+                <element signature="docComment;method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+                <element signature="method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+                <element signature="method#AfterTest#0;class#BoardScrub#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resultplace.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resultplace.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="290" selection-start-line="1" selection-start-column="286" selection-end-line="1" selection-end-column="290" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -68,7 +71,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/tnaboardbellevue.sh" />
-        <option value="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" />
         <option value="$PROJECT_DIR$/backpage.sh" />
         <option value="$PROJECT_DIR$/craigslistHouse.sh" />
         <option value="$PROJECT_DIR$/ebay.sh" />
@@ -78,6 +80,7 @@
         <option value="$MAVEN_REPOSITORY$/com/jaemzware/SeleniumCodeBase/1.0-SNAPSHOT/SeleniumCodeBase-1.0-SNAPSHOT.jar!/com/jaemzware/seleniumcodebase/ParameterType.class" />
         <option value="$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java" />
         <option value="$PROJECT_DIR$/resultplace.sh" />
+        <option value="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" />
       </list>
     </option>
   </component>
@@ -89,9 +92,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="4" />
     <option name="y" value="23" />
-    <option name="width" value="1280" />
-    <option name="height" value="740" />
+    <option name="width" value="1276" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -183,8 +187,8 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -456,7 +460,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="740" extended-state="6" />
+    <frame x="4" y="23" width="1276" height="777" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -469,7 +473,8 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2463651" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24635333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329927" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -480,7 +485,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -500,12 +504,35 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/ResultPlace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2460">
           <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#BoardScrub#0" expanded="false" />
+            <element signature="method#BeforeTest#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#BuildPageOfFoundLinks#0;class#BoardScrub#0" expanded="false" />
+            <element signature="e#2721#2735#0" expanded="false" />
+            <element signature="method#GetBuildPageOfFoundLinksRequiredProperties#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#GetContentFromLinks#0;class#BoardScrub#0" expanded="false" />
+            <element signature="e#7881#7894#0" expanded="false" />
+            <element signature="e#8122#8134#0" expanded="false" />
+            <element signature="e#11131#11142#0" expanded="false" />
+            <element signature="e#12254#12262#0" expanded="false" />
+            <element signature="docComment;method#WriteContentsToWebPage#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+            <element signature="method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+            <element signature="method#AfterTest#0;class#BoardScrub#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -514,7 +541,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="457" selection-start-line="1" selection-start-column="457" selection-end-line="1" selection-end-column="457" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -522,7 +548,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -530,7 +555,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="219" selection-start-line="1" selection-start-column="219" selection-end-line="1" selection-end-column="219" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -538,7 +562,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -546,7 +569,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="105" selection-start-line="1" selection-start-column="105" selection-end-line="1" selection-end-column="105" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -554,7 +576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -562,7 +583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="166" selection-start-line="1" selection-start-column="164" selection-end-line="1" selection-end-column="166" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -571,7 +591,20 @@
         <state relative-caret-position="60">
           <caret line="18" column="3" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="docComment;class#BoardScrub#0" expanded="false" />
+            <element signature="method#BeforeTest#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#BuildPageOfFoundLinks#0;class#BoardScrub#0" expanded="false" />
+            <element signature="e#2721#2735#0" expanded="false" />
+            <element signature="method#GetBuildPageOfFoundLinksRequiredProperties#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#GetContentFromLinks#0;class#BoardScrub#0" expanded="false" />
+            <element signature="e#7881#7894#0" expanded="false" />
+            <element signature="e#8122#8134#0" expanded="false" />
+            <element signature="e#11131#11142#0" expanded="false" />
+            <element signature="e#12254#12262#0" expanded="false" />
+            <element signature="docComment;method#WriteContentsToWebPage#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+            <element signature="method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+            <element signature="method#AfterTest#0;class#BoardScrub#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -590,7 +623,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="457" selection-start-line="1" selection-start-column="457" selection-end-line="1" selection-end-column="457" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -598,7 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -606,7 +637,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="105" selection-start-line="1" selection-start-column="105" selection-end-line="1" selection-end-column="105" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -614,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="56" selection-start-line="1" selection-start-column="56" selection-end-line="1" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -622,7 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="166" selection-start-line="1" selection-start-column="164" selection-end-line="1" selection-end-column="166" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -630,7 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="219" selection-start-line="1" selection-start-column="219" selection-end-line="1" selection-end-column="219" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -638,17 +665,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="1" column="692" selection-start-line="1" selection-start-column="692" selection-end-line="1" selection-end-column="692" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -656,6 +672,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resultplace.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="290" selection-start-line="1" selection-start-column="286" selection-end-line="1" selection-end-column="290" />
           <folding />
         </state>
       </provider>
@@ -670,11 +694,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resultplace.sh">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="290" selection-start-line="1" selection-start-column="286" selection-end-line="1" selection-end-column="290" />
-          <folding />
+        <state relative-caret-position="181">
+          <caret line="362" column="51" selection-start-line="362" selection-start-column="51" selection-end-line="362" selection-end-column="51" />
+          <folding>
+            <element signature="docComment;class#BoardScrub#0" expanded="false" />
+            <element signature="method#BeforeTest#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#BuildPageOfFoundLinks#0;class#BoardScrub#0" expanded="false" />
+            <element signature="e#2721#2735#0" expanded="false" />
+            <element signature="method#GetBuildPageOfFoundLinksRequiredProperties#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#GetContentFromLinks#0;class#BoardScrub#0" expanded="false" />
+            <element signature="e#7881#7894#0" expanded="false" />
+            <element signature="e#8122#8134#0" expanded="false" />
+            <element signature="e#11131#11142#0" expanded="false" />
+            <element signature="e#12254#12262#0" expanded="false" />
+            <element signature="docComment;method#WriteContentsToWebPage#0;class#BoardScrub#0" expanded="false" />
+            <element signature="docComment;method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+            <element signature="method#LessThan1000CharString#0;class#BoardScrub#0" expanded="false" />
+            <element signature="method#AfterTest#0;class#BoardScrub#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
