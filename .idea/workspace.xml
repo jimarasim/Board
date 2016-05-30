@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3574383d-203c-49de-8dec-7bb1983ba69a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" afterPath="$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java" />
     </list>
     <ignored path="Board.iws" />
@@ -28,8 +27,8 @@
       <file leaf-file-name="BoardScrub.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="362" column="51" selection-start-line="362" selection-start-column="51" selection-end-line="362" selection-end-column="51" />
+            <state relative-caret-position="196">
+              <caret line="363" column="41" selection-start-line="363" selection-start-column="41" selection-end-line="363" selection-end-column="41" />
               <folding>
                 <element signature="docComment;class#BoardScrub#0" expanded="false" />
                 <element signature="method#BeforeTest#0;class#BoardScrub#0" expanded="false" />
@@ -696,8 +695,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/jaemzware/board/BoardScrub.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="362" column="51" selection-start-line="362" selection-start-column="51" selection-end-line="362" selection-end-column="51" />
+        <state relative-caret-position="196">
+          <caret line="363" column="41" selection-start-line="363" selection-start-column="41" selection-end-line="363" selection-end-column="41" />
           <folding>
             <element signature="docComment;class#BoardScrub#0" expanded="false" />
             <element signature="method#BeforeTest#0;class#BoardScrub#0" expanded="false" />
