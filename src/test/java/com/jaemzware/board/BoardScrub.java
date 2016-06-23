@@ -69,6 +69,7 @@ public class BoardScrub extends CodeBase {
             Thread.sleep(waitAfterPageLoadMilliSeconds);
             
             //PAGE THROUGH ALL RESULTS
+            String checkHtmlResponseForError="";
             while(continueProcessing){
                 //get all the links on the target url
                 List<String> links = GetLinksOnPage(); 
@@ -81,11 +82,15 @@ public class BoardScrub extends CodeBase {
                 
                 //PAGING LOGIC
                 //go back to content page with results just collected
-                driverGetWithTime(currentContentPageUrl,1);
-                
+                checkHtmlResponseForError = driverGetWithTime(currentContentPageUrl,1);
+                if(checkHtmlResponseForError.equals("ERROR")){
+                    System.out.println("THERE WAS AN ERROR GETTING THE LAST PAGE. BREAKING");
+                    continueProcessing=false;
+                }
+
                 //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
                 numCurrentPageFirstResult += contentsOnCurrentPage.size();
-                
+
                 //STOP IF MAXVISITS REACHED
                 System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+"){");
                 System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+waitAfterPageLoadMilliSeconds+")||");
