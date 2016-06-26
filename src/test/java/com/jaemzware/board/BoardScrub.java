@@ -47,7 +47,6 @@ public class BoardScrub extends CodeBase {
             Assert.fail(ex.getMessage());
         }
     }
-    
     /**
      * This method visits each url, and puts its content into a results list using webdriver 
      */
@@ -137,25 +136,20 @@ public class BoardScrub extends CodeBase {
             Assert.fail("BuildPageOfFoundLinks EXCEPTION MESSAGE:"+ex.getMessage());
         }
     }
-        
     private void GetBuildPageOfFoundLinksRequiredProperties() throws Exception{           
         // CHECK FOR REQUIRED PARAMETERS
         if (linksLoadedIndicatorXpath==null || linksLoadedIndicatorXpath.isEmpty()) {
             throw new Exception("MISSING: -DlinksLoadedIndicatorXpath");
         }
-
         if (linkXpath == null || linkXpath.isEmpty()) {
             throw new Exception("MISSING: -DlinkXpath");
         }
-
         if (imageXpath == null||imageXpath.isEmpty()) {
             throw new Exception("MISSING: -DimageXpath");
         }
-
         if (titleTextXpath == null || titleTextXpath.isEmpty()) {
             throw new Exception("MISSING: -DtitleTextXpath");
         }
-
         if (bodyTextXpath == null||bodyTextXpath.isEmpty()) {
             throw new Exception("MISSING: -DbodyTextXpath");
         }
@@ -168,7 +162,6 @@ public class BoardScrub extends CodeBase {
         if (report == null || report.isEmpty()) {
             throw new Exception("URL NOT SPECIFIED -Dreport");
         }
-
         System.out.println("linksLoadedIndicatorXpath:"+
                 linksLoadedIndicatorXpath+
                 " linkXpath:"+
@@ -203,23 +196,20 @@ public class BoardScrub extends CodeBase {
         // navigate to links and get images
         String driverGetHtmlOutput = "";
         int visitCount = 0;
+        String titleText=null;
         for (String href : links) {
             try{
                 driverGetHtmlOutput = driverGetWithTime(href);
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
-//                ScrollPage();
+                ScrollPage();
             }
             catch(Exception ex){
                 System.out.println("WARNING: PAGE TOOK LONG TO LOAD:"+href+", ... MOVING ON");
                 continue;
             }
 
-            //TITLE TEXT
-            // check for the title text
-            String titleText="";
-            
             //THROTTLE DOWN IMPLICIT WAIT //implictlywait cant' work with appium
             if(!browser.toString().contains("APPIUM")){
                 // throttle wait time when looking for elements that should already be on the page
@@ -229,7 +219,8 @@ public class BoardScrub extends CodeBase {
             }
 
             System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
-            
+
+            //check for TITLE TEXT
             if (IsElementPresent(By.xpath(titleTextXpath), waitTimeMillis)) {
                 try{            
                         System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
@@ -244,14 +235,10 @@ public class BoardScrub extends CodeBase {
                     if(!browser.toString().contains("APPIUM")){
                         // throttle implicit wait time back up
                         driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-                        
                         System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
-                        
                     }
-                    
                     break;
                 }
-
                 if (titleText == null) {
                     System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" GETTEXT IS NULL");
                 }
@@ -284,8 +271,6 @@ public class BoardScrub extends CodeBase {
             else{
                 System.out.println("WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
             }
-
-
             //add all body text into one string
             StringBuilder bodyText=new StringBuilder();
             String tempString;
@@ -299,7 +284,6 @@ public class BoardScrub extends CodeBase {
                     break;
                 }
             }
-
             //IMAGES
             // check for images
             String imageSrc = "";
@@ -327,19 +311,15 @@ public class BoardScrub extends CodeBase {
                     System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
                 }
             }
-
             //add at least one result entry if no images were found
             if(imageSrc!=null && imageSrc.isEmpty()){
                 results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput});
-            }                
-
+            }
             //check the desired image count, and break if it's been reached
             if((aNumber>0) && (++visitCount>aNumber)){
                 break;
             }
-
         }
-        
        return results;
     }
     /**
@@ -394,8 +374,6 @@ public class BoardScrub extends CodeBase {
             return stringToTrim.substring(0,999);
         }
     }
-
-   
     @After
     public void AfterTest() {
         try {
