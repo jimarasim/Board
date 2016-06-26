@@ -210,33 +210,24 @@ public class BoardScrub extends CodeBase {
                 continue;
             }
 
-            //THROTTLE DOWN IMPLICIT WAIT //implictlywait cant' work with appium
-            if(!browser.toString().contains("APPIUM")){
-                // throttle wait time when looking for elements that should already be on the page
-                driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
-                
-                System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
-            }
-
+            //THROTTLE DOWN IMPLICIT WAIT
+            // throttle wait time when looking for elements that should already be on the page
+            driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
+            System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
             System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
-
             //check for TITLE TEXT
             if (IsElementPresent(By.xpath(titleTextXpath), waitTimeMillis)) {
                 try{            
-                        System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
-
-                        titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
-
+                    System.out.println("LOOKING FOR TITLE TEXT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+                    titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }
                 catch(Exception ex){
                     System.out.println("WARNING: STALE ELEMENT REFERENCE ON titleTextXpath:"+titleTextXpath+" WHILE GETTING IMAGES, TITLE, BODY FROM:"+href);
                     
-                    //THROTTLE UP IMPLICIT WAIT //implictlywait cant' work with appium
-                    if(!browser.toString().contains("APPIUM")){
-                        // throttle implicit wait time back up
-                        driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-                        System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
-                    }
+                    //THROTTLE UP IMPLICIT WAIT
+                    // throttle implicit wait time back up
+                    driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
+                    System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
                     break;
                 }
                 if (titleText == null) {
@@ -249,15 +240,10 @@ public class BoardScrub extends CodeBase {
             else{
                 System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+waitTimeMillis +"ms");
             }
-            
-            
-            if(!browser.toString().contains("APPIUM")){
-                //THROTTLE UP IMPLICIT WAIT //implictlywait cant' work with appium
-                driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-                
-                System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
-                
-            }
+
+            //THROTTLE UP IMPLICIT WAIT
+            driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
+            System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
 
             //BODY TEXT
             // check for the body text
@@ -319,6 +305,8 @@ public class BoardScrub extends CodeBase {
             if((aNumber>0) && (++visitCount>aNumber)){
                 break;
             }
+            //set titleText back to null for next check
+            titleText=null;
         }
        return results;
     }
