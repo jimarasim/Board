@@ -1,1 +1,0 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -DaHubServer=localhost -DaHubPort=4723 -DappiumIosTargetVersion=8.3 -DappiumIosDeviceName="iPhone 6" -Dbrowser=APPIUMSAFARISIMULATOR -Denvironment=bbc -Dinput="bbc.com/news" -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=2 test

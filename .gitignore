@@ -3,3 +3,4 @@ src/.DS_Store
 target/
 screenshot*.png
 *.htm
+.idea/

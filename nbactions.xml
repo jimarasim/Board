@@ -5,15 +5,17 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
-                <goal>-DaHubServer=10.1.10.156</goal>
-                <goal>-DaHubPort=4445</goal>
-                <goal>-Dbrowser=CHROMELINUX</goal>
-                <goal>-Denvironment=craigslist</goal>
-                <goal>-Dreport=jenkins-Board-148</goal>
-                <goal>-Dinput=http://seattle.craigslist.org/search/w4m?hasPic=1</goal>
+                <goal>-Dtest=BoardScrub#ResultPlace</goal>
+                <goal>-DdefaultImplicitWaitSeconds=25</goal>
+                <goal>-DwaitAfterPageLoadMilliSeconds=3000</goal>
+                <goal>-Dbrowser=CHROME</goal>
+                <goal>-Denvironment=google</goal>
+                <goal>-Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules"</goal>
+                <goal>-DaString=seattlerules.com</goal>
                 <goal>-DaNumber=0</goal>
-                <goal>-DwaitForPageLoadMilliSeconds=0</goal>
+                <goal>-Dnogrid</goal>
+                
+                
                 
                 
                 
@@ -34,15 +36,17 @@
             <goals>
                 <goal>test-compile</goal>
                 <goal>surefire:test</goal>
-                <goal>-Dtest=BoardScrub#BuildPageOfFoundLinks</goal>
-                <goal>-DaHubServer=10.1.10.156</goal>
-                <goal>-DaHubPort=4445</goal>
-                <goal>-Dbrowser=CHROMELINUX</goal>
-                <goal>-Denvironment=craigslist</goal>
-                <goal>-Dreport=jenkins-Board-148</goal>
-                <goal>-Dinput=http://seattle.craigslist.org/search/w4m?hasPic=1</goal>
+                <goal>-Dtest=BoardScrub#ResultPlace</goal>
+                <goal>-DdefaultImplicitWaitSeconds=25</goal>
+                <goal>-DwaitAfterPageLoadMilliSeconds=3000</goal>
+                <goal>-Dbrowser=CHROME</goal>
+                <goal>-Denvironment=google</goal>
+                <goal>-Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules"</goal>
+                <goal>-DaString=seattlerules.com</goal>
                 <goal>-DaNumber=0</goal>
-                <goal>-DwaitForPageLoadMilliSeconds=0</goal>
+                <goal>-Dnogrid</goal>
+                
+                
                 
                 
                 

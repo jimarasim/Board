@@ -20,27 +20,25 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.5.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <!--Be specific about surefire version because one of them is buggy, and won't run individual tests-->
       <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.17</version>
+          <version>2.19.1</version>
       </plugin>
     </plugins>
   </build>
-
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -51,12 +49,10 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-support</artifactId>
-      <version>2.43.1</version>
-      <scope>test</scope>
-      <type>jar</type>
-    </dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>2.52.0</version>
+    </dependency> 
   </dependencies>
 <!-- #
 BUILDPAGEOFFOUNDLINKSVIAREST-REQUIRED PARAMETERS:
@@ -79,32 +75,13 @@ BUILDPAGEOFFOUNDLINKS/BUILDPAGEOFFOUNDLINKSVIAREST-OPTIONAL PARAMETERS:
     -DwaitAfterPageLoadMilliSeconds   time to wait after a page has loaded. 
     -DappiumApp     path to ios app ipa file, if using appium to test a native app APPIUMSIMULATORAPPSCRATCH APPIUMDEVICEAPPSCRATCH
     -DappiumUdid    path to ios device udid, if using appium ot test a device instead of a simulator APPIUMDEVICEAPPSCRATCH
-BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:    
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=fark -Dinput="http://www.fark.com" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=0 test    
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=5000 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=30000 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=300 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?137-ID-Provider-Ads&s=&pp=30&prefixid=boise&field_dvb_service_type=Escort" -Dnogrid -DaNumber=100 -DwaitAfterPageLoadMilliSeconds=7000 test    
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/search/w4m?hasPic=1" -DaNumber=0 -Dnogrid test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -Dnogrid -DaNumber=0 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://portland.craigslist.org/search/mca?query=shadow+750&hasPic=1#list" -DaNumber=0 -Dnogrid test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=0 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://boise.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=0 test
-    
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -Dnogrid -DaNumber=0 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 test
-BUILDPAGEOFFOUNDLINKS-GRID SAMPLES:
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOXLINUX -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 -DaHubPort=4445 -DaHubServer=localhost test
-BUILDPAGEOFFOUNDLINKS-APPIUM SAMPLE:
+ UILDPAGEOFFOUNDLINKS-APPIUM SAMPLE:
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitAfterPageLoadMilliSeconds=20000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=0 -DaHubPort=4723 -DaHubServer=localhost -DwaitAfterPageLoadMilliSeconds=20000 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaNumber=3 -DaHubPort=4723 -DaHubServer=localhost -DwaitAfterPageLoadMilliSeconds=20000 test
 BUILDPAGEOFFOUNDLINKSVIAREST-NOGRID,NOIMAGES
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=5 -DaString=/Users/jameskarasim/Documents/STATIC/jaemzware/java/Board/ test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinksViaRest -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DnoImages -DaNumber=5 -DaString=file:///Users/jimarasim/Downloads/installed/jaemzware/java/Board/ test
-
+ 
 RESULTPLACE-REQUIRED PARMETERS:
     -Dtest
     -Dbrowser
@@ -120,19 +97,25 @@ RESULTPLACE-OPTIONAL PARAMETERS:
     -DappiumApp     path to ios app ipa file, if using appium to test a native app APPIUMSIMULATORAPPSCRATCH APPIUMDEVICEAPPSCRATCH
     -DappiumUdid    path to ios device udid, if using appium ot test a device instead of a simulator APPIUMDEVICEAPPSCRATCH
 RESULTPLACE-NOGRID SAMPLES:
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=0 -Dnogrid test
     mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=SAFARI -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=seattle+rules" -DaString=seattlerules.com -DaNumber=0 -Dnogrid test
-RESULTPLACE-GRID SAMPLES:
-    mvn -Dtest=BoardScrub#ResultPlace -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput="https://www.google.com/?gws_rd=ssl#q=pop" -DaString=pop.com -DaNumber=200 test
 RESULTPLACE-NETBEANS DEBUG SAMPLES:
     test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=pop -DaString=pop.com -DaNumber=500 -Dnogrid
-    test-compile surefire:test -Dtest=BoardScrub#ResultPlace -Dbrowser=CHROME -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=seattle+rules -DaString=seattlerules.com -DaNumber=500 -Dnogrid
-MISC
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -DaHubPort=4445 -DaHubServer="http://10.1.10.156" -Dbrowser=FIREFOXLINUX -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=new+york+city -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=5000 test
-    mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=FIREFOX -Denvironment=google -Dinput=https://www.google.com/?gws_rd=ssl#q=new+york+city -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=5000 -Dnogrid test    
-APPIUM RUNNING ON LOCALHOST
+RESULTPLACE-APPIUM RUNNING ON LOCALHOST
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=bbc -Dinput="http://www.bbc.com/news/world/us_and_canada/" -DaHubPort=4723 -DaHubServer=localhost -DaNumber=0 test
     mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=APPIUMSIMULATORAPPSAFARI -Denvironment=tnaboard -Dinput="http://www.tnaboard.com/forumdisplay.php?98-WA-Provider-Ads&s=&pp=30&prefixid=seattle&field_dvb_service_type=Escort" -DaHubPort=4723 -DaHubServer=localhost test
+ 
+ BUILDPAGEOFFOUNDLINKS-NOGRID SAMPLES:
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=fark -Dinput="http://www.fark.com" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=0 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=5000 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=googlenews -Dinput="https://news.google.com/" -Dnogrid -DaNumber=0 -DwaitAfterPageLoadMilliSeconds=30000 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="https://seattle.craigslist.org/search/sss/?sort=date&query=iphone%205%20verizon" -DaNumber=0 -Dnogrid test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=craigslist -Dinput="http://seattle.craigslist.org/search/w4m?hasPic=1" -DaNumber=0 -Dnogrid test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=ebay -Dinput="http://www.ebay.com/sch/i.html?_from=R40&_sacat=0&_nkw=melvins+vinyl&_sop=16" -DaNumber=0 -Dnogrid test
+
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=backpage -Dinput="http://seattle.backpage.com/FemaleEscorts/" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=2000 test
+mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=tnaboard -Dinput="https://www.tnaboard.com/forumdisplay.php?100-WA-LMA-amp-LMS" -Dnogrid -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=1000 -DdefaultImplicitWaitSeconds=120 -DnoScroll test
+
+
 
   -->
 </project>

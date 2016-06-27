@@ -1,0 +1,23 @@
+/**
+//  PARAMETERS FOR BOARD
+//
+//
+//
+//
+**/
+
+search/sss?sort=priceasc&query=
+search/rea?sort=pricedsc&housing_type=12&query=
+search/apa?sort=pricedsc&bathrooms=1&bedrooms=1&maxAsk=650&pets_cat=1&query=
+search/sya?sort=pricedsc&hasPic=1&maxAsk=250&query=
+search/see/gms?sale_date=2015-05-23&query=
+search/rea?sort=pricedsc&hasPic=1&housing_type=3&housing_type=6&housing_type=12&maxAsk=350000&query=
+search/cta?sort=pricedsc&maxAsk=1000&minAsk=50&query=
+
+<b>GENERAL SEARCH</b>: search/sss?sort=priceasc&query= <BR />
+<b>LAND SEARCH</b>: search/rea?sort=pricedsc&housing_type=12&query= <BR />
+<b>APARTMENT SEARCH</b>: search/apa?sort=pricedsc&bathrooms=1&bedrooms=1&maxAsk=650&pets_cat=1&query=<BR />
+<b>COMPUTER $250 MAX</b>: search/sya?sort=pricedsc&hasPic=1&maxAsk=250&query=<BR />
+<b>SEATTLE GARAGE SALES ON 2015-05-23</b>: search/see/gms?sale_date=2015-05-23&query=<br />
+<b>REAL ESTATE $350K MAX</b>: search/rea?sort=pricedsc&hasPic=1&housing_type=3&housing_type=6&housing_type=12&maxAsk=350000&query=<br />
+<b>CARS $50 - $1000 DESCENDING ORDER</b>: search/cta?sort=pricedsc&maxAsk=1000&minAsk=50&query=

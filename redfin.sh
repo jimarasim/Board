@@ -1,1 +1,0 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=redfin -Dinput="https://www.redfin.com/zipcode/98126/real-estate#!max_price=325000&num_beds=2&num_baths=1.0&uipt=1&sf=1%2C2%2C5%2C3%2C4&view=true&v=8&sst=&region_id=40837&region_type=2&market=seattle" -Dnogrid -DaNumber=2 -DwaitAfterPageLoadMilliSeconds=500 test
