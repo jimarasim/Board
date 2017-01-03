@@ -70,8 +70,11 @@ public class BoardScrub extends CodeBase {
             //PAGE THROUGH ALL RESULTS
             String checkHtmlResponseForError="";
             while(continueProcessing){
+                System.out.println("INFORMATIONAL: BuildPageOfFoundLinks CURRENTCONTENTPAGEURL:"+currentContentPageUrl);
+                System.out.println("INFORMATIONAL: BuildPageOfFoundLinks NUMCURRENTPAGEFIRSTRESULT:"+numCurrentPageFirstResult);
+
                 //get all the links on the target url
-                List<String> links = GetLinksOnPage(); 
+                List<String> links = GetLinksOnPage();
 
                 //get conent from the links
                 List<String[]> contentsOnCurrentPage
@@ -98,11 +101,23 @@ public class BoardScrub extends CodeBase {
                     System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
                     continueProcessing=false;
                 }
+                //STOP IF THE NEXT LINK IS PRESENT BUT NOT ENABLED
+                else if(IsElementPresent(By.xpath(nextLinkXpath))) {
+                    if (!driver.findElement(By.xpath(nextLinkXpath)).isEnabled()) {
+                        System.out.println("INFORMATIONAL: NEXT LINK PRESENT BUT NOT ENABLED: " + driver.getCurrentUrl());
+                        continueProcessing = false;
+                    }
+                }
+                //STOP IF THE NEXT LINK IS PRESENT BUT NOT DISPLAYED
+                else if(IsElementPresent(By.xpath(nextLinkXpath))) {
+                    if (!driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()) {
+                        System.out.println("INFORMATIONAL: NEXT LINK PRESENT BUT NOT DISPLAYED: " + driver.getCurrentUrl());
+                        continueProcessing = false;
+                    }
+                }
                 //STOP IF THERE IS NO NEXT LINK
-                else if(!IsElementPresent(By.xpath(nextLinkXpath),waitAfterPageLoadMilliSeconds)||
-                        !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()||
-                        !driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()){
-                    System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
+                else if(!IsElementPresent(By.xpath(nextLinkXpath))){
+                    System.out.println("INFORMATIONAL: NEXT LINK NOT PRESENT: "+driver.getCurrentUrl());
                     continueProcessing=false;
                 }
                 //OTHERWISE CONTINUE PROCESSING
@@ -110,16 +125,16 @@ public class BoardScrub extends CodeBase {
 
                     //GET NEXT page link
                     WebElement nextPageLink = driver.findElement(By.xpath(nextLinkXpath));
-                    
+
                     //GOING TO NEXT PAGE MESSAGE
-                    System.out.println("GOING TO NEXT PAGE:"+nextPageLink.getAttribute("href"));
-                    
+                    System.out.println("INFORMATIONAL GOING TO NEXT PAGE:"+nextPageLink.getAttribute("href"));
+
                     //GO TO THE NEXT PAGE
                     nextPageLink.click();
 
                     //WAIT FOR NEW RESULTS PAGE TO LOAD
                     WaitForPageChange(currentContentPageUrl);
-                    
+
                     //update the current page url
                     currentContentPageUrl = driver.getCurrentUrl();
 
@@ -200,6 +215,7 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetHtmlOutput = driverGetWithTime(href);
+                System.out.println("INFORMATIONAL: GETCONTENTFROMLINKS VISITCOUNT:"+visitCount);
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
                 //scroll page
@@ -302,7 +318,8 @@ public class BoardScrub extends CodeBase {
                 results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput});
             }
             //check the desired image count, and break if it's been reached
-            if((aNumber>0) && (++visitCount>aNumber)){
+            visitCount=visitCount+1;
+            if((aNumber>0) && (visitCount>aNumber)){
                 break;
             }
             //set titleText back to null for next check

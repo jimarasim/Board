@@ -1,1 +1,2 @@
+#!/usr/bin/env bash
 mvn -Dtest="BoardScrub#BuildPageOfFoundLinks" -Dbrowser=CHROME -Dreport="bbcnews" -Dinput="http://www.bbc.com/news" -DbodyTextXpath="//p" -DlinkXpath="//a[contains(@href,'/news/')]" -DnextLinkXpath="//void" -DlinksLoadedIndicatorXpath="//span[contains(text(),'Copyright')]" -DimageXpath="//img" -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=1500 -DdefaultImplicitWaitSeconds=60 -DlinksLoadedIndicatorXpath="//a" -DtitleTextXpath="//h1" -DnoScreenShots -DnoScroll -Dnogrid test
