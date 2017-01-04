@@ -64,7 +64,11 @@ public class BoardScrub extends CodeBase {
             
             
             //go to the first page
-            driverGetWithTime(input,1);
+            String driverGetWithTimeErrorCheck=driverGetWithTime(input,1);
+            if(driverGetWithTimeErrorCheck.equals("ERROR")){
+                throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
+            }
+
             Thread.sleep(waitAfterPageLoadMilliSeconds);
             
             //PAGE THROUGH ALL RESULTS
@@ -86,7 +90,7 @@ public class BoardScrub extends CodeBase {
                 //go back to content page with results just collected
                 checkHtmlResponseForError = driverGetWithTime(currentContentPageUrl,1);
                 if(checkHtmlResponseForError.equals("ERROR")){
-                    System.out.println("THERE WAS AN ERROR GETTING THE LAST PAGE. BREAKING");
+                    System.out.println("THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
                     continueProcessing=false;
                 }
 
@@ -122,6 +126,7 @@ public class BoardScrub extends CodeBase {
                 }
                 //OTHERWISE CONTINUE PROCESSING
                 else{
+                    System.out.println("============================="+"INFORMATIONAL: NEXTLINKXPATH: EXISTS: "++" DISPLAYED:"++" ENABLED:"++"=============================");
 
                     //GET NEXT page link
                     WebElement nextPageLink = driver.findElement(By.xpath(nextLinkXpath));
@@ -215,6 +220,10 @@ public class BoardScrub extends CodeBase {
         for (String href : links) {
             try{
                 driverGetHtmlOutput = driverGetWithTime(href);
+                if(driverGetHtmlOutput.equals("ERROR")){
+                    throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
+                }
+
                 System.out.println("INFORMATIONAL: GETCONTENTFROMLINKS VISITCOUNT:"+visitCount);
                 Thread.sleep(waitAfterPageLoadMilliSeconds);
                 
