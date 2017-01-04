@@ -58,25 +58,26 @@ public class BoardScrub extends CodeBase {
             
             //paging variables
             String currentContentPageUrl = input;  //used to navigate to next page
-            int numCurrentPageFirstResult=1; //used to track max visits
+            int resultCountNumCurrentPageFirstResult=1; //used to track max visits
             Boolean continueProcessing = true; //used to track if we should keep paging
             List<String[]> contents = new ArrayList(); //contents collected from each page
-            
-            
+
             //go to the first page
             String driverGetWithTimeErrorCheck=driverGetWithTime(input,1);
             if(driverGetWithTimeErrorCheck.equals("ERROR")){
                 throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
             }
 
-            Thread.sleep(waitAfterPageLoadMilliSeconds);
-            
             //PAGE THROUGH ALL RESULTS
-            String checkHtmlResponseForError="";
+            String checkHtmlResponseForError=""; //FOR CHECKING FOR ERRORS FROM driverGetWithTime AS WE PROCESS PAGES
+            boolean maximumResultsSpecified = (aNumber>0)?true:false;
+            int maximumResultsToReturn = aNumber;
+            //debugging variables for paging issue concerning -DnextLinkXpath, in while loop, to avoid infinite loops and unexpected paging errors
+            WebElement weNextLinkXpathElement = null;
+            boolean nextLinkXpathExists = false;
+            boolean nextLinkXpathEnabled = false;
+            boolean nextLinkXpathDisplayed = false;
             while(continueProcessing){
-                System.out.println("INFORMATIONAL: BuildPageOfFoundLinks CURRENTCONTENTPAGEURL:"+currentContentPageUrl);
-                System.out.println("INFORMATIONAL: BuildPageOfFoundLinks NUMCURRENTPAGEFIRSTRESULT:"+numCurrentPageFirstResult);
-
                 //get all the links on the target url
                 List<String> links = GetLinksOnPage();
 
@@ -94,40 +95,41 @@ public class BoardScrub extends CodeBase {
                     continueProcessing=false;
                 }
 
-                //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
-                numCurrentPageFirstResult += contentsOnCurrentPage.size();
+                //DISPLAY INFORMATIONAL DATA FOR PAGING DEBUGGING
+                //variables for paging; get the next link xpath element, and SET varibles for displayed and enabled to CHECK
+                //whether or not to stop trying to continue processing
+                nextLinkXpathExists = IsElementPresent(By.xpath(nextLinkXpath));
+                weNextLinkXpathElement = nextLinkXpathExists?driver.findElement(By.xpath(nextLinkXpath)):null;
+                nextLinkXpathDisplayed = (weNextLinkXpathElement!=null)?weNextLinkXpathElement.isDisplayed():false;
+                nextLinkXpathEnabled = (weNextLinkXpathElement!=null)?weNextLinkXpathElement.isEnabled():false;
 
-                //STOP IF MAXVISITS REACHED
-                System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+"){");
-                System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+waitAfterPageLoadMilliSeconds+")||");
-                System.out.println("else");
-                if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
-                    System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
+                System.out.println("=============================INFORMATIONAL: URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled+"=============================");
+
+                //increment the number of results by the size of them on the current page, and see if that's more
+                //than the number of results maximum to return, as specified by -DaNumber on the command line
+                resultCountNumCurrentPageFirstResult += contentsOnCurrentPage.size();
+                if(     maximumResultsSpecified &&
+                        (resultCountNumCurrentPageFirstResult >= maximumResultsToReturn)  ){
+                    System.out.println("=============================INFORMATIONAL: MAX VISITS REACHED resultCountNumCurrentPageFirstResult:"+resultCountNumCurrentPageFirstResult+" contentsOnCurrentPage.size():"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
                     continueProcessing=false;
-                }
-                //STOP IF THE NEXT LINK IS PRESENT BUT NOT ENABLED
-                else if(IsElementPresent(By.xpath(nextLinkXpath))) {
-                    if (!driver.findElement(By.xpath(nextLinkXpath)).isEnabled()) {
-                        System.out.println("INFORMATIONAL: NEXT LINK PRESENT BUT NOT ENABLED: " + driver.getCurrentUrl());
-                        continueProcessing = false;
-                    }
-                }
-                //STOP IF THE NEXT LINK IS PRESENT BUT NOT DISPLAYED
-                else if(IsElementPresent(By.xpath(nextLinkXpath))) {
-                    if (!driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()) {
-                        System.out.println("INFORMATIONAL: NEXT LINK PRESENT BUT NOT DISPLAYED: " + driver.getCurrentUrl());
-                        continueProcessing = false;
-                    }
                 }
                 //STOP IF THERE IS NO NEXT LINK
-                else if(!IsElementPresent(By.xpath(nextLinkXpath))){
-                    System.out.println("INFORMATIONAL: NEXT LINK NOT PRESENT: "+driver.getCurrentUrl());
+                else if(!nextLinkXpathExists){
+                    System.out.println("=============================INFORMATIONAL: NEXT LINK XPATH:"+nextLinkXpath+" NOT PRESENT. URL:"+driver.getCurrentUrl());
                     continueProcessing=false;
                 }
-                //OTHERWISE CONTINUE PROCESSING
+                //STOP IF THE NEXT LINK IS PRESENT BUT NOT DISPLAYED
+                else if(!nextLinkXpathDisplayed) {
+                    System.out.println("=============================INFORMATIONAL: NEXT LINK PRESENT BUT NOT DISPLAYED. URL:" + driver.getCurrentUrl());
+                    continueProcessing = false;
+                }
+                //STOP IF THE NEXT LINK IS PRESENT BUT NOT ENABLED
+                else if(!nextLinkXpathEnabled) {
+                    System.out.println("=============================INFORMATIONAL: NEXT LINK PRESENT BUT NOT ENABLED. URL:" + driver.getCurrentUrl());
+                    continueProcessing = false;
+                }
+                //OTHERWISE CONTINUE PROCESSING pages by clicking the link pointed to by -DnextLinkXpath
                 else{
-                    System.out.println("============================="+"INFORMATIONAL: NEXTLINKXPATH: EXISTS: "++" DISPLAYED:"++" ENABLED:"++"=============================");
-
                     //GET NEXT page link
                     WebElement nextPageLink = driver.findElement(By.xpath(nextLinkXpath));
 
