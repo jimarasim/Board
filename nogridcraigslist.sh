@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 #[SOURCE OF TRUTH FOR BoardScrub#BuildPageOfFoundLinks NO GRID craigslist]
-mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/sss?query=skateboard&sort=rel" -Dreport="nogridcraigslistskateboardCHROME" -DaNumber=0 -DdefaultImplicitWaitSeconds=60 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=0 -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[@title='next page']" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+
+#SEATTLE LEVEL LAND REAL ESTATE NOT AUBURN
+#mvn -Dbrowser="SAFARI" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+level&sort=pricedsc&search_distance=20&postal=98310&min_price=50000&max_price=110000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DaNumber=0 -DdefaultImplicitWaitSeconds=5 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=1 -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+
+#SEATTLE SKATEBOARD
+mvn -Dbrowser="SAFARI" -Dinput="http://seattle.craigslist.org/search/sss?query=skateboard&sort=rel" -Dreport="gridcraigslisthousesbremerton" -DaNumber=0 -DdefaultImplicitWaitSeconds=5 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=1 -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
 #-Dinput MAPS TO STARTURL (eg http://jaemzware.com)
 #-Dreport appended to index in report name index___.htm

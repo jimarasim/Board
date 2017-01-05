@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #[SOURCE OF TRUTH FOR BoardScrub#BuildPageOfFoundLinks GRID craigslist]
-mvn -Dbrowser="CHROMEMAC" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn&search_distance=25&postal=98126&min_price=50000&max_price=100000&availabilityMode=0" -Dreport="gridcraigslisthousesseattleFIREFOXMAC" -DaNumber=0 -DdefaultImplicitWaitSeconds=4 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=0 -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DtitleTextXpath="//h2[@class='postingtitle']" -DaHubPort="4444" -DaHubServer="localhost" -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+
+#LEVEL LAND REAL ESTATE NOT AUBURN
+mvn -Dbrowser="SAFARI" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+level&sort=pricedsc&search_distance=20&postal=98310&min_price=50000&max_price=110000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DaNumber=0 -DdefaultImplicitWaitSeconds=5 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=1 -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -DaHubPort="4444" -DaHubServer="localhost" -Dtest="BoardScrub#BuildPageOfFoundLinks" test
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
 #-Dinput MAPS TO STARTURL (eg http://jaemzware.com)
 #-Dreport appended to index in report name index___.htm
