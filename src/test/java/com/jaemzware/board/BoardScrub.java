@@ -92,7 +92,7 @@ public class BoardScrub extends CodeBase {
                 //AFTER VISITING THE COLLECTION OF LINKS, GO BACK TO THE PAGE WE GOT THEM FROM, SPECIFIED BY -Dinput
                 checkHtmlResponseForError = driverGetWithTime(currentContentPageUrl);
                 if(checkHtmlResponseForError.equals("ERROR")){
-                    System.out.println("=============================ERROR: THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
+                    System.out.println("=============================BOARDSCRUB ERROR: THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
                     continueProcessing=false;
                     continue;
                 }
@@ -104,7 +104,7 @@ public class BoardScrub extends CodeBase {
                 if(browser.toString().contains("SAFARI")) {
                     //SAFARI DOESN'T PROCESS ISDISPLAYED CORRECTLY; IT ERRORS OUT, SO CHECK IT'S STYLES display PROPERTY FOR none
                     String nextLinkXpathElementCSSDisplayValue = weNextLinkXpathElement.getCssValue("display");
-                    System.out.println("=============================INFORMATIONAL SAFARI: nextLinkXpathElementCSSDisplayValue:'"+nextLinkXpathElementCSSDisplayValue+"' URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled+"=============================");
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL SAFARI: nextLinkXpathElementCSSDisplayValue:'"+nextLinkXpathElementCSSDisplayValue+"' URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled);
 
                     nextLinkXpathDisplayed = nextLinkXpathElementCSSDisplayValue==null?false:!nextLinkXpathElementCSSDisplayValue.contains("none");
                 }
@@ -113,24 +113,24 @@ public class BoardScrub extends CodeBase {
                 }
                 nextLinkXpathEnabled = (weNextLinkXpathElement!=null)?weNextLinkXpathElement.isEnabled():false;
 
-                System.out.println("=============================INFORMATIONAL: URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled+"=============================");
+                System.out.println("=============================BOARDSCRUB INFORMATIONAL: URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled);
 
                 //STOP IF THERE IS NO NEXT LINK
                 if(!nextLinkXpathExists){
-                    System.out.println("=============================INFORMATIONAL: NEXT LINK XPATH:"+nextLinkXpath+" NOT PRESENT. URL:"+driver.getCurrentUrl());
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: NEXT LINK XPATH:"+nextLinkXpath+" NOT PRESENT. URL:"+driver.getCurrentUrl());
                     continueProcessing=false;
                     continue;
                 }
                 //STOP IF THE NEXT LINK IS PRESENT BUT NOT DISPLAYED
                 //SAFARI DOESN'T PROCESS ISDISPLAYED CORRECTLY; IT ERRORS OUT
                 else if(!nextLinkXpathDisplayed) {
-                    System.out.println("=============================INFORMATIONAL: NEXT LINK PRESENT BUT NOT DISPLAYED. URL:" + driver.getCurrentUrl());
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: NEXT LINK PRESENT BUT NOT DISPLAYED. URL:" + driver.getCurrentUrl());
                     continueProcessing = false;
                     continue;
                 }
                 //STOP IF THE NEXT LINK IS PRESENT BUT NOT ENABLED
                 else if(!nextLinkXpathEnabled) {
-                    System.out.println("=============================INFORMATIONAL: NEXT LINK PRESENT BUT NOT ENABLED. URL:" + driver.getCurrentUrl());
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: NEXT LINK PRESENT BUT NOT ENABLED. URL:" + driver.getCurrentUrl());
                     continueProcessing = false;
                     continue;
                 }
@@ -140,7 +140,7 @@ public class BoardScrub extends CodeBase {
                 resultCountNumCurrentPageFirstResult += contentsOnCurrentPage.size();
                 if(     maximumResultsSpecified &&
                         (resultCountNumCurrentPageFirstResult >= maximumResultsToReturn)  ){
-                    System.out.println("=============================INFORMATIONAL: MAX VISITS REACHED resultCountNumCurrentPageFirstResult:"+resultCountNumCurrentPageFirstResult+" contentsOnCurrentPage.size():"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: MAX VISITS REACHED resultCountNumCurrentPageFirstResult:"+resultCountNumCurrentPageFirstResult+" contentsOnCurrentPage.size():"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
                     continueProcessing=false;
                     continue;
                 }
@@ -148,7 +148,7 @@ public class BoardScrub extends CodeBase {
                 else{
                     //GO TO THE NEXT PAGE
                     weNextLinkXpathElement.click();
-                    System.out.println("=============================INFORMATIONAL: CLICKED weNextLinkXpathElement:"+weNextLinkXpathElement.getText());
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: CLICKED weNextLinkXpathElement:"+weNextLinkXpathElement.getText());
 
                     //WAIT FOR NEW RESULTS PAGE TO LOAD
                     checkPageChangeResponseForError = WaitForPageChange(currentContentPageUrl);
