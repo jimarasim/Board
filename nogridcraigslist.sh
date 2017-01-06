@@ -2,11 +2,10 @@
 #[SOURCE OF TRUTH FOR BoardScrub#BuildPageOfFoundLinks NO GRID craigslist]
 
 #SEATTLE LEVEL LAND REAL ESTATE NOT AUBURN
-mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+-arlington+-chelan+-everett+-marysville&sort=priceasc&search_distance=40&postal=98126&min_price=10000&max_price=100000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DaNumber=0 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=500 -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+-arlington+-chelan+-everett+-marysville&sort=priceasc&search_distance=40&postal=98126&min_price=10000&max_price=100000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
 
 #SEATTLE BOOK
 #mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/foa?query=book" -Dreport="testing" -DaNumber=102 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=1 -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
-
 
 
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
@@ -32,7 +31,8 @@ mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-
 #-Dbrowser
 #NOTE: VERSION AND PLATFORM ENUMERATION VARS ONLY USED BY GRID
 #NOTE: CHROMELINUX32 SPECIAL FOR RASPBERRY PI
-#NOTE: FIREFOX IS NO LONGER SUPPORTED RUNNING LOCALLY AS OF WEBDRIVER 3.0
+#NOTE: FIREFOX NO LONGER SUPPORTED FOR LOGGING
+#NOTE: SAFARI NO LONGER SUPPORTED FOR LOGGING
 #NOTE: SAFARI MUST NOT ALREADY BE RUNNING WHEN RUNNING A SAFARI AUTOMATION
 #NOTE: SAFARI MUST enable the 'Allow Remote Automation' option in Safari's Develop menu to control Safari via WebDriver
 #NOTE: SAFARI IS FAST BUT DOESN'T WORK CONSISTENTLY LIKE CHROME, AND FIREFOX
@@ -40,8 +40,8 @@ mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-
 #CHROMELINUX("chrome","",Platform.LINUX),
 #CHROMELINUX32("chrome","",Platform.LINUX),
 #CHROMEMAC ("chrome","",Platform.MAC),
+#FIREFOX("firefox","",Platform.WINDOWS),
 #FIREFOXLINUX("firefox","",Platform.LINUX),
-#FIREFOXLINUXBPT("firefox","",Platform.LINUX),
 #FIREFOXMAC("firefox","",Platform.MAC),
 #SAFARI("safari","10",Platform.MAC),
 #IE8("InternetExplorer","8",Platform.WINDOWS),

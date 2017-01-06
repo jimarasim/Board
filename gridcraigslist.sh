@@ -2,7 +2,7 @@
 #[SOURCE OF TRUTH FOR BoardScrub#BuildPageOfFoundLinks GRID craigslist]
 
 #LEVEL LAND REAL ESTATE NOT AUBURN
-mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+level&sort=pricedsc&search_distance=20&postal=98310&min_price=50000&max_price=110000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DaNumber=0 -DnoScreenShots -DnoScroll -DwaitAfterPageLoadMilliSeconds=1 -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -DaHubPort="4444" -DaHubServer="localhost" -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+level&sort=pricedsc&search_distance=20&postal=98310&min_price=50000&max_price=110000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -DaHubPort="4444" -DaHubServer="localhost" -Dtest="BoardScrub#BuildPageOfFoundLinks" test
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
 #-Dinput MAPS TO STARTURL (eg http://jaemzware.com)
 #-Dreport appended to index in report name index___.htm
@@ -26,7 +26,8 @@ mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-
 #-Dbrowser
 #NOTE: VERSION AND PLATFORM ENUMERATION VARS ONLY USED BY GRID
 #NOTE: CHROMELINUX32 SPECIAL FOR RASPBERRY PI
-#NOTE: FIREFOX IS NO LONGER SUPPORTED RUNNING LOCALLY AS OF WEBDRIVER 3.0
+#NOTE: FIREFOX NO LONGER SUPPORTED FOR LOGGING
+#NOTE: SAFARI NO LONGER SUPPORTED FOR LOGGING
 #NOTE: SAFARI MUST NOT ALREADY BE RUNNING WHEN RUNNING A SAFARI AUTOMATION
 #NOTE: SAFARI MUST enable the 'Allow Remote Automation' option in Safari's Develop menu to control Safari via WebDriver
 #NOTE: SAFARI IS FAST BUT DOESN'T WORK CONSISTENTLY LIKE CHROME, AND FIREFOX
@@ -34,8 +35,8 @@ mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-
 #CHROMELINUX("chrome","",Platform.LINUX),
 #CHROMELINUX32("chrome","",Platform.LINUX),
 #CHROMEMAC ("chrome","",Platform.MAC),
+#FIREFOX("firefox","",Platform.WINDOWS),
 #FIREFOXLINUX("firefox","",Platform.LINUX),
-#FIREFOXLINUXBPT("firefox","",Platform.LINUX),
 #FIREFOXMAC("firefox","",Platform.MAC),
 #SAFARI("safari","10",Platform.MAC),
 #IE8("InternetExplorer","8",Platform.WINDOWS),
