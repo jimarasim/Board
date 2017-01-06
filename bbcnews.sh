@@ -1,1 +1,2 @@
-mvn -Dtest=BoardScrub#BuildPageOfFoundLinks -Dbrowser=CHROME -Denvironment=bbc -Dinput="http://www.bbc.com/news" -Dnogrid -DaNumber=3 -DwaitAfterPageLoadMilliSeconds=3000 test
+#!/usr/bin/env bash
+mvn -Dtest="BoardScrub#BuildPageOfFoundLinks" -Dbrowser=CHROME -Dreport="bbcnews" -Dinput="http://www.bbc.com/news" -DbodyTextXpath="//p" -DlinkXpath="//a[contains(@href,'/news/')]" -DnextLinkXpath="//void" -DlinksLoadedIndicatorXpath="//span[contains(text(),'Copyright')]" -DimageXpath="//img" -DaNumber=50 -DwaitAfterPageLoadMilliSeconds=1500 -DdefaultImplicitWaitSeconds=60 -DlinksLoadedIndicatorXpath="//a" -DtitleTextXpath="//h1" -DnoScreenShots -DnoScroll -Dnogrid test

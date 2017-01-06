@@ -20,6 +20,9 @@ import java.security.InvalidParameterException;
  * @author jaemzware.org
  */
 public class BoardScrub extends CodeBase {
+
+    int visitCount = 1; //used to track how many visits total, in order to know when to stop if -DaNumber specified
+
     @Before
     public void BeforeTest() {
         try {
@@ -58,71 +61,112 @@ public class BoardScrub extends CodeBase {
             
             //paging variables
             String currentContentPageUrl = input;  //used to navigate to next page
-            int numCurrentPageFirstResult=1; //used to track max visits
+            int resultCountNumCurrentPageFirstResult=1; //used to track max visits
             Boolean continueProcessing = true; //used to track if we should keep paging
             List<String[]> contents = new ArrayList(); //contents collected from each page
-            
-            
-            //go to the first page
-            driverGetWithTime(input,1);
-            Thread.sleep(waitAfterPageLoadMilliSeconds);
-            
-            //PAGE THROUGH ALL RESULTS
-            String checkHtmlResponseForError="";
-            while(continueProcessing){
-                //get all the links on the target url
-                List<String> links = GetLinksOnPage(); 
 
-                //get conent from the links
+            //GO TO THE FIRST PAGE SPECIFIED BY -Dinput
+            String driverGetWithTimeErrorCheck=driverGetWithTime(input,1);
+            if(driverGetWithTimeErrorCheck.equals("ERROR")){
+                throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
+            }
+
+            //COLLECT CONTENT OF ALL LINKS UNTIL THERE ARE NON MORE PAGES, OR WE'VE HIT THE MAXIMUM
+            //NUMBER OF RESULTS, SPECIFIED BY -DaNumber (IF -DaNumber IS GREATER THAN 0)
+            String checkHtmlResponseForError=""; //FOR CHECKING FOR ERRORS FROM driverGetWithTime AS WE PROCESS PAGES
+            String checkPageChangeResponseForError="";//FOR CHECKING ERRORS FROM WaitForPageChange AS WE PROCESS PAGES
+            boolean maximumResultsSpecified = (aNumber>0)?true:false;
+            int maximumResultsToReturn = aNumber;
+            //debugging variables for paging issue concerning -DnextLinkXpath, in while loop, to avoid infinite loops and unexpected paging errors
+            WebElement weNextLinkXpathElement = null;
+            boolean nextLinkXpathExists = true;
+            boolean nextLinkXpathEnabled = true;
+            boolean nextLinkXpathDisplayed = true;
+            while(continueProcessing){
+                //GET A COLLECTION OF LINKS TO VISIT ON THE CURRENT PAGE, SPECIFIED BY -Dinput
+                List<String> links = GetLinksOnPage();
+
+                //VISIT THE COLLECTION OF LINKS GATHERED FROM THE CURRENT PAGE, SPECIFIED BY -Dinput
                 List<String[]> contentsOnCurrentPage
                         =GetContentFromLinks(links);
-                
+                //ADD THEIR CONTENTS TO THE CONTENTS COLLECTION, THAT WILL GET WRITTEN OUT TO THE REPORT, NAMED IN PART BY -Dreport
                 contents.addAll(contentsOnCurrentPage); 
                 
-                //PAGING LOGIC
-                //go back to content page with results just collected
-                checkHtmlResponseForError = driverGetWithTime(currentContentPageUrl,1);
+                //AFTER VISITING THE COLLECTION OF LINKS, GO BACK TO THE PAGE WE GOT THEM FROM, SPECIFIED BY -Dinput
+                checkHtmlResponseForError = driverGetWithTime(currentContentPageUrl);
                 if(checkHtmlResponseForError.equals("ERROR")){
-                    System.out.println("THERE WAS AN ERROR GETTING THE LAST PAGE. BREAKING");
+                    System.out.println("=============================BOARDSCRUB ERROR: THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
                     continueProcessing=false;
+                    continue;
                 }
-
-                //SET FIRST RESULT ON THE NEXT PAGE OF RESULTS
-                numCurrentPageFirstResult += contentsOnCurrentPage.size();
-
-                //STOP IF MAXVISITS REACHED
-                System.out.println("if("+aNumber+">0 && "+numCurrentPageFirstResult+" >= "+aNumber+"){");
-                System.out.println("else if(!IsElementPresent(By.xpath("+nextLinkXpath+"),"+waitAfterPageLoadMilliSeconds+")||");
-                System.out.println("else");
-                if(aNumber>0 && numCurrentPageFirstResult >= aNumber){
-                    System.out.println("MAX VISITS REACHED numCurrentPageFirstResult:"+numCurrentPageFirstResult+" numResultsOnPage:"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
-                    continueProcessing=false;
-                }
-                //STOP IF THERE IS NO NEXT LINK
-                else if(!IsElementPresent(By.xpath(nextLinkXpath),waitAfterPageLoadMilliSeconds)||
-                        !driver.findElement(By.xpath(nextLinkXpath)).isEnabled()||
-                        !driver.findElement(By.xpath(nextLinkXpath)).isDisplayed()){
-                    System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
-                    continueProcessing=false;
-                }
-                //OTHERWISE CONTINUE PROCESSING
                 else{
+                    currentContentPageUrl = driver.getCurrentUrl();
+                }
 
-                    //GET NEXT page link
-                    WebElement nextPageLink = driver.findElement(By.xpath(nextLinkXpath));
-                    
-                    //GOING TO NEXT PAGE MESSAGE
-                    System.out.println("GOING TO NEXT PAGE:"+nextPageLink.getAttribute("href"));
-                    
-                    //GO TO THE NEXT PAGE
-                    nextPageLink.click();
+                //CHECK FOR A NEXT PAGE LINK BY SPECIFIED -DnextLinkXpath TO TELL WHETHER OR NOT TO CONTINUE PROCESSING
+                //IF THERE IS NO NEXT LINK OR ITS DISABLED, THEN DONT TRY TO GO TO THE NEXT PAGE. WE'RE DONE
+                nextLinkXpathExists = IsElementPresent(By.xpath(nextLinkXpath));
+                weNextLinkXpathElement = nextLinkXpathExists?driver.findElement(By.xpath(nextLinkXpath)):null;
+                if(browser.toString().contains("SAFARI")) {
+                    //SAFARI DOESN'T PROCESS ISDISPLAYED CORRECTLY; IT ERRORS OUT, SO CHECK IT'S STYLES display PROPERTY FOR none
+                    String nextLinkXpathElementCSSDisplayValue = weNextLinkXpathElement.getCssValue("display");
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL SAFARI: nextLinkXpathElementCSSDisplayValue:'"+nextLinkXpathElementCSSDisplayValue+"' URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled);
 
-                    //WAIT FOR NEW RESULTS PAGE TO LOAD
-                    WaitForPageChange(currentContentPageUrl);
-                    
-                    //update the current page url
+                    nextLinkXpathDisplayed = nextLinkXpathElementCSSDisplayValue==null?false:!nextLinkXpathElementCSSDisplayValue.contains("none");
+                }
+                else{
+                    nextLinkXpathDisplayed = (weNextLinkXpathElement != null) ? weNextLinkXpathElement.isDisplayed() : false;
+                }
+                nextLinkXpathEnabled = (weNextLinkXpathElement!=null)?weNextLinkXpathElement.isEnabled():false;
+
+                System.out.println("=============================BOARDSCRUB INFORMATIONAL: URL:"+currentContentPageUrl+" NEXTLINKXPATH:"+nextLinkXpath+" EXISTS: "+nextLinkXpathExists+" DISPLAYED:"+nextLinkXpathDisplayed+" ENABLED:"+nextLinkXpathEnabled);
+
+                //STOP IF THERE IS NO NEXT LINK
+                if(!nextLinkXpathExists){
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: NEXT LINK XPATH:"+nextLinkXpath+" NOT PRESENT. URL:"+driver.getCurrentUrl());
+                    continueProcessing=false;
+                    continue;
+                }
+                //STOP IF THE NEXT LINK IS PRESENT BUT NOT DISPLAYED
+                //SAFARI DOESN'T PROCESS ISDISPLAYED CORRECTLY; IT ERRORS OUT
+                else if(!nextLinkXpathDisplayed) {
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: NEXT LINK PRESENT BUT NOT DISPLAYED. URL:" + driver.getCurrentUrl());
+                    continueProcessing = false;
+                    continue;
+                }
+                //STOP IF THE NEXT LINK IS PRESENT BUT NOT ENABLED
+                else if(!nextLinkXpathEnabled) {
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: NEXT LINK PRESENT BUT NOT ENABLED. URL:" + driver.getCurrentUrl());
+                    continueProcessing = false;
+                    continue;
+                }
+
+                //increment the number of results by the size of them on the current page, and see if that's more
+                //than the number of results maximum to return, as specified by -DaNumber on the command line
+                if(     maximumResultsSpecified &&
+                        (visitCount >= maximumResultsToReturn)  ){
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: MAX VISITS REACHED visitCount:"+visitCount+" maxVisits:"+aNumber);
+                    continueProcessing=false;
+                    continue;
+                }
+                //OTHERWISE CONTINUE PROCESSING pages by clicking the link pointed to by -DnextLinkXpath
+                else{
                     currentContentPageUrl = driver.getCurrentUrl();
 
+                    //GO TO THE NEXT PAGE
+                    driver.findElement(By.xpath(nextLinkXpath)).click();
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: CLICKED nextLinkXpath:"+nextLinkXpath);
+
+                    //WAIT FOR NEW RESULTS PAGE TO LOAD
+                    checkPageChangeResponseForError = WaitForPageChange(currentContentPageUrl);
+                    if(checkPageChangeResponseForError.equals("ERROR")){
+                        System.out.println("=============================ERROR: THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
+                        continueProcessing=false;
+                        continue;
+                    }
+
+                    //update the current page url
+                    currentContentPageUrl = driver.getCurrentUrl();
                 }
             }
             
@@ -193,15 +237,20 @@ public class BoardScrub extends CodeBase {
         System.out.println("VISITING RESULT LINKS");
         List<String[]> results = new ArrayList<>();
 
-        // navigate to links and get images
+        /*variable for getting html returned from drivergetwithtime, if there's not an ERROR*/
         String driverGetHtmlOutput = "";
-        int visitCount = 0;
+        /*variable to keep track of visits. set visit count for the first visit.
+        it will be incremented again for each visit, after the drivergetwithtime in the for loop*/
         String titleText=null;
         for (String href : links) {
             try{
                 driverGetHtmlOutput = driverGetWithTime(href);
-                Thread.sleep(waitAfterPageLoadMilliSeconds);
-                
+                if(driverGetHtmlOutput.equals("ERROR")){
+                    throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
+                }
+
+                System.out.println("INFORMATIONAL: GETCONTENTFROMLINKS VISITCOUNT:"+visitCount);
+
                 //scroll page
                 ScrollPage();
             }
@@ -302,7 +351,8 @@ public class BoardScrub extends CodeBase {
                 results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput});
             }
             //check the desired image count, and break if it's been reached
-            if((aNumber>0) && (++visitCount>aNumber)){
+            visitCount=visitCount+1;
+            if((aNumber>0) && (visitCount>aNumber)){
                 break;
             }
             //set titleText back to null for next check
