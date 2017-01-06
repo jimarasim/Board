@@ -68,7 +68,7 @@ public class BoardScrub extends CodeBase {
             //GO TO THE FIRST PAGE SPECIFIED BY -Dinput
             String driverGetWithTimeErrorCheck=driverGetWithTime(input,1);
             if(driverGetWithTimeErrorCheck.equals("ERROR")){
-                throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
+                throw new Exception("BuildPageOfFoundLinks DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
             }
 
             //COLLECT CONTENT OF ALL LINKS UNTIL THERE ARE NON MORE PAGES, OR WE'VE HIT THE MAXIMUM
@@ -95,7 +95,7 @@ public class BoardScrub extends CodeBase {
                 //AFTER VISITING THE COLLECTION OF LINKS, GO BACK TO THE PAGE WE GOT THEM FROM, SPECIFIED BY -Dinput
                 checkHtmlResponseForError = driverGetWithTime(currentContentPageUrl);
                 if(checkHtmlResponseForError.equals("ERROR")){
-                    System.out.println("=============================BOARDSCRUB ERROR: THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
+                    System.out.println("=============================BOARDSCRUB BuildPaageOfFoundLinks ERROR: THERE WAS AN ERROR GETTING THE LAST PAGE. SEE ABOVE FOR EXCEPTION MESSAGE.");
                     continueProcessing=false;
                     continue;
                 }
@@ -232,21 +232,22 @@ public class BoardScrub extends CodeBase {
     @SuppressWarnings("SleepWhileInLoop")
     private List<String[]> GetContentFromLinks(List<String> links) throws Exception{
     
-        int waitTimeMillis=5000;
+        int throttleDownWaitTimeMillis=5000;
         
         System.out.println("VISITING RESULT LINKS");
         List<String[]> results = new ArrayList<>();
 
         /*variable for getting html returned from drivergetwithtime, if there's not an ERROR*/
         String driverGetHtmlOutput = "";
-        /*variable to keep track of visits. set visit count for the first visit.
-        it will be incremented again for each visit, after the drivergetwithtime in the for loop*/
+
+        //VARIABLE FOR GRABBING TITLE TEXT SPECIFIED BY -DtitleTextXpath
         String titleText=null;
         for (String href : links) {
             try{
+                //GET THE LINK AND CHECK FOR AN ERROR LOADING THE PAGE
                 driverGetHtmlOutput = driverGetWithTime(href);
                 if(driverGetHtmlOutput.equals("ERROR")){
-                    throw new Exception("GETCONTENTFROM LINKS DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
+                    throw new Exception("BoardScrub GetContentFromLinks DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
                 }
 
                 System.out.println("INFORMATIONAL: GETCONTENTFROMLINKS VISITCOUNT:"+visitCount);
@@ -261,13 +262,13 @@ public class BoardScrub extends CodeBase {
 
             //THROTTLE DOWN IMPLICIT WAIT
             // throttle wait time when looking for elements that should already be on the page
-            driver.manage().timeouts().implicitlyWait(waitTimeMillis, TimeUnit.MILLISECONDS);
-            System.out.println("DECREASED IMPLICIT WAIT FROM defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO waitTimeMillis:"+waitTimeMillis+" ms");
-            System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+            driver.manage().timeouts().implicitlyWait(throttleDownWaitTimeMillis, TimeUnit.MILLISECONDS);
+            System.out.println("DECREASED IMPLICIT WAIT FROM -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO -DthrottleDownWaitTimeMillis:"+throttleDownWaitTimeMillis+" ms");
+            System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+throttleDownWaitTimeMillis+"ms");
             //check for TITLE TEXT
-            if (IsElementPresent(By.xpath(titleTextXpath), waitTimeMillis)) {
+            if (IsElementPresent(By.xpath(titleTextXpath), throttleDownWaitTimeMillis)) {
                 try{            
-                    System.out.println("LOOKING FOR TITLE TEXT:"+titleTextXpath+" TIMEOUT:"+waitTimeMillis+"ms");
+                    System.out.println("LOOKING FOR TITLE TEXT:"+titleTextXpath+" -DthrottleDownWaitTimeMillis:"+throttleDownWaitTimeMillis+"ms");
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }
                 catch(Exception ex){
@@ -276,7 +277,7 @@ public class BoardScrub extends CodeBase {
                     //THROTTLE UP IMPLICIT WAIT
                     // throttle implicit wait time back up
                     driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-                    System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
+                    System.out.println("INCREASED IMPLICIT WAIT FROM -DthrottleDownWaitTimeMillis"+throttleDownWaitTimeMillis+"ms TO -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
                     break;
                 }
                 if (titleText == null) {
@@ -287,12 +288,12 @@ public class BoardScrub extends CodeBase {
                 }
             }
             else{
-                System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER:"+waitTimeMillis +"ms");
+                System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER -DthrottleDownWaitTimeMillis:"+throttleDownWaitTimeMillis +"ms");
             }
 
             //THROTTLE UP IMPLICIT WAIT
             driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-            System.out.println("INCREASED IMPLICIT WAIT FROM waitTimeMillis"+waitTimeMillis+"ms TO defaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
+            System.out.println("INCREASED IMPLICIT WAIT FROM -DthrottleDownWaitTimeMillis"+throttleDownWaitTimeMillis+"ms TO -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
 
             //BODY TEXT
             // check for the body text

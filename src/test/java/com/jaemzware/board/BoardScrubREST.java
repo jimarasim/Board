@@ -56,7 +56,10 @@ public class BoardScrubREST extends CodeBase {
             GetBuildPageOfFoundLinksRequiredPropertiesREST(); 
             
             //go to the first page
-            driverGetWithTime(input,1);
+            String driverGetWithTimeResponse = driverGetWithTime(input,1);
+            if(driverGetWithTimeResponse.equals("ERROR")){
+                throw new Exception("BuildPageOfFoundLinksViaRest DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
+            }
             
             //get all the links on the target url
             List<String> links = 

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #[SOURCE OF TRUTH FOR BoardScrub#BuildPageOfFoundLinks GRID craigslist]
-
 #LEVEL LAND REAL ESTATE NOT AUBURN
-mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+level&sort=pricedsc&search_distance=20&postal=98310&min_price=50000&max_price=110000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -DaHubPort="4444" -DaHubServer="localhost" -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+mvn -Dbrowser="FIREFOX" -Dinput="http://seattle.craigslist.org/search/rea?query=-auburn+level&sort=pricedsc&search_distance=20&postal=98310&min_price=50000&max_price=110000&availabilityMode=0" -Dreport="gridcraigslisthousesbremerton" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -DaHubPort="4444" -DaHubServer="localhost" -Dtest="BoardScrub#BuildPageOfFoundLinks" test
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
 #-Dinput MAPS TO STARTURL (eg http://jaemzware.com)
 #-Dreport appended to index in report name index___.htm
@@ -27,6 +26,7 @@ mvn -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/rea?query=-
 #NOTE: VERSION AND PLATFORM ENUMERATION VARS ONLY USED BY GRID
 #NOTE: CHROMELINUX32 SPECIAL FOR RASPBERRY PI
 #NOTE: FIREFOX NO LONGER SUPPORTED FOR LOGGING
+#NOTE: FIREFOX SCREENSHOTS SHOW THE WHOLE PAGE
 #NOTE: SAFARI NO LONGER SUPPORTED FOR LOGGING
 #NOTE: SAFARI MUST NOT ALREADY BE RUNNING WHEN RUNNING A SAFARI AUTOMATION
 #NOTE: SAFARI MUST enable the 'Allow Remote Automation' option in Safari's Develop menu to control Safari via WebDriver

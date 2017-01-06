@@ -133,7 +133,10 @@ public class ResultPlace extends CodeBase {
         // NAVIGATE TO URL
 
         String oldUrl=driver.getCurrentUrl();
-        driverGetWithTime(urlWithParms,1);
+        String driverGetWithTimeResponse = driverGetWithTime(urlWithParms,1);
+        if(driverGetWithTimeResponse.equals("ERROR")){
+            throw new Exception("GetResultPlacesOfTarget DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
+        }
         WaitForPageChange(oldUrl);
 
         Boolean continueProcessing = true;
@@ -215,7 +218,10 @@ public class ResultPlace extends CodeBase {
                 oldUrl=driver.getCurrentUrl();
 
                 // NAVIGATE TO URL
-                driverGetWithTime(urlWithParms,1);
+                driverGetWithTimeResponse = driverGetWithTime(urlWithParms,1);
+                if(driverGetWithTimeResponse.equals("ERROR")){
+                    throw new Exception("GetResultPlacesOfTarget DRIVERGETWITHTIME ERROR OCCURRED. LOOK ABOVE FOR EXCEPTION MESSAGE.");
+                }
 
                 //WAIT FOR NEW RESULTS PAGE TO LOAD
                 WaitForPageChange(oldUrl);
