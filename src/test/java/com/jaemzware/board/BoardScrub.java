@@ -231,9 +231,6 @@ public class BoardScrub extends CodeBase {
      */
     @SuppressWarnings("SleepWhileInLoop")
     private List<String[]> GetContentFromLinks(List<String> links) throws Exception{
-    
-        int throttleDownWaitTimeMillis=5000;
-        
         System.out.println("VISITING RESULT LINKS");
         List<String[]> results = new ArrayList<>();
 
@@ -262,13 +259,13 @@ public class BoardScrub extends CodeBase {
 
             //THROTTLE DOWN IMPLICIT WAIT
             // throttle wait time when looking for elements that should already be on the page
-            driver.manage().timeouts().implicitlyWait(throttleDownWaitTimeMillis, TimeUnit.MILLISECONDS);
-            System.out.println("DECREASED IMPLICIT WAIT FROM -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO -DthrottleDownWaitTimeMillis:"+throttleDownWaitTimeMillis+" ms");
-            System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+throttleDownWaitTimeMillis+"ms");
+            driver.manage().timeouts().implicitlyWait(throttleDownWaitTimeMilliSeconds, TimeUnit.MILLISECONDS);
+            System.out.println("DECREASED IMPLICIT WAIT FROM -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+"ms TO -DthrottleDownWaitTimeMilliSeconds:"+throttleDownWaitTimeMilliSeconds+" ms");
+            System.out.println("LOOKING FOR TITLE TEXT AT (GetContentFromLinks):"+titleTextXpath+" TIMEOUT:"+throttleDownWaitTimeMilliSeconds+"ms");
             //check for TITLE TEXT
-            if (IsElementPresent(By.xpath(titleTextXpath), throttleDownWaitTimeMillis)) {
+            if (IsElementPresent(By.xpath(titleTextXpath), throttleDownWaitTimeMilliSeconds)) {
                 try{            
-                    System.out.println("LOOKING FOR TITLE TEXT:"+titleTextXpath+" -DthrottleDownWaitTimeMillis:"+throttleDownWaitTimeMillis+"ms");
+                    System.out.println("LOOKING FOR TITLE TEXT:"+titleTextXpath+" -DthrottleDownWaitTimeMilliSeconds:"+throttleDownWaitTimeMilliSeconds+"ms");
                     titleText = driver.findElement(By.xpath(titleTextXpath)).getText();
                 }
                 catch(Exception ex){
@@ -277,7 +274,7 @@ public class BoardScrub extends CodeBase {
                     //THROTTLE UP IMPLICIT WAIT
                     // throttle implicit wait time back up
                     driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-                    System.out.println("INCREASED IMPLICIT WAIT FROM -DthrottleDownWaitTimeMillis"+throttleDownWaitTimeMillis+"ms TO -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
+                    System.out.println("INCREASED IMPLICIT WAIT FROM -DthrottleDownWaitTimeMilliSeconds"+throttleDownWaitTimeMilliSeconds+"ms TO -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
                     break;
                 }
                 if (titleText == null) {
@@ -288,24 +285,22 @@ public class BoardScrub extends CodeBase {
                 }
             }
             else{
-                System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER -DthrottleDownWaitTimeMillis:"+throttleDownWaitTimeMillis +"ms");
+                System.out.println("WARNING: TITLETEXT AT XPATH:"+titleTextXpath+" WAS NOT FOUND AFTER -DthrottleDownWaitTimeMilliSeconds:"+throttleDownWaitTimeMilliSeconds +"ms");
             }
 
             //THROTTLE UP IMPLICIT WAIT
             driver.manage().timeouts().implicitlyWait(defaultImplicitWaitSeconds, TimeUnit.SECONDS);
-            System.out.println("INCREASED IMPLICIT WAIT FROM -DthrottleDownWaitTimeMillis"+throttleDownWaitTimeMillis+"ms TO -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
+            System.out.println("INCREASED IMPLICIT WAIT FROM -DthrottleDownWaitTimeMilliSeconds"+throttleDownWaitTimeMilliSeconds+"ms TO -DdefaultImplicitWaitSeconds:"+defaultImplicitWaitSeconds+" ms");
 
             //BODY TEXT
             // check for the body text
             List<WebElement> allBodyTexts = new ArrayList<>();
             
-            System.out.println("IsElementPresent(By.xpath("+bodyTextXpath+"), "+quickWaitMilliSeconds+"))");
-
-            if (IsElementPresent(By.xpath(bodyTextXpath), quickWaitMilliSeconds)) {
+            if (IsElementPresent(By.xpath(bodyTextXpath),throttleDownWaitTimeMilliSeconds)) {
                 allBodyTexts = driver.findElements(By.xpath(bodyTextXpath));
             }
             else{
-                System.out.println("WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                System.out.println("WARNING: BODYTEXT AT XPATH:"+bodyTextXpath+" WAS NOT FOUND AFTER throttleDownWaitTimeMilliSeconds:"+throttleDownWaitTimeMilliSeconds+"ms");
             }
             //add all body text into one string
             StringBuilder bodyText=new StringBuilder();
@@ -325,8 +320,8 @@ public class BoardScrub extends CodeBase {
             String imageSrc = "";
             if(noImages==null){
                 
-                System.out.println("CHECKING IMAGES IsElementPresent(By.xpath("+imageXpath+"), "+quickWaitMilliSeconds+")");
-                if (IsElementPresent(By.xpath(imageXpath), quickWaitMilliSeconds)) {
+                System.out.println("CHECKING IMAGES IsElementPresent(By.xpath("+imageXpath+"), throttleDownWaitTimeMilliSeconds:"+throttleDownWaitTimeMilliSeconds+")");
+                if (IsElementPresent(By.xpath(imageXpath), throttleDownWaitTimeMilliSeconds)) {
                     // add images to images list
                     List<WebElement> imageElements = driver.findElements(By.xpath(imageXpath));
                     System.out.println("IMAGE COUNT:"+imageElements.size());
@@ -344,7 +339,7 @@ public class BoardScrub extends CodeBase {
                     }
                 }
                 else{
-                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER:"+quickWaitMilliSeconds+"ms");
+                    System.out.println("WARNING: IMAGE AT XPATH:"+imageXpath+" WAS NOT FOUND AFTER throttleDownWaitTimeMilliSeconds:"+throttleDownWaitTimeMilliSeconds+"ms");
                 }
             }
             //add at least one result entry if no images were found

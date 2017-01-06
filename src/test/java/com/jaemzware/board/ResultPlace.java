@@ -146,8 +146,8 @@ public class ResultPlace extends CodeBase {
 
             // make sure there are some links
             System.out.println("CHECKING FOR RESULTS");
-            System.out.println("!IsElementPresent(By.xpath("+linkXpath+"), "+quickWaitMilliSeconds+")");
-            if (!IsElementPresent(By.xpath(linkXpath), quickWaitMilliSeconds)) {
+            System.out.println("!IsElementPresent(By.xpath("+linkXpath+"), "+throttleDownWaitTimeMilliSeconds+")");
+            if (!IsElementPresent(By.xpath(linkXpath), throttleDownWaitTimeMilliSeconds)) {
                 throw new Exception("COULDN'T FIND ANY RESULTS");
             }
 
@@ -194,7 +194,7 @@ public class ResultPlace extends CodeBase {
                 //tell the loop to stop
                 continueProcessing=false;
             }
-            else if(!IsElementPresent(By.xpath(nextLinkXpath),quickWaitMilliSeconds)){
+            else if(!IsElementPresent(By.xpath(nextLinkXpath),throttleDownWaitTimeMilliSeconds)){
                 System.out.println("LAST PAGE REACHED: "+driver.getCurrentUrl());
 
                 //there is no next link, we're done, tell the while loop to stop
