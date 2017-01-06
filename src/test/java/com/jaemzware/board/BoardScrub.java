@@ -20,6 +20,9 @@ import java.security.InvalidParameterException;
  * @author jaemzware.org
  */
 public class BoardScrub extends CodeBase {
+
+    int visitCount = 1; //used to track how many visits total, in order to know when to stop if -DaNumber specified
+
     @Before
     public void BeforeTest() {
         try {
@@ -96,6 +99,9 @@ public class BoardScrub extends CodeBase {
                     continueProcessing=false;
                     continue;
                 }
+                else{
+                    currentContentPageUrl = driver.getCurrentUrl();
+                }
 
                 //CHECK FOR A NEXT PAGE LINK BY SPECIFIED -DnextLinkXpath TO TELL WHETHER OR NOT TO CONTINUE PROCESSING
                 //IF THERE IS NO NEXT LINK OR ITS DISABLED, THEN DONT TRY TO GO TO THE NEXT PAGE. WE'RE DONE
@@ -137,18 +143,19 @@ public class BoardScrub extends CodeBase {
 
                 //increment the number of results by the size of them on the current page, and see if that's more
                 //than the number of results maximum to return, as specified by -DaNumber on the command line
-                resultCountNumCurrentPageFirstResult += contentsOnCurrentPage.size();
                 if(     maximumResultsSpecified &&
-                        (resultCountNumCurrentPageFirstResult >= maximumResultsToReturn)  ){
-                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: MAX VISITS REACHED resultCountNumCurrentPageFirstResult:"+resultCountNumCurrentPageFirstResult+" contentsOnCurrentPage.size():"+contentsOnCurrentPage.size()+" maxVisits:"+aNumber);
+                        (visitCount >= maximumResultsToReturn)  ){
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: MAX VISITS REACHED visitCount:"+visitCount+" maxVisits:"+aNumber);
                     continueProcessing=false;
                     continue;
                 }
                 //OTHERWISE CONTINUE PROCESSING pages by clicking the link pointed to by -DnextLinkXpath
                 else{
+                    currentContentPageUrl = driver.getCurrentUrl();
+
                     //GO TO THE NEXT PAGE
-                    weNextLinkXpathElement.click();
-                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: CLICKED weNextLinkXpathElement:"+weNextLinkXpathElement.getText());
+                    driver.findElement(By.xpath(nextLinkXpath)).click();
+                    System.out.println("=============================BOARDSCRUB INFORMATIONAL: CLICKED nextLinkXpath:"+nextLinkXpath);
 
                     //WAIT FOR NEW RESULTS PAGE TO LOAD
                     checkPageChangeResponseForError = WaitForPageChange(currentContentPageUrl);
@@ -234,7 +241,6 @@ public class BoardScrub extends CodeBase {
         String driverGetHtmlOutput = "";
         /*variable to keep track of visits. set visit count for the first visit.
         it will be incremented again for each visit, after the drivergetwithtime in the for loop*/
-        int visitCount = 1;
         String titleText=null;
         for (String href : links) {
             try{
