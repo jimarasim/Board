@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 #[SOURCE OF TRUTH FOR BoardScrub#BuildPageOfFoundLinks NO GRID craigslist]
-#SEATTLE BOOKS
-#http://seattle.craigslist.org/search/foa?query=book
-#SOFTWARE JOBS
-mvn -DthrottleDownWaitTimeMilliSeconds=100 -Dbrowser="CHROME" -Dinput="http://seattle.craigslist.org/search/sof" -Dreport="jobs" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+#SEATTLE SOFTWARE JOBS
+#mvn -DthrottleDownWaitTimeMilliSeconds=0 -Dbrowser=FIREFOX -Dinput="http://seattle.craigslist.org/search/sof" -Dreport="jobs" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+#BAINBRIDGE HOMES
+#mvn -DthrottleDownWaitTimeMilliSeconds=0 -Dbrowser=CHROME  -Dreport="bainbridgerealestate" -Dinput="http://seattle.craigslist.org/search/rea?search_distance=12&postal=98110&min_price=10000&max_price=77000&availabilityMode=0" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+#PORT ORCHARD HOMES
+mvn -Dbrowser=CHROMEIPHONE6 -Dreport="portorchardrealestate" -Dinput="http://seattle.craigslist.org/search/rea?search_distance=12&postal=98366&min_price=10000&max_price=77000&availabilityMode=0" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+
+#BOISE HOMES
+#mvn -DthrottleDownWaitTimeMilliSeconds=0 -Dbrowser=CHROME -Dinput="http://boise.craigslist.org/search/rea?search_distance=20&postal=83701&min_price=10000&max_price=70000&availabilityMode=0" -Dreport="boiserealestate" -DnoScreenShots -DnoScroll -DlinksLoadedIndicatorXpath="//a[contains(text(),'help')]" -DlinkXpath="//a[contains(@class,'result-title')]" -DnextLinkXpath="//a[contains(@class,'button next')]" -DbodyTextXpath="//section[@id='postingbody']" -DimageXpath="//div[contains(@class,'slide first')]/img" -DtitleTextXpath="//h2[@class='postingtitle']" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
 #=====================================
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
 #-DbodyTextXpath="//section[@id='postingbody']" xpath for the body text of the board post to grab
@@ -41,30 +46,30 @@ mvn -DthrottleDownWaitTimeMilliSeconds=100 -Dbrowser="CHROME" -Dinput="http://se
 #=====================================
 #BROWSER ENUMERATIONS
 #-Dbrowser
-#NOTE: VERSION AND PLATFORM ENUMERATION VARS ONLY USED BY GRID
-#NOTE: CHROMELINUX32 SPECIAL FOR RASPBERRY PI
-#NOTE: FIREFOX NO LONGER SUPPORTED FOR LOGGING
-#NOTE: FIREFOX SCREENSHOTS SHOW THE WHOLE PAGE
-#NOTE: SAFARI NO LONGER SUPPORTED FOR LOGGING
-#NOTE: SAFARI MUST NOT ALREADY BE RUNNING WHEN RUNNING A SAFARI AUTOMATION
-#NOTE: SAFARI MUST enable the 'Allow Remote Automation' option in Safari's Develop menu to control Safari via WebDriver
-#NOTE: SAFARI IS FAST BUT DOESN'T WORK CONSISTENTLY LIKE CHROME, AND FIREFOX
-#CHROME("chrome","",Platform.WINDOWS),
-#CHROMELINUX("chrome","",Platform.LINUX),
-#CHROMELINUX32("chrome","",Platform.LINUX),
-#CHROMEMAC ("chrome","",Platform.MAC),
-#FIREFOX("firefox","",Platform.WINDOWS),
-#FIREFOXLINUX("firefox","",Platform.LINUX),
-#FIREFOXMAC("firefox","",Platform.MAC),
-#SAFARI("safari","10",Platform.MAC),
-#IE8("InternetExplorer","8",Platform.WINDOWS),
-#IE9("InternetExplorer","9",Platform.WINDOWS),
-#IE10("InternetExplorer","10",Platform.WINDOWS),
-#IE11("InternetExplorer","11",Platform.WINDOWS),
-#CHROMEIPHONE6("IPHONE","6",Platform.MAC),
-#CHROMEIPAD4("IPAD","4",Platform.MAC),
-#CHROMEANDROID402("ANDROID","4.0.2",Platform.WINDOWS),
-#APPIUMSAFARISIMULATOR("","",Platform.MAC),
-#APPIUMAPPSIMULATOR("","",Platform.MAC),
-#APPIUMAPPDEVICE("","",Platform.MAC),
-#APPIUMSAFARIDEVICE("","",Platform.MAC);
+#    //GRID: PLATFORM AND VERSION ARE ONLY USED WHEN USING GRID OR A CHROME EMULATION
+#    //NON-GRID: FOR NON-GRID, JUST SPECIFYING CHROME, FIREFOX, OR SAFARI WORKS ON MAC
+#    //FIREFOX: ONLY WORKS WITH GECKODRIVER NOW
+#    CHROME("chrome","",Platform.WINDOWS),  //REQUIRES CHROMEDRIVER
+#    CHROMELINUX("chrome","",Platform.LINUX),
+#    CHROMELINUX32("chrome","",Platform.LINUX),
+#    CHROMEMAC ("chrome","",Platform.MAC),
+#    FIREFOX("firefox","",Platform.WINDOWS), //REQUIRES GECKODRIVER
+#    FIREFOXLINUX("firefox","",Platform.LINUX),
+#    FIREFOXMAC("firefox","",Platform.MAC),
+#    SAFARI("safari","",Platform.MAC),  //REQUIRES SAFARI DRIVER
+#    IE8("InternetExplorer","8",Platform.WINDOWS), //REQUIRES IEDRIVERSERVER
+#    IE9("InternetExplorer","9",Platform.WINDOWS),
+#    IE10("InternetExplorer","10",Platform.WINDOWS),
+#    IE11("InternetExplorer","11",Platform.WINDOWS),
+#    //CHROME EMULATIONS
+#    CHROMENEXUS5("Google","Nexus 5", Platform.MAC),
+#    CHROMENEXUS6P("Google","Nexus 6P",Platform.MAC),
+#    CHROMEIPHONE5("Apple","iPhone 5",Platform.MAC),
+#    CHROMEIPHONE6("Apple","iPhone 6",Platform.MAC),
+#    CHROMEIPHONE6PLUS("Apple","iPhone 6 Plus",Platform.MAC),
+#    CHROMEIPAD("Apple","iPad",Platform.MAC),
+#    //APPIUM MUST BE RUNNING AS THE SELENIUM GRID FOR THESE
+#    APPIUMSAFARISIMULATOR("","",Platform.MAC),
+#    APPIUMAPPSIMULATOR("","",Platform.MAC),
+#    APPIUMAPPDEVICE("","",Platform.MAC),
+#    APPIUMSAFARIDEVICE("","",Platform.MAC);
