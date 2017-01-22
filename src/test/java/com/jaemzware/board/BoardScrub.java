@@ -331,7 +331,7 @@ public class BoardScrub extends CodeBase {
                             imageSrc=i.getAttribute("src");
 
                             //add result entry image
-                            results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput });
+                            results.add(new String[] { href, imageSrc, titleText, LessThan2000CharString(bodyText.toString()),driverGetHtmlOutput });
                         } 
                         catch (Exception ex) {
                             System.out.println("WARNING: IMAGE WENT STALE");
@@ -344,7 +344,7 @@ public class BoardScrub extends CodeBase {
             }
             //add at least one result entry if no images were found
             if(imageSrc!=null && imageSrc.isEmpty()){
-                results.add(new String[] { href, imageSrc, titleText, LessThan1000CharString(bodyText.toString()),driverGetHtmlOutput});
+                results.add(new String[] { href, imageSrc, titleText, LessThan2000CharString(bodyText.toString()),driverGetHtmlOutput});
             }
             //check the desired image count, and break if it's been reached
             visitCount=visitCount+1;
@@ -400,12 +400,12 @@ public class BoardScrub extends CodeBase {
      * @param stringToTrim - string to trim to less than 1000 characters, if it has 1000 characters
      * @return 
      */
-    private String LessThan1000CharString(String stringToTrim){
-        if(stringToTrim.length()<1000){
+    private String LessThan2000CharString(String stringToTrim){
+        if(stringToTrim.length()<2000){
             return stringToTrim;
         }
         else{
-            return stringToTrim.substring(0,999);
+            return stringToTrim.substring(0,1999);
         }
     }
     @After
