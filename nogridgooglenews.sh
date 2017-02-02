@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-mvn -Dbrowser=CHROME -Dreport="nogridgooglenews" -DnoImages -DaNumber=100 -DdefaultImplicitWaitSeconds=60 -DnoScreenShots -DnoScroll -Dinput="https://news.google.com/" -DbodyTextXpath="//p" -DlinkXpath="//a[contains(@class,'article')]" -DnextLinkXpath="//void" -DlinksLoadedIndicatorXpath="//span[contains(@class,'copyright')]" -DimageXpath="//img" -DtitleTextXpath="//h1" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
+mvn -Dbrowser=CHROME -Dreport="nogridgooglenews" -DnoImages -DaNumber=150 -DdefaultImplicitWaitSeconds=60 -DnoScreenShots -DnoScroll -Dinput="https://news.google.com/" -DbodyTextXpath="//p" -DlinkXpath="//div[@class='main-content-with-gutter-wrapper']//a[contains(@class,'article')]" -DnextLinkXpath="//void" -DlinksLoadedIndicatorXpath="//span[contains(@class,'copyright')]" -DimageXpath="//img" -DtitleTextXpath="//h1" -Dnogrid -Dtest="BoardScrub#BuildPageOfFoundLinks" test
 #=====================================
 #COMMAND LINE SWITCHES FOR BoardScrub#BuildPageOfFoundLinks
 #-DbodyTextXpath="//section[@id='postingbody']" xpath for the body text of the board post to grab
