@@ -308,7 +308,7 @@ public class BoardScrub extends CodeBase {
             for(WebElement we: allBodyTexts){
                 try{
                     tempString = we.getText();
-                    bodyText.append(tempString);
+                    bodyText.append(tempString).append(" ");
                 }
                 catch(Exception ex){
                     System.out.println("WARNING: allBodyTexts ELEMENTS WENT STALE WHILE TRYING TO GET TEXT FROM THEM");
