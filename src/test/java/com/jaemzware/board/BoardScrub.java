@@ -54,7 +54,7 @@ public class BoardScrub extends CodeBase {
      * This method visits each url, and puts its content into a results list using webdriver 
      */
     @Test
-    public void BuildPageOfFoundLinks() {
+    public void BuildPageOfFoundLinks(){
         try {
             //get properties file information
             GetBuildPageOfFoundLinksRequiredProperties(); 
@@ -70,6 +70,9 @@ public class BoardScrub extends CodeBase {
             if(driverGetWithTimeErrorCheck.equals("ERROR")){
                 throw new Exception("BuildPageOfFoundLinks DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
             }
+
+            System.out.println("SLEEP FOR LOGIN, 10 SECONDS, QUICK!");
+            Thread.sleep(10000);
 
             //COLLECT CONTENT OF ALL LINKS UNTIL THERE ARE NON MORE PAGES, OR WE'VE HIT THE MAXIMUM
             //NUMBER OF RESULTS, SPECIFIED BY -DaNumber (IF -DaNumber IS GREATER THAN 0)
