@@ -3,6 +3,7 @@ package com.jaemzware.board;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
@@ -71,8 +72,12 @@ public class BoardScrub extends CodeBase {
                 throw new Exception("BuildPageOfFoundLinks DRIVERGETWITHTIME ERROR OCCURRED SEE ABOVE FOR EXCEPTION MESSAGE");
             }
 
-            System.out.println("SLEEP FOR LOGIN, 10 SECONDS, QUICK!");
-            Thread.sleep(10000);
+            if(input.toLowerCase().contains("tnaboard")) {
+                Assert.fail("ENTER CREDENTIALS HERE THEN COMMENT THIS ASSERTION BOARDSCRUB.JAVA BUILDPAGEOFFOUNDLINKS");
+                driver.findElement(By.name("vb_login_username")).sendKeys("");
+                driver.findElement(By.name("vb_login_password")).sendKeys("");
+                driver.findElement(By.xpath("//input[@value='login']")).click();
+            }
 
             //COLLECT CONTENT OF ALL LINKS UNTIL THERE ARE NON MORE PAGES, OR WE'VE HIT THE MAXIMUM
             //NUMBER OF RESULTS, SPECIFIED BY -DaNumber (IF -DaNumber IS GREATER THAN 0)
